@@ -1,0 +1,1357 @@
+{
+   "root": {
+      "label": 0,
+      "split_info": {
+         "dimension": 1,
+         "threshold": 291.5
+      },
+      "depth": 0,
+      "gain": 0.162144934653834,
+      "left": {
+         "label": 0.45999999999999996,
+         "split_info": {
+            "dimension": 0,
+            "threshold": 0
+         },
+         "depth": 1,
+         "gain": 0,
+         "left": null,
+         "right": null
+      },
+      "right": {
+         "label": 0,
+         "split_info": {
+            "dimension": 3,
+            "threshold": 1
+         },
+         "depth": 1,
+         "gain": 0.16283571099651978,
+         "left": {
+            "label": 0,
+            "split_info": {
+               "dimension": 0,
+               "threshold": 135
+            },
+            "depth": 2,
+            "gain": 0.5623351446188083,
+            "left": {
+               "label": 0.46,
+               "split_info": {
+                  "dimension": 0,
+                  "threshold": 0
+               },
+               "depth": 3,
+               "gain": 0,
+               "left": null,
+               "right": null
+            },
+            "right": {
+               "label": 0.6266666666666666,
+               "split_info": {
+                  "dimension": 0,
+                  "threshold": 0
+               },
+               "depth": 3,
+               "gain": 0,
+               "left": null,
+               "right": null
+            }
+         },
+         "right": {
+            "label": 0,
+            "split_info": {
+               "dimension": 6,
+               "threshold": 7.29
+            },
+            "depth": 2,
+            "gain": 0.1546011214137738,
+            "left": {
+               "label": 0.415,
+               "split_info": {
+                  "dimension": 0,
+                  "threshold": 0
+               },
+               "depth": 3,
+               "gain": 0,
+               "left": null,
+               "right": null
+            },
+            "right": {
+               "label": 0,
+               "split_info": {
+                  "dimension": 5,
+                  "threshold": 1.5
+               },
+               "depth": 3,
+               "gain": 0.1519979112712257,
+               "left": {
+                  "label": 0,
+                  "split_info": {
+                     "dimension": 1,
+                     "threshold": 313
+                  },
+                  "depth": 4,
+                  "gain": 0.6365141682948128,
+                  "left": {
+                     "label": 0.45999999999999996,
+                     "split_info": {
+                        "dimension": 0,
+                        "threshold": 0
+                     },
+                     "depth": 5,
+                     "gain": 0,
+                     "left": null,
+                     "right": null
+                  },
+                  "right": {
+                     "label": 0.7,
+                     "split_info": {
+                        "dimension": 0,
+                        "threshold": 0
+                     },
+                     "depth": 5,
+                     "gain": 0,
+                     "left": null,
+                     "right": null
+                  }
+               },
+               "right": {
+                  "label": 0,
+                  "split_info": {
+                     "dimension": 3,
+                     "threshold": 1
+                  },
+                  "depth": 4,
+                  "gain": 0.14628784480561768,
+                  "left": {
+                     "label": 0,
+                     "split_info": {
+                        "dimension": 0,
+                        "threshold": 177.5
+                     },
+                     "depth": 5,
+                     "gain": 0.6365141682948128,
+                     "left": {
+                        "label": 0.46,
+                        "split_info": {
+                           "dimension": 0,
+                           "threshold": 0
+                        },
+                        "depth": 6,
+                        "gain": 0,
+                        "left": null,
+                        "right": null
+                     },
+                     "right": {
+                        "label": 0.5700000000000001,
+                        "split_info": {
+                           "dimension": 0,
+                           "threshold": 0
+                        },
+                        "depth": 6,
+                        "gain": 0,
+                        "left": null,
+                        "right": null
+                     }
+                  },
+                  "right": {
+                     "label": 0,
+                     "split_info": {
+                        "dimension": 5,
+                        "threshold": 1.5
+                     },
+                     "depth": 5,
+                     "gain": 0.13676445033205073,
+                     "left": {
+                        "label": 0.52,
+                        "split_info": {
+                           "dimension": 0,
+                           "threshold": 0
+                        },
+                        "depth": 6,
+                        "gain": 0,
+                        "left": null,
+                        "right": null
+                     },
+                     "right": {
+                        "label": 0,
+                        "split_info": {
+                           "dimension": 5,
+                           "threshold": 1.5
+                        },
+                        "depth": 6,
+                        "gain": 0.13704250570205292,
+                        "left": {
+                           "label": 0.49,
+                           "split_info": {
+                              "dimension": 0,
+                              "threshold": 0
+                           },
+                           "depth": 7,
+                           "gain": 0,
+                           "left": null,
+                           "right": null
+                        },
+                        "right": {
+                           "label": 0,
+                           "split_info": {
+                              "dimension": 0,
+                              "threshold": 1.5
+                           },
+                           "depth": 7,
+                           "gain": 0.12998167980561295,
+                           "left": {
+                              "label": 0.92,
+                              "split_info": {
+                                 "dimension": 0,
+                                 "threshold": 0
+                              },
+                              "depth": 8,
+                              "gain": 0,
+                              "left": null,
+                              "right": null
+                           },
+                           "right": {
+                              "label": 0,
+                              "split_info": {
+                                 "dimension": 0,
+                                 "threshold": 2.5
+                              },
+                              "depth": 8,
+                              "gain": 0.13025002704804917,
+                              "left": {
+                                 "label": 0.76,
+                                 "split_info": {
+                                    "dimension": 0,
+                                    "threshold": 0
+                                 },
+                                 "depth": 9,
+                                 "gain": 0,
+                                 "left": null,
+                                 "right": null
+                              },
+                              "right": {
+                                 "label": 0,
+                                 "split_info": {
+                                    "dimension": 3,
+                                    "threshold": 1
+                                 },
+                                 "depth": 9,
+                                 "gain": 0.134271394448182,
+                                 "left": {
+                                    "label": 0.52,
+                                    "split_info": {
+                                       "dimension": 0,
+                                       "threshold": 0
+                                    },
+                                    "depth": 10,
+                                    "gain": 0,
+                                    "left": null,
+                                    "right": null
+                                 },
+                                 "right": {
+                                    "label": 0,
+                                    "split_info": {
+                                       "dimension": 0,
+                                       "threshold": 4
+                                    },
+                                    "depth": 10,
+                                    "gain": 0.1307904280443169,
+                                    "left": {
+                                       "label": 0.72,
+                                       "split_info": {
+                                          "dimension": 0,
+                                          "threshold": 0
+                                       },
+                                       "depth": 11,
+                                       "gain": 0,
+                                       "left": null,
+                                       "right": null
+                                    },
+                                    "right": {
+                                       "label": 0,
+                                       "split_info": {
+                                          "dimension": 5,
+                                          "threshold": 1.5
+                                       },
+                                       "depth": 11,
+                                       "gain": 0.13482707167791208,
+                                       "left": {
+                                          "label": 0.43,
+                                          "split_info": {
+                                             "dimension": 0,
+                                             "threshold": 0
+                                          },
+                                          "depth": 12,
+                                          "gain": 0,
+                                          "left": null,
+                                          "right": null
+                                       },
+                                       "right": {
+                                          "label": 0,
+                                          "split_info": {
+                                             "dimension": 0,
+                                             "threshold": 5.5
+                                          },
+                                          "depth": 12,
+                                          "gain": 0.12757768453205431,
+                                          "left": {
+                                             "label": 0.65,
+                                             "split_info": {
+                                                "dimension": 0,
+                                                "threshold": 0
+                                             },
+                                             "depth": 13,
+                                             "gain": 0,
+                                             "left": null,
+                                             "right": null
+                                          },
+                                          "right": {
+                                             "label": 0,
+                                             "split_info": {
+                                                "dimension": 0,
+                                                "threshold": 6.5
+                                             },
+                                             "depth": 13,
+                                             "gain": 0.1278458797756984,
+                                             "left": {
+                                                "label": 0.9,
+                                                "split_info": {
+                                                   "dimension": 0,
+                                                   "threshold": 0
+                                                },
+                                                "depth": 14,
+                                                "gain": 0,
+                                                "left": null,
+                                                "right": null
+                                             },
+                                             "right": {
+                                                "label": 0,
+                                                "split_info": {
+                                                   "dimension": 0,
+                                                   "threshold": 7.5
+                                                },
+                                                "depth": 14,
+                                                "gain": 0.12811532946496035,
+                                                "left": {
+                                                   "label": 0.75,
+                                                   "split_info": {
+                                                      "dimension": 0,
+                                                      "threshold": 0
+                                                   },
+                                                   "depth": 15,
+                                                   "gain": 0,
+                                                   "left": null,
+                                                   "right": null
+                                                },
+                                                "right": {
+                                                   "label": 0,
+                                                   "split_info": {
+                                                      "dimension": 3,
+                                                      "threshold": 1
+                                                   },
+                                                   "depth": 15,
+                                                   "gain": 0.13224346651626687,
+                                                   "left": {
+                                                      "label": 0.67,
+                                                      "split_info": {
+                                                         "dimension": 0,
+                                                         "threshold": 0
+                                                      },
+                                                      "depth": 16,
+                                                      "gain": 0,
+                                                      "left": null,
+                                                      "right": null
+                                                   },
+                                                   "right": {
+                                                      "label": 0,
+                                                      "split_info": {
+                                                         "dimension": 3,
+                                                         "threshold": 1
+                                                      },
+                                                      "depth": 16,
+                                                      "gain": 0.1325221881724378,
+                                                      "left": {
+                                                         "label": 0.58,
+                                                         "split_info": {
+                                                            "dimension": 0,
+                                                            "threshold": 0
+                                                         },
+                                                         "depth": 17,
+                                                         "gain": 0,
+                                                         "left": null,
+                                                         "right": null
+                                                      },
+                                                      "right": {
+                                                         "label": 0,
+                                                         "split_info": {
+                                                            "dimension": 0,
+                                                            "threshold": 9
+                                                         },
+                                                         "depth": 17,
+                                                         "gain": 0.12893129680659646,
+                                                         "left": {
+                                                            "label": 0.68,
+                                                            "split_info": {
+                                                               "dimension": 0,
+                                                               "threshold": 0
+                                                            },
+                                                            "depth": 18,
+                                                            "gain": 0,
+                                                            "left": null,
+                                                            "right": null
+                                                         },
+                                                         "right": {
+                                                            "label": 0,
+                                                            "split_info": {
+                                                               "dimension": 0,
+                                                               "threshold": 10.5
+                                                            },
+                                                            "depth": 18,
+                                                            "gain": 0.13308356181743464,
+                                                            "left": {
+                                                               "label": 0.45,
+                                                               "split_info": {
+                                                                  "dimension": 0,
+                                                                  "threshold": 0
+                                                               },
+                                                               "depth": 19,
+                                                               "gain": 0,
+                                                               "left": null,
+                                                               "right": null
+                                                            },
+                                                            "right": {
+                                                               "label": 0,
+                                                               "split_info": {
+                                                                  "dimension": 0,
+                                                                  "threshold": 11.5
+                                                               },
+                                                               "depth": 19,
+                                                               "gain": 0.12561082194609197,
+                                                               "left": {
+                                                                  "label": 0.52,
+                                                                  "split_info": {
+                                                                     "dimension": 0,
+                                                                     "threshold": 0
+                                                                  },
+                                                                  "depth": 20,
+                                                                  "gain": 0,
+                                                                  "left": null,
+                                                                  "right": null
+                                                               },
+                                                               "right": {
+                                                                  "label": 0,
+                                                                  "split_info": {
+                                                                     "dimension": 0,
+                                                                     "threshold": 12.5
+                                                                  },
+                                                                  "depth": 20,
+                                                                  "gain": 0.12588120749754655,
+                                                                  "left": {
+                                                                     "label": 0.84,
+                                                                     "split_info": {
+                                                                        "dimension": 0,
+                                                                        "threshold": 0
+                                                                     },
+                                                                     "depth": 21,
+                                                                     "gain": 0,
+                                                                     "left": null,
+                                                                     "right": null
+                                                                  },
+                                                                  "right": {
+                                                                     "label": 0,
+                                                                     "split_info": {
+                                                                        "dimension": 0,
+                                                                        "threshold": 13.5
+                                                                     },
+                                                                     "depth": 21,
+                                                                     "gain": 0.12615288809083874,
+                                                                     "left": {
+                                                                        "label": 0.78,
+                                                                        "split_info": {
+                                                                           "dimension": 0,
+                                                                           "threshold": 0
+                                                                        },
+                                                                        "depth": 22,
+                                                                        "gain": 0,
+                                                                        "left": null,
+                                                                        "right": null
+                                                                     },
+                                                                     "right": {
+                                                                        "label": 0,
+                                                                        "split_info": {
+                                                                           "dimension": 0,
+                                                                           "threshold": 14.5
+                                                                        },
+                                                                        "depth": 22,
+                                                                        "gain": 0.12642587336621697,
+                                                                        "left": {
+                                                                           "label": 0.62,
+                                                                           "split_info": {
+                                                                              "dimension": 0,
+                                                                              "threshold": 0
+                                                                           },
+                                                                           "depth": 23,
+                                                                           "gain": 0,
+                                                                           "left": null,
+                                                                           "right": null
+                                                                        },
+                                                                        "right": {
+                                                                           "label": 0,
+                                                                           "split_info": {
+                                                                              "dimension": 4,
+                                                                              "threshold": 5
+                                                                           },
+                                                                           "depth": 23,
+                                                                           "gain": 0.13068371686104285,
+                                                                           "left": {
+                                                                              "label": 0,
+                                                                              "split_info": {
+                                                                                 "dimension": 0,
+                                                                                 "threshold": 15.5
+                                                                              },
+                                                                              "depth": 24,
+                                                                              "gain": 0.12697579701039025,
+                                                                              "left": {
+                                                                                 "label": 0.61,
+                                                                                 "split_info": {
+                                                                                    "dimension": 0,
+                                                                                    "threshold": 0
+                                                                                 },
+                                                                                 "depth": 25,
+                                                                                 "gain": 0,
+                                                                                 "left": null,
+                                                                                 "right": null
+                                                                              },
+                                                                              "right": {
+                                                                                 "label": 0,
+                                                                                 "split_info": {
+                                                                                    "dimension": 0,
+                                                                                    "threshold": 16.5
+                                                                                 },
+                                                                                 "depth": 25,
+                                                                                 "gain": 0.12725275514953313,
+                                                                                 "left": {
+                                                                                    "label": 0.54,
+                                                                                    "split_info": {
+                                                                                       "dimension": 0,
+                                                                                       "threshold": 0
+                                                                                    },
+                                                                                    "depth": 26,
+                                                                                    "gain": 0,
+                                                                                    "left": null,
+                                                                                    "right": null
+                                                                                 },
+                                                                                 "right": {
+                                                                                    "label": 0,
+                                                                                    "split_info": {
+                                                                                       "dimension": 0,
+                                                                                       "threshold": 17.5
+                                                                                    },
+                                                                                    "depth": 26,
+                                                                                    "gain": 0.12753105751395574,
+                                                                                    "left": {
+                                                                                       "label": 0.66,
+                                                                                       "split_info": {
+                                                                                          "dimension": 0,
+                                                                                          "threshold": 0
+                                                                                       },
+                                                                                       "depth": 27,
+                                                                                       "gain": 0,
+                                                                                       "left": null,
+                                                                                       "right": null
+                                                                                    },
+                                                                                    "right": {
+                                                                                       "label": 0,
+                                                                                       "split_info": {
+                                                                                          "dimension": 0,
+                                                                                          "threshold": 18.5
+                                                                                       },
+                                                                                       "depth": 27,
+                                                                                       "gain": 0.1278107142412558,
+                                                                                       "left": {
+                                                                                          "label": 0.65,
+                                                                                          "split_info": {
+                                                                                             "dimension": 0,
+                                                                                             "threshold": 0
+                                                                                          },
+                                                                                          "depth": 28,
+                                                                                          "gain": 0,
+                                                                                          "left": null,
+                                                                                          "right": null
+                                                                                       },
+                                                                                       "right": {
+                                                                                          "label": 0,
+                                                                                          "split_info": {
+                                                                                             "dimension": 0,
+                                                                                             "threshold": 19.5
+                                                                                          },
+                                                                                          "depth": 28,
+                                                                                          "gain": 0.12809173557231746,
+                                                                                          "left": {
+                                                                                             "label": 0.63,
+                                                                                             "split_info": {
+                                                                                                "dimension": 0,
+                                                                                                "threshold": 0
+                                                                                             },
+                                                                                             "depth": 29,
+                                                                                             "gain": 0,
+                                                                                             "left": null,
+                                                                                             "right": null
+                                                                                          },
+                                                                                          "right": {
+                                                                                             "label": 0,
+                                                                                             "split_info": {
+                                                                                                "dimension": 0,
+                                                                                                "threshold": 20.5
+                                                                                             },
+                                                                                             "depth": 29,
+                                                                                             "gain": 0.12837413185262575,
+                                                                                             "left": {
+                                                                                                "label": 0.62,
+                                                                                                "split_info": {
+                                                                                                   "dimension": 0,
+                                                                                                   "threshold": 0
+                                                                                                },
+                                                                                                "depth": 30,
+                                                                                                "gain": 0,
+                                                                                                "left": null,
+                                                                                                "right": null
+                                                                                             },
+                                                                                             "right": {
+                                                                                                "label": 0,
+                                                                                                "split_info": {
+                                                                                                   "dimension": 0,
+                                                                                                   "threshold": 21.5
+                                                                                                },
+                                                                                                "depth": 30,
+                                                                                                "gain": 0.12865791353360712,
+                                                                                                "left": {
+                                                                                                   "label": 0.64,
+                                                                                                   "split_info": {
+                                                                                                      "dimension": 0,
+                                                                                                      "threshold": 0
+                                                                                                   },
+                                                                                                   "depth": 31,
+                                                                                                   "gain": 0,
+                                                                                                   "left": null,
+                                                                                                   "right": null
+                                                                                                },
+                                                                                                "right": {
+                                                                                                   "label": 0,
+                                                                                                   "split_info": {
+                                                                                                      "dimension": 3,
+                                                                                                      "threshold": 1
+                                                                                                   },
+                                                                                                   "depth": 31,
+                                                                                                   "gain": 0.1329848055187992,
+                                                                                                   "left": {
+                                                                                                      "label": 0.57,
+                                                                                                      "split_info": {
+                                                                                                         "dimension": 0,
+                                                                                                         "threshold": 0
+                                                                                                      },
+                                                                                                      "depth": 32,
+                                                                                                      "gain": 0,
+                                                                                                      "left": null,
+                                                                                                      "right": null
+                                                                                                   },
+                                                                                                   "right": {
+                                                                                                      "label": 0,
+                                                                                                      "split_info": {
+                                                                                                         "dimension": 3,
+                                                                                                         "threshold": 1
+                                                                                                      },
+                                                                                                      "depth": 32,
+                                                                                                      "gain": 0.13327878765371126,
+                                                                                                      "left": {
+                                                                                                         "label": 0.64,
+                                                                                                         "split_info": {
+                                                                                                            "dimension": 0,
+                                                                                                            "threshold": 0
+                                                                                                         },
+                                                                                                         "depth": 33,
+                                                                                                         "gain": 0,
+                                                                                                         "left": null,
+                                                                                                         "right": null
+                                                                                                      },
+                                                                                                      "right": {
+                                                                                                         "label": 0,
+                                                                                                         "split_info": {
+                                                                                                            "dimension": 3,
+                                                                                                            "threshold": 1
+                                                                                                         },
+                                                                                                         "depth": 33,
+                                                                                                         "gain": 0.13357421580373074,
+                                                                                                         "left": {
+                                                                                                            "label": 0.57,
+                                                                                                            "split_info": {
+                                                                                                               "dimension": 0,
+                                                                                                               "threshold": 0
+                                                                                                            },
+                                                                                                            "depth": 34,
+                                                                                                            "gain": 0,
+                                                                                                            "left": null,
+                                                                                                            "right": null
+                                                                                                         },
+                                                                                                         "right": {
+                                                                                                            "label": 0,
+                                                                                                            "split_info": {
+                                                                                                               "dimension": 3,
+                                                                                                               "threshold": 1
+                                                                                                            },
+                                                                                                            "depth": 34,
+                                                                                                            "gain": 0.1338711010061754,
+                                                                                                            "left": {
+                                                                                                               "label": 0.53,
+                                                                                                               "split_info": {
+                                                                                                                  "dimension": 0,
+                                                                                                                  "threshold": 0
+                                                                                                               },
+                                                                                                               "depth": 35,
+                                                                                                               "gain": 0,
+                                                                                                               "left": null,
+                                                                                                               "right": null
+                                                                                                            },
+                                                                                                            "right": {
+                                                                                                               "label": 0,
+                                                                                                               "split_info": {
+                                                                                                                  "dimension": 3,
+                                                                                                                  "threshold": 1
+                                                                                                               },
+                                                                                                               "depth": 35,
+                                                                                                               "gain": 0.1341694544119168,
+                                                                                                               "left": {
+                                                                                                                  "label": 0.49,
+                                                                                                                  "split_info": {
+                                                                                                                     "dimension": 0,
+                                                                                                                     "threshold": 0
+                                                                                                                  },
+                                                                                                                  "depth": 36,
+                                                                                                                  "gain": 0,
+                                                                                                                  "left": null,
+                                                                                                                  "right": null
+                                                                                                               },
+                                                                                                               "right": {
+                                                                                                                  "label": 0,
+                                                                                                                  "split_info": {
+                                                                                                                     "dimension": 0,
+                                                                                                                     "threshold": 23.5
+                                                                                                                  },
+                                                                                                                  "depth": 36,
+                                                                                                                  "gain": 0.1263263311370747,
+                                                                                                                  "left": {
+                                                                                                                     "label": 0.7,
+                                                                                                                     "split_info": {
+                                                                                                                        "dimension": 0,
+                                                                                                                        "threshold": 0
+                                                                                                                     },
+                                                                                                                     "depth": 37,
+                                                                                                                     "gain": 0,
+                                                                                                                     "left": null,
+                                                                                                                     "right": null
+                                                                                                                  },
+                                                                                                                  "right": {
+                                                                                                                     "label": 0,
+                                                                                                                     "split_info": {
+                                                                                                                        "dimension": 0,
+                                                                                                                        "threshold": 25.5
+                                                                                                                     },
+                                                                                                                     "depth": 37,
+                                                                                                                     "gain": 0.12661262845615312,
+                                                                                                                     "left": {
+                                                                                                                        "label": 0.97,
+                                                                                                                        "split_info": {
+                                                                                                                           "dimension": 0,
+                                                                                                                           "threshold": 0
+                                                                                                                        },
+                                                                                                                        "depth": 38,
+                                                                                                                        "gain": 0,
+                                                                                                                        "left": null,
+                                                                                                                        "right": null
+                                                                                                                     },
+                                                                                                                     "right": {
+                                                                                                                        "label": 0,
+                                                                                                                        "split_info": {
+                                                                                                                           "dimension": 0,
+                                                                                                                           "threshold": 26.5
+                                                                                                                        },
+                                                                                                                        "depth": 38,
+                                                                                                                        "gain": 0.1269003697112901,
+                                                                                                                        "left": {
+                                                                                                                           "label": 0.94,
+                                                                                                                           "split_info": {
+                                                                                                                              "dimension": 0,
+                                                                                                                              "threshold": 0
+                                                                                                                           },
+                                                                                                                           "depth": 39,
+                                                                                                                           "gain": 0,
+                                                                                                                           "left": null,
+                                                                                                                           "right": null
+                                                                                                                        },
+                                                                                                                        "right": {
+                                                                                                                           "label": 0,
+                                                                                                                           "split_info": {
+                                                                                                                              "dimension": 0,
+                                                                                                                              "threshold": 28.5
+                                                                                                                           },
+                                                                                                                           "depth": 39,
+                                                                                                                           "gain": 0.127189566220813,
+                                                                                                                           "left": {
+                                                                                                                              "label": 0.76,
+                                                                                                                              "split_info": {
+                                                                                                                                 "dimension": 0,
+                                                                                                                                 "threshold": 0
+                                                                                                                              },
+                                                                                                                              "depth": 40,
+                                                                                                                              "gain": 0,
+                                                                                                                              "left": null,
+                                                                                                                              "right": null
+                                                                                                                           },
+                                                                                                                           "right": {
+                                                                                                                              "label": 0,
+                                                                                                                              "split_info": {
+                                                                                                                                 "dimension": 0,
+                                                                                                                                 "threshold": 30.5
+                                                                                                                              },
+                                                                                                                              "depth": 40,
+                                                                                                                              "gain": 0.12748022942294368,
+                                                                                                                              "left": {
+                                                                                                                                 "label": 0.54,
+                                                                                                                                 "split_info": {
+                                                                                                                                    "dimension": 0,
+                                                                                                                                    "threshold": 0
+                                                                                                                                 },
+                                                                                                                                 "depth": 41,
+                                                                                                                                 "gain": 0,
+                                                                                                                                 "left": null,
+                                                                                                                                 "right": null
+                                                                                                                              },
+                                                                                                                              "right": {
+                                                                                                                                 "label": 0,
+                                                                                                                                 "split_info": {
+                                                                                                                                    "dimension": 6,
+                                                                                                                                    "threshold": 7.37
+                                                                                                                                 },
+                                                                                                                                 "depth": 41,
+                                                                                                                                 "gain": 0.13196858378102838,
+                                                                                                                                 "left": {
+                                                                                                                                    "label": 0.47,
+                                                                                                                                    "split_info": {
+                                                                                                                                       "dimension": 0,
+                                                                                                                                       "threshold": 0
+                                                                                                                                    },
+                                                                                                                                    "depth": 42,
+                                                                                                                                    "gain": 0,
+                                                                                                                                    "left": null,
+                                                                                                                                    "right": null
+                                                                                                                                 },
+                                                                                                                                 "right": {
+                                                                                                                                    "label": 0,
+                                                                                                                                    "split_info": {
+                                                                                                                                       "dimension": 0,
+                                                                                                                                       "threshold": 32.5
+                                                                                                                                    },
+                                                                                                                                    "depth": 42,
+                                                                                                                                    "gain": 0.12387775705518995,
+                                                                                                                                    "left": {
+                                                                                                                                       "label": 0.65,
+                                                                                                                                       "split_info": {
+                                                                                                                                          "dimension": 0,
+                                                                                                                                          "threshold": 0
+                                                                                                                                       },
+                                                                                                                                       "depth": 43,
+                                                                                                                                       "gain": 0,
+                                                                                                                                       "left": null,
+                                                                                                                                       "right": null
+                                                                                                                                    },
+                                                                                                                                    "right": {
+                                                                                                                                       "label": 0,
+                                                                                                                                       "split_info": {
+                                                                                                                                          "dimension": 0,
+                                                                                                                                          "threshold": 34.5
+                                                                                                                                       },
+                                                                                                                                       "depth": 43,
+                                                                                                                                       "gain": 0.1241649545602773,
+                                                                                                                                       "left": {
+                                                                                                                                          "label": 0.9,
+                                                                                                                                          "split_info": {
+                                                                                                                                             "dimension": 0,
+                                                                                                                                             "threshold": 0
+                                                                                                                                          },
+                                                                                                                                          "depth": 44,
+                                                                                                                                          "gain": 0,
+                                                                                                                                          "left": null,
+                                                                                                                                          "right": null
+                                                                                                                                       },
+                                                                                                                                       "right": {
+                                                                                                                                          "label": 0,
+                                                                                                                                          "split_info": {
+                                                                                                                                             "dimension": 0,
+                                                                                                                                             "threshold": 35.5
+                                                                                                                                          },
+                                                                                                                                          "depth": 44,
+                                                                                                                                          "gain": 0.12445363385189284,
+                                                                                                                                          "left": {
+                                                                                                                                             "label": 0.94,
+                                                                                                                                             "split_info": {
+                                                                                                                                                "dimension": 0,
+                                                                                                                                                "threshold": 0
+                                                                                                                                             },
+                                                                                                                                             "depth": 45,
+                                                                                                                                             "gain": 0,
+                                                                                                                                             "left": null,
+                                                                                                                                             "right": null
+                                                                                                                                          },
+                                                                                                                                          "right": {
+                                                                                                                                             "label": 0,
+                                                                                                                                             "split_info": {
+                                                                                                                                                "dimension": 0,
+                                                                                                                                                "threshold": 36.5
+                                                                                                                                             },
+                                                                                                                                             "depth": 45,
+                                                                                                                                             "gain": 0.12474380681823569,
+                                                                                                                                             "left": {
+                                                                                                                                                "label": 0.88,
+                                                                                                                                                "split_info": {
+                                                                                                                                                   "dimension": 0,
+                                                                                                                                                   "threshold": 0
+                                                                                                                                                },
+                                                                                                                                                "depth": 46,
+                                                                                                                                                "gain": 0,
+                                                                                                                                                "left": null,
+                                                                                                                                                "right": null
+                                                                                                                                             },
+                                                                                                                                             "right": {
+                                                                                                                                                "label": 0,
+                                                                                                                                                "split_info": {
+                                                                                                                                                   "dimension": 0,
+                                                                                                                                                   "threshold": 38.5
+                                                                                                                                                },
+                                                                                                                                                "depth": 46,
+                                                                                                                                                "gain": 0.1250354854765083,
+                                                                                                                                                "left": {
+                                                                                                                                                   "label": 0.64,
+                                                                                                                                                   "split_info": {
+                                                                                                                                                      "dimension": 0,
+                                                                                                                                                      "threshold": 0
+                                                                                                                                                   },
+                                                                                                                                                   "depth": 47,
+                                                                                                                                                   "gain": 0,
+                                                                                                                                                   "left": null,
+                                                                                                                                                   "right": null
+                                                                                                                                                },
+                                                                                                                                                "right": {
+                                                                                                                                                   "label": 0,
+                                                                                                                                                   "split_info": {
+                                                                                                                                                      "dimension": 0,
+                                                                                                                                                      "threshold": 42.5
+                                                                                                                                                   },
+                                                                                                                                                   "depth": 47,
+                                                                                                                                                   "gain": 0.13804058210041198,
+                                                                                                                                                   "left": {
+                                                                                                                                                      "label": 0.4766666666666666,
+                                                                                                                                                      "split_info": {
+                                                                                                                                                         "dimension": 0,
+                                                                                                                                                         "threshold": 0
+                                                                                                                                                      },
+                                                                                                                                                      "depth": 48,
+                                                                                                                                                      "gain": 0,
+                                                                                                                                                      "left": null,
+                                                                                                                                                      "right": null
+                                                                                                                                                   },
+                                                                                                                                                   "right": {
+                                                                                                                                                      "label": 0,
+                                                                                                                                                      "split_info": {
+                                                                                                                                                         "dimension": 0,
+                                                                                                                                                         "threshold": 43.5
+                                                                                                                                                      },
+                                                                                                                                                      "depth": 48,
+                                                                                                                                                      "gain": 0.11293492982692144,
+                                                                                                                                                      "left": {
+                                                                                                                                                         "label": 0.53,
+                                                                                                                                                         "split_info": {
+                                                                                                                                                            "dimension": 0,
+                                                                                                                                                            "threshold": 0
+                                                                                                                                                         },
+                                                                                                                                                         "depth": 49,
+                                                                                                                                                         "gain": 0,
+                                                                                                                                                         "left": null,
+                                                                                                                                                         "right": null
+                                                                                                                                                      },
+                                                                                                                                                      "right": {
+                                                                                                                                                         "label": 0,
+                                                                                                                                                         "split_info": {
+                                                                                                                                                            "dimension": 0,
+                                                                                                                                                            "threshold": 44.5
+                                                                                                                                                         },
+                                                                                                                                                         "depth": 49,
+                                                                                                                                                         "gain": 0.11320786578003315,
+                                                                                                                                                         "left": {
+                                                                                                                                                            "label": 0.87,
+                                                                                                                                                            "split_info": {
+                                                                                                                                                               "dimension": 0,
+                                                                                                                                                               "threshold": 0
+                                                                                                                                                            },
+                                                                                                                                                            "depth": 50,
+                                                                                                                                                            "gain": 0,
+                                                                                                                                                            "left": null,
+                                                                                                                                                            "right": null
+                                                                                                                                                         },
+                                                                                                                                                         "right": {
+                                                                                                                                                            "label": 0,
+                                                                                                                                                            "split_info": {
+                                                                                                                                                               "dimension": 0,
+                                                                                                                                                               "threshold": 46
+                                                                                                                                                            },
+                                                                                                                                                            "depth": 50,
+                                                                                                                                                            "gain": 0.1134822690634755,
+                                                                                                                                                            "left": {
+                                                                                                                                                               "label": 0.91,
+                                                                                                                                                               "split_info": {
+                                                                                                                                                                  "dimension": 0,
+                                                                                                                                                                  "threshold": 0
+                                                                                                                                                               },
+                                                                                                                                                               "depth": 51,
+                                                                                                                                                               "gain": 0,
+                                                                                                                                                               "left": null,
+                                                                                                                                                               "right": null
+                                                                                                                                                            },
+                                                                                                                                                            "right": {
+                                                                                                                                                               "label": 0,
+                                                                                                                                                               "split_info": {
+                                                                                                                                                                  "dimension": 0,
+                                                                                                                                                                  "threshold": 47.5
+                                                                                                                                                               },
+                                                                                                                                                               "depth": 51,
+                                                                                                                                                               "gain": 0.11375815196390394,
+                                                                                                                                                               "left": {
+                                                                                                                                                                  "label": 0.86,
+                                                                                                                                                                  "split_info": {
+                                                                                                                                                                     "dimension": 0,
+                                                                                                                                                                     "threshold": 0
+                                                                                                                                                                  },
+                                                                                                                                                                  "depth": 52,
+                                                                                                                                                                  "gain": 0,
+                                                                                                                                                                  "left": null,
+                                                                                                                                                                  "right": null
+                                                                                                                                                               },
+                                                                                                                                                               "right": {
+                                                                                                                                                                  "label": 0,
+                                                                                                                                                                  "split_info": {
+                                                                                                                                                                     "dimension": 0,
+                                                                                                                                                                     "threshold": 48.5
+                                                                                                                                                                  },
+                                                                                                                                                                  "depth": 52,
+                                                                                                                                                                  "gain": 0.11403552690753371,
+                                                                                                                                                                  "left": {
+                                                                                                                                                                     "label": 0.89,
+                                                                                                                                                                     "split_info": {
+                                                                                                                                                                        "dimension": 0,
+                                                                                                                                                                        "threshold": 0
+                                                                                                                                                                     },
+                                                                                                                                                                     "depth": 53,
+                                                                                                                                                                     "gain": 0,
+                                                                                                                                                                     "left": null,
+                                                                                                                                                                     "right": null
+                                                                                                                                                                  },
+                                                                                                                                                                  "right": {
+                                                                                                                                                                     "label": 0,
+                                                                                                                                                                     "split_info": {
+                                                                                                                                                                        "dimension": 0,
+                                                                                                                                                                        "threshold": 49.5
+                                                                                                                                                                     },
+                                                                                                                                                                     "depth": 53,
+                                                                                                                                                                     "gain": 0.11431440646214108,
+                                                                                                                                                                     "left": {
+                                                                                                                                                                        "label": 0.82,
+                                                                                                                                                                        "split_info": {
+                                                                                                                                                                           "dimension": 0,
+                                                                                                                                                                           "threshold": 0
+                                                                                                                                                                        },
+                                                                                                                                                                        "depth": 54,
+                                                                                                                                                                        "gain": 0,
+                                                                                                                                                                        "left": null,
+                                                                                                                                                                        "right": null
+                                                                                                                                                                     },
+                                                                                                                                                                     "right": {
+                                                                                                                                                                        "label": 0,
+                                                                                                                                                                        "split_info": {
+                                                                                                                                                                           "dimension": 0,
+                                                                                                                                                                           "threshold": 50.5
+                                                                                                                                                                        },
+                                                                                                                                                                        "depth": 54,
+                                                                                                                                                                        "gain": 0.11459480333908886,
+                                                                                                                                                                        "left": {
+                                                                                                                                                                           "label": 0.78,
+                                                                                                                                                                           "split_info": {
+                                                                                                                                                                              "dimension": 0,
+                                                                                                                                                                              "threshold": 0
+                                                                                                                                                                           },
+                                                                                                                                                                           "depth": 55,
+                                                                                                                                                                           "gain": 0,
+                                                                                                                                                                           "left": null,
+                                                                                                                                                                           "right": null
+                                                                                                                                                                        },
+                                                                                                                                                                        "right": {
+                                                                                                                                                                           "label": 0,
+                                                                                                                                                                           "split_info": {
+                                                                                                                                                                              "dimension": 0,
+                                                                                                                                                                              "threshold": 51.5
+                                                                                                                                                                           },
+                                                                                                                                                                           "depth": 55,
+                                                                                                                                                                           "gain": 0.11487673039539516,
+                                                                                                                                                                           "left": {
+                                                                                                                                                                              "label": 0.76,
+                                                                                                                                                                              "split_info": {
+                                                                                                                                                                                 "dimension": 0,
+                                                                                                                                                                                 "threshold": 0
+                                                                                                                                                                              },
+                                                                                                                                                                              "depth": 56,
+                                                                                                                                                                              "gain": 0,
+                                                                                                                                                                              "left": null,
+                                                                                                                                                                              "right": null
+                                                                                                                                                                           },
+                                                                                                                                                                           "right": {
+                                                                                                                                                                              "label": 0,
+                                                                                                                                                                              "split_info": {
+                                                                                                                                                                                 "dimension": 0,
+                                                                                                                                                                                 "threshold": 52.5
+                                                                                                                                                                              },
+                                                                                                                                                                              "depth": 56,
+                                                                                                                                                                              "gain": 0.11516020063583446,
+                                                                                                                                                                              "left": {
+                                                                                                                                                                                 "label": 0.56,
+                                                                                                                                                                                 "split_info": {
+                                                                                                                                                                                    "dimension": 0,
+                                                                                                                                                                                    "threshold": 0
+                                                                                                                                                                                 },
+                                                                                                                                                                                 "depth": 57,
+                                                                                                                                                                                 "gain": 0,
+                                                                                                                                                                                 "left": null,
+                                                                                                                                                                                 "right": null
+                                                                                                                                                                              },
+                                                                                                                                                                              "right": {
+                                                                                                                                                                                 "label": 0,
+                                                                                                                                                                                 "split_info": {
+                                                                                                                                                                                    "dimension": 0,
+                                                                                                                                                                                    "threshold": 53.5
+                                                                                                                                                                                 },
+                                                                                                                                                                                 "depth": 57,
+                                                                                                                                                                                 "gain": 0.1154452272150727,
+                                                                                                                                                                                 "left": {
+                                                                                                                                                                                    "label": 0.78,
+                                                                                                                                                                                    "split_info": {
+                                                                                                                                                                                       "dimension": 0,
+                                                                                                                                                                                       "threshold": 0
+                                                                                                                                                                                    },
+                                                                                                                                                                                    "depth": 58,
+                                                                                                                                                                                    "gain": 0,
+                                                                                                                                                                                    "left": null,
+                                                                                                                                                                                    "right": null
+                                                                                                                                                                                 },
+                                                                                                                                                                                 "right": {
+                                                                                                                                                                                    "label": 0,
+                                                                                                                                                                                    "split_info": {
+                                                                                                                                                                                       "dimension": 0,
+                                                                                                                                                                                       "threshold": 54.5
+                                                                                                                                                                                    },
+                                                                                                                                                                                    "depth": 58,
+                                                                                                                                                                                    "gain": 0.1157318234398439,
+                                                                                                                                                                                    "left": {
+                                                                                                                                                                                       "label": 0.72,
+                                                                                                                                                                                       "split_info": {
+                                                                                                                                                                                          "dimension": 0,
+                                                                                                                                                                                          "threshold": 0
+                                                                                                                                                                                       },
+                                                                                                                                                                                       "depth": 59,
+                                                                                                                                                                                       "gain": 0,
+                                                                                                                                                                                       "left": null,
+                                                                                                                                                                                       "right": null
+                                                                                                                                                                                    },
+                                                                                                                                                                                    "right": {
+                                                                                                                                                                                       "label": 0,
+                                                                                                                                                                                       "split_info": {
+                                                                                                                                                                                          "dimension": 4,
+                                                                                                                                                                                          "threshold": 5
+                                                                                                                                                                                       },
+                                                                                                                                                                                       "depth": 59,
+                                                                                                                                                                                       "gain": 0.12076376882814685,
+                                                                                                                                                                                       "left": {
+                                                                                                                                                                                          "label": 0,
+                                                                                                                                                                                          "split_info": {
+                                                                                                                                                                                             "dimension": 0,
+                                                                                                                                                                                             "threshold": 56
+                                                                                                                                                                                          },
+                                                                                                                                                                                          "depth": 60,
+                                                                                                                                                                                          "gain": 0.11630977882657295,
+                                                                                                                                                                                          "left": {
+                                                                                                                                                                                             "label": 0.7,
+                                                                                                                                                                                             "split_info": {
+                                                                                                                                                                                                "dimension": 0,
+                                                                                                                                                                                                "threshold": 0
+                                                                                                                                                                                             },
+                                                                                                                                                                                             "depth": 61,
+                                                                                                                                                                                             "gain": 0,
+                                                                                                                                                                                             "left": null,
+                                                                                                                                                                                             "right": null
+                                                                                                                                                                                          },
+                                                                                                                                                                                          "right": {
+                                                                                                                                                                                             "label": 0,
+                                                                                                                                                                                             "split_info": {
+                                                                                                                                                                                                "dimension": 0,
+                                                                                                                                                                                                "threshold": 57.5
+                                                                                                                                                                                             },
+                                                                                                                                                                                             "depth": 61,
+                                                                                                                                                                                             "gain": 0.11660116538244254,
+                                                                                                                                                                                             "left": {
+                                                                                                                                                                                                "label": 0.64,
+                                                                                                                                                                                                "split_info": {
+                                                                                                                                                                                                   "dimension": 0,
+                                                                                                                                                                                                   "threshold": 0
+                                                                                                                                                                                                },
+                                                                                                                                                                                                "depth": 62,
+                                                                                                                                                                                                "gain": 0,
+                                                                                                                                                                                                "left": null,
+                                                                                                                                                                                                "right": null
+                                                                                                                                                                                             },
+                                                                                                                                                                                             "right": {
+                                                                                                                                                                                                "label": 0,
+                                                                                                                                                                                                "split_info": {
+                                                                                                                                                                                                   "dimension": 0,
+                                                                                                                                                                                                   "threshold": 62.5
+                                                                                                                                                                                                },
+                                                                                                                                                                                                "depth": 62,
+                                                                                                                                                                                                "gain": 0.13590517692095236,
+                                                                                                                                                                                                "left": {
+                                                                                                                                                                                                   "label": 0.45749999999999996,
+                                                                                                                                                                                                   "split_info": {
+                                                                                                                                                                                                      "dimension": 0,
+                                                                                                                                                                                                      "threshold": 0
+                                                                                                                                                                                                   },
+                                                                                                                                                                                                   "depth": 63,
+                                                                                                                                                                                                   "gain": 0,
+                                                                                                                                                                                                   "left": null,
+                                                                                                                                                                                                   "right": null
+                                                                                                                                                                                                },
+                                                                                                                                                                                                "right": {
+                                                                                                                                                                                                   "label": 0,
+                                                                                                                                                                                                   "split_info": {
+                                                                                                                                                                                                      "dimension": 6,
+                                                                                                                                                                                                      "threshold": 7.64
+                                                                                                                                                                                                   },
+                                                                                                                                                                                                   "depth": 63,
+                                                                                                                                                                                                   "gain": 0.1141179055725318,
+                                                                                                                                                                                                   "left": {
+                                                                                                                                                                                                      "label": 0.4166666666666667,
+                                                                                                                                                                                                      "split_info": {
+                                                                                                                                                                                                         "dimension": 0,
+                                                                                                                                                                                                         "threshold": 0
+                                                                                                                                                                                                      },
+                                                                                                                                                                                                      "depth": 64,
+                                                                                                                                                                                                      "gain": 0,
+                                                                                                                                                                                                      "left": null,
+                                                                                                                                                                                                      "right": null
+                                                                                                                                                                                                   },
+                                                                                                                                                                                                   "right": {
+                                                                                                                                                                                                      "label": 0.7448571428571427,
+                                                                                                                                                                                                      "split_info": {
+                                                                                                                                                                                                         "dimension": 0,
+                                                                                                                                                                                                         "threshold": 0
+                                                                                                                                                                                                      },
+                                                                                                                                                                                                      "depth": 64,
+                                                                                                                                                                                                      "gain": 0.08260877480543052,
+                                                                                                                                                                                                      "left": null,
+                                                                                                                                                                                                      "right": null
+                                                                                                                                                                                                   }
+                                                                                                                                                                                                }
+                                                                                                                                                                                             }
+                                                                                                                                                                                          }
+                                                                                                                                                                                       },
+                                                                                                                                                                                       "right": {
+                                                                                                                                                                                          "label": 0.94,
+                                                                                                                                                                                          "split_info": {
+                                                                                                                                                                                             "dimension": 0,
+                                                                                                                                                                                             "threshold": 0
+                                                                                                                                                                                          },
+                                                                                                                                                                                          "depth": 60,
+                                                                                                                                                                                          "gain": 0,
+                                                                                                                                                                                          "left": null,
+                                                                                                                                                                                          "right": null
+                                                                                                                                                                                       }
+                                                                                                                                                                                    }
+                                                                                                                                                                                 }
+                                                                                                                                                                              }
+                                                                                                                                                                           }
+                                                                                                                                                                        }
+                                                                                                                                                                     }
+                                                                                                                                                                  }
+                                                                                                                                                               }
+                                                                                                                                                            }
+                                                                                                                                                         }
+                                                                                                                                                      }
+                                                                                                                                                   }
+                                                                                                                                                }
+                                                                                                                                             }
+                                                                                                                                          }
+                                                                                                                                       }
+                                                                                                                                    }
+                                                                                                                                 }
+                                                                                                                              }
+                                                                                                                           }
+                                                                                                                        }
+                                                                                                                     }
+                                                                                                                  }
+                                                                                                               }
+                                                                                                            }
+                                                                                                         }
+                                                                                                      }
+                                                                                                   }
+                                                                                                }
+                                                                                             }
+                                                                                          }
+                                                                                       }
+                                                                                    }
+                                                                                 }
+                                                                              }
+                                                                           },
+                                                                           "right": {
+                                                                              "label": 0.93,
+                                                                              "split_info": {
+                                                                                 "dimension": 0,
+                                                                                 "threshold": 0
+                                                                              },
+                                                                              "depth": 24,
+                                                                              "gain": 0,
+                                                                              "left": null,
+                                                                              "right": null
+                                                                           }
+                                                                        }
+                                                                     }
+                                                                  }
+                                                               }
+                                                            }
+                                                         }
+                                                      }
+                                                   }
+                                                }
+                                             }
+                                          }
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   },
+   "impurity": {
+      "val": 0.5
+   },
+   "MinGain": 0.1
+}

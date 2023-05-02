@@ -1,0 +1,11 @@
+path: manning/Chapter_3_Linear_Regression/Hyderabad.csv
+target: Price
+features: 
+  - Area
+  - No. of Bedrooms
+nepochs: 100
+lrate: 1e-2
+lasso: 0.0
+ridge: 0.0
+modelfile: ../lr.json
+predict: [1342, 2]
