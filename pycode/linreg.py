@@ -1,13 +1,13 @@
 import argparse
+import joblib
 import sys
 import yaml
+from pathlib import Path
+
 import pandas as pd
 import sklearn.linear_model as lm
 from sklearn.model_selection import train_test_split 
 # import pickle as pkl # alternative to joblib
-
-from pathlib import Path
-from joblib import load, dump
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -29,9 +29,9 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    parms = get_parms('lrparms.yml')
+    parms = get_parms('config/lrparms.yml')
 
-    model_path = Path('lr.joblib')
+    model_path = Path('config/lr.joblib')
     
     if args.train:
         print('fitting a new model')
@@ -40,11 +40,11 @@ if __name__ == '__main__':
         Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, test_size=0.1) 
         lr = lm.LinearRegression()
         lr.fit(Xtrain, ytrain)
-        dump(lr, str(model_path))
+        joblib.dump(lr, str(model_path))
         print('testset score:', lr.score(Xtest, ytest))
     elif model_path.exists():
         print('use existing model')
-        lr = load(str(model_path))
+        lr = joblib.load(str(model_path))
     else:
         print('ERROR: Need to train a model. Try again.')
         sys.exit(0)

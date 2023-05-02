@@ -1,4 +1,4 @@
-path: manning/Chapter_3_Linear_Regression/Hyderabad.csv
+path: .manning/Chapter_3_Linear_Regression/Hyderabad.csv
 target: Price
 features: 
   - Area
