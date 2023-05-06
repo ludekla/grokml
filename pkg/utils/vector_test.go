@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
+// Helper function to decide whether two vectors are the same.
 func equal(lvec, rvec Vector) bool {
 	for i, val := range lvec {
 		if math.Abs(val-rvec[i]) > 1e-6 {

@@ -1,4 +1,4 @@
-package vaux
+package utils
 
 import (
 	"encoding/csv"
@@ -8,13 +8,16 @@ import (
 	"math/rand"
 	"os"
 	"strconv"
+	"fmt"
 )
 
 type DataSet struct {
-	Path string
-	Size int
-	X    []Vector
-	Y    []float64
+	path     string
+	size     int
+	features []string
+	target   string
+	x        []Vector
+	y        []float64
 }
 
 type DataStats struct {
@@ -26,8 +29,8 @@ type DataStats struct {
 
 // fetch data from csv file with specified columns
 func NewDataSet(csvfile string, target string, features []string) DataSet {
-	ds := DataSet{Path: "../" + csvfile}
-	file, err := os.Open(ds.Path)
+	ds := DataSet{path: csvfile}
+	file, err := os.Open(csvfile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -53,25 +56,54 @@ func NewDataSet(csvfile string, target string, features []string) DataSet {
 			}
 			row[j] = x
 		}
-		ds.X = append(ds.X, row)
+		ds.x = append(ds.x, row)
 		y, err := strconv.ParseFloat(rec[targetCol], 64)
 		if err != nil {
 			log.Fatal(err)
 		}
-		ds.Y = append(ds.Y, y)
+		ds.y = append(ds.y, y)
 	}
-	ds.Size = len(ds.X)
+	ds.size = len(ds.x)
+	ds.features = features
+	ds.target = target
 	return ds
 }
 
+func (ds DataSet) Size() int {
+	return ds.size
+}
+
+func (ds DataSet) Features() []string {
+	return ds.features
+}
+
+func (ds DataSet) X() []Vector {
+	return ds.x
+}
+
+func (ds DataSet) Target() string {
+	return ds.target
+}
+
+func (ds DataSet) Y() []float64 {
+	return ds.y
+}
+
+func (ds DataSet) String() string {
+	return fmt.Sprintf(
+		"DataSet{size: %d, target: %s, features: %v}", 
+		ds.size, ds.target, ds.features,
+	)
+}
+
 func (ds DataSet) Random() (Vector, float64) {
-	i := rand.Intn(ds.Size)
-	return ds.X[i], ds.Y[i]
+	i := rand.Intn(ds.size)
+	return ds.x[i], ds.y[i]
 }
 
 func findCols(row []string, target string, features []string) (int, []int) {
 	var targetCol int
-	var featureCols []int
+	featureCols := make([]int, 0, len(features))
 	for i, word := range row {
 		if word == target {
 			targetCol = i
@@ -88,18 +120,18 @@ func findCols(row []string, target string, features []string) (int, []int) {
 
 func (ds DataSet) Stats() DataStats {
 	var ymean float64
-	for _, y := range ds.Y {
+	for _, y := range ds.y {
 		ymean += y
 	}
-	ymean /= float64(ds.Size)
+	ymean /= float64(ds.size)
 	var ystd float64
-	for _, y := range ds.Y {
+	for _, y := range ds.y {
 		ystd += (y - ymean) * (y - ymean)
 	}
-	ystd /= float64(ds.Size)
+	ystd /= float64(ds.size)
 	ystd = math.Sqrt(ystd)
 
-	xmean, xstd := VecStats(ds.X)
+	xmean, xstd := VecStats(ds.x)
 	return DataStats{XMean: xmean, XStd: xstd, YMean: ymean, YStd: ystd}
 }
 
@@ -112,24 +144,24 @@ func (ds DataSet) Normalise(stats DataStats) DataSet {
 	ymean, ystd := stats.YMean, stats.YStd
 
 	nds := DataSet{
-		Size: ds.Size,
-		X:    make([]Vector, ds.Size),
-		Y:    make([]float64, ds.Size),
+		size: ds.size,
+		x:    make([]Vector, ds.size),
+		y:    make([]float64, ds.size),
 	}
-	for i, vec := range ds.X {
-		nds.X[i] = vec.Add(xmean.ScaMul(-1.0)).Mul(nf)
-		nds.Y[i] = (ds.Y[i] - ymean) / ystd
+	for i, vec := range ds.x {
+		nds.x[i] = vec.Add(xmean.ScaMul(-1.0)).Mul(nf)
+		nds.y[i] = (ds.y[i] - ymean) / ystd
 	}
 	return nds
 }
 
 func (ds DataSet) Split(ratio float64) (DataSet, DataSet) {
-	nTest := int(float64(ds.Size) * ratio)
-	rand.Shuffle(ds.Size, func(i, j int) {
-		ds.X[i], ds.X[j] = ds.X[j], ds.X[i]
-		ds.Y[i], ds.Y[j] = ds.Y[j], ds.Y[i]
+	nTest := int(float64(ds.size) * ratio)
+	rand.Shuffle(ds.size, func(i, j int) {
+		ds.x[i], ds.x[j] = ds.x[j], ds.x[i]
+		ds.y[i], ds.y[j] = ds.y[j], ds.y[i]
 	})
-	testSet := DataSet{X: ds.X[:nTest], Y: ds.Y[:nTest], Size: nTest}
-	trainSet := DataSet{X: ds.X[nTest:], Y: ds.Y[nTest:], Size: ds.Size - nTest}
+	testSet := DataSet{x: ds.x[:nTest], y: ds.y[:nTest], size: nTest}
+	trainSet := DataSet{x: ds.x[nTest:], y: ds.y[nTest:], size: ds.size - nTest}
 	return trainSet, testSet
 }

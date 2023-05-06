@@ -39,7 +39,7 @@ func (v Vector) Dot(other Vector) float64 {
 	return sum
 }
 
-// Performs a multiplication with a scalar. 
+// Performs a multiplication with a scalar.
 func (v Vector) ScaMul(factor float64) Vector {
 	res := make(Vector, len(v))
 	for i, val := range v {
@@ -55,7 +55,7 @@ func (v Vector) IScaMul(factor float64) {
 	}
 }
 
-// Performs vector addition (component-wise) with other vector. 
+// Performs vector addition (component-wise) with other vector.
 func (v Vector) Add(other Vector) Vector {
 	res := make(Vector, len(v))
 	for i, val := range other {
@@ -90,7 +90,7 @@ func (v Vector) Div(other Vector) Vector {
 	return res
 }
 
-// In-place version of component-wise vector division. 
+// In-place version of component-wise vector division.
 func (v Vector) IDiv(other Vector) {
 	for i, val := range other {
 		v[i] /= val
