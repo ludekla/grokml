@@ -1,4 +1,4 @@
-package linreg
+package ch03
 
 import (
 	"encoding/json"
@@ -8,7 +8,7 @@ import (
 	"math/rand"
 	"os"
 
-	"goc/vaux"
+	"grokml/pkg/utils"
 )
 
 type RegLinReg struct {
@@ -25,33 +25,34 @@ func NewRegLinReg(lrate float64, nEpochs int, lpen, rpen float64) *RegLinReg {
 	}
 }
 
-func (l *RegLinReg) Fit(ds vaux.DataSet) []float64 {
+func (l *RegLinReg) Fit(ds utils.DataSet) []float64 {
 	stats := ds.Stats()
 	nds := ds.Normalise(stats)
-	l.Weights = vaux.RandVector(len(stats.XMean))
+	l.Weights = utils.RandVector(len(stats.XMean))
 	l.Bias = rand.Float64()
 	errs := make([]float64, 0, l.NEpochs)
+	size := nds.Size()
 	for ep := 0; ep < l.NEpochs; ep++ {
 		var err float64
-		for i := 0; i < nds.Size; i++ {
+		for i := 0; i < size; i++ {
 			x, y := nds.Random()
 			delta := l.Weights.Dot(x) + l.Bias - y
 			l.Weights = l.Weights.
 				Add(x.ScaMul(-l.LRate * delta)).
-				Add(l1grad(l.Weights).ScaMul(l.LassoPen)).
-				Add(l.Weights.ScaMul(l.RidgePen))
+				Add(l1grad(l.Weights).ScaMul(-l.LassoPen)).
+				Add(l.Weights.ScaMul(-l.RidgePen))
 			l.Bias -= l.LRate * delta
 			err += delta * delta
 		}
-		errs = append(errs, math.Sqrt(err/float64(ds.Size)))
+		errs = append(errs, math.Sqrt(err/float64(size)))
 	}
 	l.Weights = l.Weights.Div(stats.XStd).ScaMul(stats.YStd)
 	l.Bias = stats.YMean + stats.YStd*l.Bias - l.Weights.Dot(stats.XMean)
 	return errs
 }
 
-func l1grad(vec vaux.Vector) vaux.Vector {
-	res := make(vaux.Vector, len(vec))
+func l1grad(vec utils.Vector) utils.Vector {
+	res := make(utils.Vector, len(vec))
 	for i, val := range vec {
 		switch {
 		case val > 0:
@@ -81,11 +82,11 @@ func RegLinRegFromJSON(filepath string) *RegLinReg {
 	lr := RegLinReg{}
 	asBytes, err := os.ReadFile(filepath)
 	if err != nil {
-		log.Fatalf("cannot read from file %s: %w", filepath, err)
+		log.Fatalf("cannot read from file %s: %v", filepath, err)
 	}
 	err = json.Unmarshal(asBytes, &lr)
 	if err != nil {
-		log.Fatalf("cannot unmarshal JSON bytes: %w", err)
+		log.Fatalf("cannot unmarshal JSON bytes: %v", err)
 	}
 	return &lr
 }

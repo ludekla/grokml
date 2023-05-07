@@ -61,16 +61,18 @@ func (l LinReg) Predict(points []utils.Vector) []float64 {
 	return preds
 }
 
+// Computes the coefficient of determination
 func (l LinReg) Score(ds utils.DataSet) float64 {
 	preds := l.Predict(ds.X())
-	m := mean(preds)
-	var u, v float64
+	ym := mean(preds)
+	// Residual Sum of Squares, Total Sum of Squares
+	var rss, tss float64
 	y := ds.Y()
 	for i, pred := range preds {
-		u += (y[i] - pred) * (y[i] - pred)
-		v += (y[i] - m) * (y[i] - m)
+		rss += (y[i] - pred) * (y[i] - pred)
+		tss += (y[i] - ym) * (y[i] - ym)
 	}
-	return 1.0 - u/v
+	return 1.0 - rss/tss
 }
 
 func mean(numbers []float64) float64 {
@@ -97,11 +99,11 @@ func LinRegFromJSON(filepath string) *LinReg {
 	lr := LinReg{}
 	asBytes, err := os.ReadFile(filepath)
 	if err != nil {
-		log.Fatalf("cannot read from file %s: %w", filepath, err)
+		log.Fatalf("cannot read from file %s: %v", filepath, err)
 	}
 	err = json.Unmarshal(asBytes, &lr)
 	if err != nil {
-		log.Fatalf("cannot unmarshal JSON bytes: %w", err)
+		log.Fatalf("cannot unmarshal JSON bytes: %v", err)
 	}
 	return &lr
 }

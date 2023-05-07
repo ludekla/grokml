@@ -10,9 +10,6 @@ var train = flag.Bool("t", false, "train model before prediction")
 func main() {
 	flag.Parse()
 
-	// fmt.Println("Linear Regression: Housing Market (Area, No of Bedrooms) -> Price")
-	// linregMain()
-
 	// fmt.Println("Logistic Regression: Movie Reviews - Sentiment Analysis")
 	// logregMain()
 	
