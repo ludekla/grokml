@@ -8,7 +8,7 @@ import (
 	"math/rand"
 	"os"
 
-	"pkg/utils"
+	"grokml/pkg/utils"
 )
 
 type Regression interface {
@@ -25,8 +25,8 @@ type LinReg struct {
 	NEpochs int          `json:"nepochs"`
 }
 
-func NewLinReg(lr float64, epochs int) LinReg {
-	return LinReg{LRate: lr, NEpochs: epochs}
+func NewLinReg(lr float64, epochs int) *LinReg {
+	return &LinReg{LRate: lr, NEpochs: epochs}
 }
 
 func (l *LinReg) Fit(ds utils.DataSet) []float64 {

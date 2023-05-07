@@ -20,23 +20,17 @@ def fetch_data(path, target_col, *feature_cols):
     tb = pd.read_csv(path)
     return tb[list(feature_cols)], tb[target_col]
 
-def get_parms(filename):
-    with open(filename) as ymlfile:
-        return yaml.safe_load(ymlfile)
-
-
 if __name__ == '__main__':
 
     args = parser.parse_args()
-
-    parms = get_parms('config/lrparms.yml')
 
     model_path = Path('config/lr.joblib')
     
     if args.train:
         print('fitting a new model')
         # get data
-        X, y = fetch_data(parms['path'], parms['target'], *parms['features'])
+        path = 'data/Hyderabad.csv'
+        X, y = fetch_data(path, 'Price', 'Area', 'No. of Bedrooms')
         Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, test_size=0.1) 
         lr = lm.LinearRegression()
         lr.fit(Xtrain, ytrain)
@@ -49,9 +43,10 @@ if __name__ == '__main__':
         print('ERROR: Need to train a model. Try again.')
         sys.exit(0)
 
-    feats = parms['predict']
-    yp = lr.predict([feats])
-    print(f'prediction: {feats} -> {yp[0]:.2f}')
+    examples = [[600, 1], [1000, 2], [1500, 3], [2000, 4]]
+    yp = lr.predict(examples)
+    for ex, y in zip(examples, yp):
+        print(f'prediction: {ex} -> {y:.2f}')
     
 
 
