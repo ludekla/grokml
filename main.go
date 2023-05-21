@@ -11,7 +11,6 @@ func main() {
 
 	flag.Parse()
 
-	fmt.Println("Hello Logistic Regression!", *train)
-
-
+	fmt.Println("Hello Naive Bayes! Train? ", *train)
+	
 }

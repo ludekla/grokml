@@ -18,7 +18,7 @@ func main() {
 
 	var lr ch03.Regression
 
-	modelfile := "config/linreg.json"
+	modelfile := "models/linreg.json"
 
 	if *train {
 		fmt.Println("Training")

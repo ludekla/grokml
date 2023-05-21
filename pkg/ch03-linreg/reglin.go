@@ -11,21 +11,21 @@ import (
 	"grokml/pkg/utils"
 )
 
-type RegLinReg struct {
+type RegLin struct {
 	*LinReg
 	LassoPen float64 `json:"lasso_penalty"`
 	RidgePen float64 `json:"ridge_penalty"`
 }
 
-func NewRegLinReg(lrate float64, nEpochs int, lpen, rpen float64) *RegLinReg {
-	return &RegLinReg{
+func NewRegLin(lrate float64, nEpochs int, lpen, rpen float64) *RegLin {
+	return &RegLin{
 		LinReg:   NewLinReg(lrate, nEpochs),
 		LassoPen: lpen,
 		RidgePen: rpen,
 	}
 }
 
-func (l *RegLinReg) Fit(ds utils.DataSet) []float64 {
+func (l *RegLin) Fit(ds utils.DataSet) []float64 {
 	stats := ds.Stats()
 	nds := ds.Normalise(stats)
 	l.Weights = utils.RandVector(len(stats.XMean))
@@ -66,7 +66,7 @@ func l1grad(vec utils.Vector) utils.Vector {
 	return vec
 }
 
-func (l RegLinReg) Save(filepath string) error {
+func (l RegLin) Save(filepath string) error {
 	asBytes, err := json.MarshalIndent(l, "", "    ")
 	if err != nil {
 		return fmt.Errorf("unable to marshal LassoReg into JSON: %v", err)
@@ -78,8 +78,8 @@ func (l RegLinReg) Save(filepath string) error {
 	return nil
 }
 
-func RegLinRegFromJSON(filepath string) *RegLinReg {
-	lr := RegLinReg{}
+func RegLinFromJSON(filepath string) *RegLin {
+	lr := RegLin{}
 	asBytes, err := os.ReadFile(filepath)
 	if err != nil {
 		log.Fatalf("cannot read from file %s: %v", filepath, err)

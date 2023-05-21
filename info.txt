@@ -1,5 +1,0 @@
-Luis G. Serrano: Grokking Machine Learning, Manning Publications Co. (2021)
-
-Chapter 3: Linear Regression
-----------------------------
-
