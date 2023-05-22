@@ -1,4 +1,4 @@
-package tree
+package ch09
 
 import (
 	"fmt"

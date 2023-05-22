@@ -1,0 +1,1421 @@
+{
+  "size": 3,
+  "trees": [
+    {
+      "root": {
+        "label": 0,
+        "split_info": {
+          "dimension": 1,
+          "threshold": 291.5
+        },
+        "depth": 0,
+        "gain": 0.13034839804617354,
+        "left": {
+          "label": 0.47,
+          "split_info": {
+            "dimension": 0,
+            "threshold": 0
+          },
+          "depth": 1,
+          "gain": 0,
+          "left": null,
+          "right": null
+        },
+        "right": {
+          "label": 0,
+          "split_info": {
+            "dimension": 5,
+            "threshold": 1.25
+          },
+          "depth": 1,
+          "gain": 0.1262154355189858,
+          "left": {
+            "label": 0.42,
+            "split_info": {
+              "dimension": 0,
+              "threshold": 0
+            },
+            "depth": 2,
+            "gain": 0,
+            "left": null,
+            "right": null
+          },
+          "right": {
+            "label": 0,
+            "split_info": {
+              "dimension": 3,
+              "threshold": 1
+            },
+            "depth": 2,
+            "gain": 0.121973131507171,
+            "left": {
+              "label": 0.6,
+              "split_info": {
+                "dimension": 0,
+                "threshold": 0
+              },
+              "depth": 3,
+              "gain": 0,
+              "left": null,
+              "right": null
+            },
+            "right": {
+              "label": 0,
+              "split_info": {
+                "dimension": 3,
+                "threshold": 1
+              },
+              "depth": 3,
+              "gain": 0.12227968610675706,
+              "left": {
+                "label": 0.51,
+                "split_info": {
+                  "dimension": 0,
+                  "threshold": 0
+                },
+                "depth": 4,
+                "gain": 0,
+                "left": null,
+                "right": null
+              },
+              "right": {
+                "label": 0,
+                "split_info": {
+                  "dimension": 2,
+                  "threshold": 97
+                },
+                "depth": 4,
+                "gain": 0.13199295953180454,
+                "left": {
+                  "label": 0.43999999999999995,
+                  "split_info": {
+                    "dimension": 0,
+                    "threshold": 0
+                  },
+                  "depth": 5,
+                  "gain": 0,
+                  "left": null,
+                  "right": null
+                },
+                "right": {
+                  "label": 0,
+                  "split_info": {
+                    "dimension": 6,
+                    "threshold": 7.025
+                  },
+                  "depth": 5,
+                  "gain": 0.10909430334598713,
+                  "left": {
+                    "label": 0.36,
+                    "split_info": {
+                      "dimension": 0,
+                      "threshold": 0
+                    },
+                    "depth": 6,
+                    "gain": 0,
+                    "left": null,
+                    "right": null
+                  },
+                  "right": {
+                    "label": 0.733642857142857,
+                    "split_info": {
+                      "dimension": 0,
+                      "threshold": 0
+                    },
+                    "depth": 6,
+                    "gain": 0.09899395189928033,
+                    "left": null,
+                    "right": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "impurity": {
+        "val": 0.5
+      },
+      "MinGain": 0.1
+    },
+    {
+      "root": {
+        "label": 0,
+        "split_info": {
+          "dimension": 6,
+          "threshold": 7.225
+        },
+        "depth": 0,
+        "gain": 0.1347127106697947,
+        "left": {
+          "label": 0.41000000000000003,
+          "split_info": {
+            "dimension": 0,
+            "threshold": 0
+          },
+          "depth": 1,
+          "gain": 0,
+          "left": null,
+          "right": null
+        },
+        "right": {
+          "label": 0,
+          "split_info": {
+            "dimension": 1,
+            "threshold": 291.5
+          },
+          "depth": 1,
+          "gain": 0.121973131507171,
+          "left": {
+            "label": 0.47,
+            "split_info": {
+              "dimension": 0,
+              "threshold": 0
+            },
+            "depth": 2,
+            "gain": 0,
+            "left": null,
+            "right": null
+          },
+          "right": {
+            "label": 0,
+            "split_info": {
+              "dimension": 5,
+              "threshold": 1.25
+            },
+            "depth": 2,
+            "gain": 0.11761584901446917,
+            "left": {
+              "label": 0.42,
+              "split_info": {
+                "dimension": 0,
+                "threshold": 0
+              },
+              "depth": 3,
+              "gain": 0,
+              "left": null,
+              "right": null
+            },
+            "right": {
+              "label": 0,
+              "split_info": {
+                "dimension": 0,
+                "threshold": 1.5
+              },
+              "depth": 3,
+              "gain": 0.10810477987545437,
+              "left": {
+                "label": 0.92,
+                "split_info": {
+                  "dimension": 0,
+                  "threshold": 0
+                },
+                "depth": 4,
+                "gain": 0,
+                "left": null,
+                "right": null
+              },
+              "right": {
+                "label": 0,
+                "split_info": {
+                  "dimension": 0,
+                  "threshold": 2.5
+                },
+                "depth": 4,
+                "gain": 0.10838351621085664,
+                "left": {
+                  "label": 0.76,
+                  "split_info": {
+                    "dimension": 0,
+                    "threshold": 0
+                  },
+                  "depth": 5,
+                  "gain": 0,
+                  "left": null,
+                  "right": null
+                },
+                "right": {
+                  "label": 0,
+                  "split_info": {
+                    "dimension": 5,
+                    "threshold": 1.5
+                  },
+                  "depth": 5,
+                  "gain": 0.11371891803230971,
+                  "left": {
+                    "label": 0.52,
+                    "split_info": {
+                      "dimension": 0,
+                      "threshold": 0
+                    },
+                    "depth": 6,
+                    "gain": 0,
+                    "left": null,
+                    "right": null
+                  },
+                  "right": {
+                    "label": 0,
+                    "split_info": {
+                      "dimension": 0,
+                      "threshold": 3.5
+                    },
+                    "depth": 6,
+                    "gain": 0.10894579832469653,
+                    "left": {
+                      "label": 0.72,
+                      "split_info": {
+                        "dimension": 0,
+                        "threshold": 0
+                      },
+                      "depth": 7,
+                      "gain": 0,
+                      "left": null,
+                      "right": null
+                    },
+                    "right": {
+                      "label": 0,
+                      "split_info": {
+                        "dimension": 5,
+                        "threshold": 1.5
+                      },
+                      "depth": 7,
+                      "gain": 0.11430712594493456,
+                      "left": {
+                        "label": 0.7,
+                        "split_info": {
+                          "dimension": 0,
+                          "threshold": 0
+                        },
+                        "depth": 8,
+                        "gain": 0,
+                        "left": null,
+                        "right": null
+                      },
+                      "right": {
+                        "label": 0,
+                        "split_info": {
+                          "dimension": 5,
+                          "threshold": 1.5
+                        },
+                        "depth": 8,
+                        "gain": 0.11460376887889463,
+                        "left": {
+                          "label": 0.52,
+                          "split_info": {
+                            "dimension": 0,
+                            "threshold": 0
+                          },
+                          "depth": 9,
+                          "gain": 0,
+                          "left": null,
+                          "right": null
+                        },
+                        "right": {
+                          "label": 0,
+                          "split_info": {
+                            "dimension": 5,
+                            "threshold": 1.75
+                          },
+                          "depth": 9,
+                          "gain": 0.11490212469775445,
+                          "left": {
+                            "label": 0.43,
+                            "split_info": {
+                              "dimension": 0,
+                              "threshold": 0
+                            },
+                            "depth": 10,
+                            "gain": 0,
+                            "left": null,
+                            "right": null
+                          },
+                          "right": {
+                            "label": 0,
+                            "split_info": {
+                              "dimension": 0,
+                              "threshold": 5.5
+                            },
+                            "depth": 10,
+                            "gain": 0.10500088341036551,
+                            "left": {
+                              "label": 0.8,
+                              "split_info": {
+                                "dimension": 0,
+                                "threshold": 0
+                              },
+                              "depth": 11,
+                              "gain": 0,
+                              "left": null,
+                              "right": null
+                            },
+                            "right": {
+                              "label": 0,
+                              "split_info": {
+                                "dimension": 0,
+                                "threshold": 7.5
+                              },
+                              "depth": 11,
+                              "gain": 0.10527963206154255,
+                              "left": {
+                                "label": 0.75,
+                                "split_info": {
+                                  "dimension": 0,
+                                  "threshold": 0
+                                },
+                                "depth": 12,
+                                "gain": 0,
+                                "left": null,
+                                "right": null
+                              },
+                              "right": {
+                                "label": 0,
+                                "split_info": {
+                                  "dimension": 0,
+                                  "threshold": 9
+                                },
+                                "depth": 12,
+                                "gain": 0.10556002611781584,
+                                "left": {
+                                  "label": 0.68,
+                                  "split_info": {
+                                    "dimension": 0,
+                                    "threshold": 0
+                                  },
+                                  "depth": 13,
+                                  "gain": 0,
+                                  "left": null,
+                                  "right": null
+                                },
+                                "right": {
+                                  "label": 0,
+                                  "split_info": {
+                                    "dimension": 0,
+                                    "threshold": 10.5
+                                  },
+                                  "depth": 13,
+                                  "gain": 0.11111853615828106,
+                                  "left": {
+                                    "label": 0.45,
+                                    "split_info": {
+                                      "dimension": 0,
+                                      "threshold": 0
+                                    },
+                                    "depth": 14,
+                                    "gain": 0,
+                                    "left": null,
+                                    "right": null
+                                  },
+                                  "right": {
+                                    "label": 0,
+                                    "split_info": {
+                                      "dimension": 0,
+                                      "threshold": 11.5
+                                    },
+                                    "depth": 14,
+                                    "gain": 0.10086162953986219,
+                                    "left": {
+                                      "label": 0.52,
+                                      "split_info": {
+                                        "dimension": 0,
+                                        "threshold": 0
+                                      },
+                                      "depth": 15,
+                                      "gain": 0,
+                                      "left": null,
+                                      "right": null
+                                    },
+                                    "right": {
+                                      "label": 0,
+                                      "split_info": {
+                                        "dimension": 0,
+                                        "threshold": 12.5
+                                      },
+                                      "depth": 15,
+                                      "gain": 0.10113484040866542,
+                                      "left": {
+                                        "label": 0.84,
+                                        "split_info": {
+                                          "dimension": 0,
+                                          "threshold": 0
+                                        },
+                                        "depth": 16,
+                                        "gain": 0,
+                                        "left": null,
+                                        "right": null
+                                      },
+                                      "right": {
+                                        "label": 0,
+                                        "split_info": {
+                                          "dimension": 0,
+                                          "threshold": 13.5
+                                        },
+                                        "depth": 16,
+                                        "gain": 0.10140969612374473,
+                                        "left": {
+                                          "label": 0.78,
+                                          "split_info": {
+                                            "dimension": 0,
+                                            "threshold": 0
+                                          },
+                                          "depth": 17,
+                                          "gain": 0,
+                                          "left": null,
+                                          "right": null
+                                        },
+                                        "right": {
+                                          "label": 0,
+                                          "split_info": {
+                                            "dimension": 0,
+                                            "threshold": 15
+                                          },
+                                          "depth": 17,
+                                          "gain": 0.10168621212847549,
+                                          "left": {
+                                            "label": 0.62,
+                                            "split_info": {
+                                              "dimension": 0,
+                                              "threshold": 0
+                                            },
+                                            "depth": 18,
+                                            "gain": 0,
+                                            "left": null,
+                                            "right": null
+                                          },
+                                          "right": {
+                                            "label": 0,
+                                            "split_info": {
+                                              "dimension": 0,
+                                              "threshold": 16.5
+                                            },
+                                            "depth": 18,
+                                            "gain": 0.10196440406339029,
+                                            "left": {
+                                              "label": 0.54,
+                                              "split_info": {
+                                                "dimension": 0,
+                                                "threshold": 0
+                                              },
+                                              "depth": 19,
+                                              "gain": 0,
+                                              "left": null,
+                                              "right": null
+                                            },
+                                            "right": {
+                                              "label": 0,
+                                              "split_info": {
+                                                "dimension": 0,
+                                                "threshold": 17.5
+                                              },
+                                              "depth": 19,
+                                              "gain": 0.10224428776936113,
+                                              "left": {
+                                                "label": 0.66,
+                                                "split_info": {
+                                                  "dimension": 0,
+                                                  "threshold": 0
+                                                },
+                                                "depth": 20,
+                                                "gain": 0,
+                                                "left": null,
+                                                "right": null
+                                              },
+                                              "right": {
+                                                "label": 0,
+                                                "split_info": {
+                                                  "dimension": 0,
+                                                  "threshold": 18.5
+                                                },
+                                                "depth": 20,
+                                                "gain": 0.10252587929083871,
+                                                "left": {
+                                                  "label": 0.65,
+                                                  "split_info": {
+                                                    "dimension": 0,
+                                                    "threshold": 0
+                                                  },
+                                                  "depth": 21,
+                                                  "gain": 0,
+                                                  "left": null,
+                                                  "right": null
+                                                },
+                                                "right": {
+                                                  "label": 0,
+                                                  "split_info": {
+                                                    "dimension": 0,
+                                                    "threshold": 19.5
+                                                  },
+                                                  "depth": 21,
+                                                  "gain": 0.1028091948791612,
+                                                  "left": {
+                                                    "label": 0.63,
+                                                    "split_info": {
+                                                      "dimension": 0,
+                                                      "threshold": 0
+                                                    },
+                                                    "depth": 22,
+                                                    "gain": 0,
+                                                    "left": null,
+                                                    "right": null
+                                                  },
+                                                  "right": {
+                                                    "label": 0,
+                                                    "split_info": {
+                                                      "dimension": 5,
+                                                      "threshold": 2
+                                                    },
+                                                    "depth": 22,
+                                                    "gain": 0.10862644283096407,
+                                                    "left": {
+                                                      "label": 0.57,
+                                                      "split_info": {
+                                                        "dimension": 0,
+                                                        "threshold": 0
+                                                      },
+                                                      "depth": 23,
+                                                      "gain": 0,
+                                                      "left": null,
+                                                      "right": null
+                                                    },
+                                                    "right": {
+                                                      "label": 0,
+                                                      "split_info": {
+                                                        "dimension": 6,
+                                                        "threshold": 7.29
+                                                      },
+                                                      "depth": 23,
+                                                      "gain": 0.10892668651837462,
+                                                      "left": {
+                                                        "label": 0.47,
+                                                        "split_info": {
+                                                          "dimension": 0,
+                                                          "threshold": 0
+                                                        },
+                                                        "depth": 24,
+                                                        "gain": 0,
+                                                        "left": null,
+                                                        "right": null
+                                                      },
+                                                      "right": {
+                                                        "label": 0,
+                                                        "split_info": {
+                                                          "dimension": 5,
+                                                          "threshold": 2
+                                                        },
+                                                        "depth": 24,
+                                                        "gain": 0.1094804597307531,
+                                                        "left": {
+                                                          "label": 0,
+                                                          "split_info": {
+                                                            "dimension": 0,
+                                                            "threshold": 268.5
+                                                          },
+                                                          "depth": 25,
+                                                          "gain": 0.6931471805599453,
+                                                          "left": {
+                                                            "label": 0.52,
+                                                            "split_info": {
+                                                              "dimension": 0,
+                                                              "threshold": 0
+                                                            },
+                                                            "depth": 26,
+                                                            "gain": 0,
+                                                            "left": null,
+                                                            "right": null
+                                                          },
+                                                          "right": {
+                                                            "label": 0.34,
+                                                            "split_info": {
+                                                              "dimension": 0,
+                                                              "threshold": 0
+                                                            },
+                                                            "depth": 26,
+                                                            "gain": 0,
+                                                            "left": null,
+                                                            "right": null
+                                                          }
+                                                        },
+                                                        "right": {
+                                                          "label": 0,
+                                                          "split_info": {
+                                                            "dimension": 5,
+                                                            "threshold": 2
+                                                          },
+                                                          "depth": 25,
+                                                          "gain": 0.10474425687179309,
+                                                          "left": {
+                                                            "label": 0.635,
+                                                            "split_info": {
+                                                              "dimension": 0,
+                                                              "threshold": 0
+                                                            },
+                                                            "depth": 26,
+                                                            "gain": 0,
+                                                            "left": null,
+                                                            "right": null
+                                                          },
+                                                          "right": {
+                                                            "label": 0.7384942084942082,
+                                                            "split_info": {
+                                                              "dimension": 0,
+                                                              "threshold": 0
+                                                            },
+                                                            "depth": 26,
+                                                            "gain": 0.0935136870093692,
+                                                            "left": null,
+                                                            "right": null
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "impurity": {
+        "val": 0.5
+      },
+      "MinGain": 0.1
+    },
+    {
+      "root": {
+        "label": 0,
+        "split_info": {
+          "dimension": 6,
+          "threshold": 7.225
+        },
+        "depth": 0,
+        "gain": 0.1389617295852542,
+        "left": {
+          "label": 0.41000000000000003,
+          "split_info": {
+            "dimension": 0,
+            "threshold": 0
+          },
+          "depth": 1,
+          "gain": 0,
+          "left": null,
+          "right": null
+        },
+        "right": {
+          "label": 0,
+          "split_info": {
+            "dimension": 5,
+            "threshold": 1.5
+          },
+          "depth": 1,
+          "gain": 0.13102452165435297,
+          "left": {
+            "label": 0.45999999999999996,
+            "split_info": {
+              "dimension": 0,
+              "threshold": 0
+            },
+            "depth": 2,
+            "gain": 0,
+            "left": null,
+            "right": null
+          },
+          "right": {
+            "label": 0,
+            "split_info": {
+              "dimension": 1,
+              "threshold": 295
+            },
+            "depth": 2,
+            "gain": 0.12267617299907269,
+            "left": {
+              "label": 0,
+              "split_info": {
+                "dimension": 0,
+                "threshold": 292
+              },
+              "depth": 3,
+              "gain": 0.6931471805599453,
+              "left": {
+                "label": 0.57,
+                "split_info": {
+                  "dimension": 0,
+                  "threshold": 0
+                },
+                "depth": 4,
+                "gain": 0,
+                "left": null,
+                "right": null
+              },
+              "right": {
+                "label": 0.47,
+                "split_info": {
+                  "dimension": 0,
+                  "threshold": 0
+                },
+                "depth": 4,
+                "gain": 0,
+                "left": null,
+                "right": null
+              }
+            },
+            "right": {
+              "label": 0,
+              "split_info": {
+                "dimension": 1,
+                "threshold": 295
+              },
+              "depth": 3,
+              "gain": 0.11371891803230971,
+              "left": {
+                "label": 0.47,
+                "split_info": {
+                  "dimension": 0,
+                  "threshold": 0
+                },
+                "depth": 4,
+                "gain": 0,
+                "left": null,
+                "right": null
+              },
+              "right": {
+                "label": 0,
+                "split_info": {
+                  "dimension": 0,
+                  "threshold": 1.5
+                },
+                "depth": 4,
+                "gain": 0.10390204647515941,
+                "left": {
+                  "label": 0.92,
+                  "split_info": {
+                    "dimension": 0,
+                    "threshold": 0
+                  },
+                  "depth": 5,
+                  "gain": 0,
+                  "left": null,
+                  "right": null
+                },
+                "right": {
+                  "label": 0,
+                  "split_info": {
+                    "dimension": 4,
+                    "threshold": 5
+                  },
+                  "depth": 5,
+                  "gain": 0.10937846564093577,
+                  "left": {
+                    "label": 0,
+                    "split_info": {
+                      "dimension": 0,
+                      "threshold": 2.5
+                    },
+                    "depth": 6,
+                    "gain": 0.10444826268329584,
+                    "left": {
+                      "label": 0.76,
+                      "split_info": {
+                        "dimension": 0,
+                        "threshold": 0
+                      },
+                      "depth": 7,
+                      "gain": 0,
+                      "left": null,
+                      "right": null
+                    },
+                    "right": {
+                      "label": 0,
+                      "split_info": {
+                        "dimension": 0,
+                        "threshold": 3.5
+                      },
+                      "depth": 7,
+                      "gain": 0.10472376520839714,
+                      "left": {
+                        "label": 0.72,
+                        "split_info": {
+                          "dimension": 0,
+                          "threshold": 0
+                        },
+                        "depth": 8,
+                        "gain": 0,
+                        "left": null,
+                        "right": null
+                      },
+                      "right": {
+                        "label": 0,
+                        "split_info": {
+                          "dimension": 0,
+                          "threshold": 5
+                        },
+                        "depth": 8,
+                        "gain": 0.10500088341036551,
+                        "left": {
+                          "label": 0.8,
+                          "split_info": {
+                            "dimension": 0,
+                            "threshold": 0
+                          },
+                          "depth": 9,
+                          "gain": 0,
+                          "left": null,
+                          "right": null
+                        },
+                        "right": {
+                          "label": 0,
+                          "split_info": {
+                            "dimension": 0,
+                            "threshold": 6.5
+                          },
+                          "depth": 9,
+                          "gain": 0.10527963206154255,
+                          "left": {
+                            "label": 0.9,
+                            "split_info": {
+                              "dimension": 0,
+                              "threshold": 0
+                            },
+                            "depth": 10,
+                            "gain": 0,
+                            "left": null,
+                            "right": null
+                          },
+                          "right": {
+                            "label": 0,
+                            "split_info": {
+                              "dimension": 0,
+                              "threshold": 7.5
+                            },
+                            "depth": 10,
+                            "gain": 0.10556002611781584,
+                            "left": {
+                              "label": 0.75,
+                              "split_info": {
+                                "dimension": 0,
+                                "threshold": 0
+                              },
+                              "depth": 11,
+                              "gain": 0,
+                              "left": null,
+                              "right": null
+                            },
+                            "right": {
+                              "label": 0,
+                              "split_info": {
+                                "dimension": 0,
+                                "threshold": 9
+                              },
+                              "depth": 11,
+                              "gain": 0.10584208072149821,
+                              "left": {
+                                "label": 0.68,
+                                "split_info": {
+                                  "dimension": 0,
+                                  "threshold": 0
+                                },
+                                "depth": 12,
+                                "gain": 0,
+                                "left": null,
+                                "right": null
+                              },
+                              "right": {
+                                "label": 0,
+                                "split_info": {
+                                  "dimension": 0,
+                                  "threshold": 10.5
+                                },
+                                "depth": 12,
+                                "gain": 0.11141454041342788,
+                                "left": {
+                                  "label": 0.45,
+                                  "split_info": {
+                                    "dimension": 0,
+                                    "threshold": 0
+                                  },
+                                  "depth": 13,
+                                  "gain": 0,
+                                  "left": null,
+                                  "right": null
+                                },
+                                "right": {
+                                  "label": 0,
+                                  "split_info": {
+                                    "dimension": 0,
+                                    "threshold": 11.5
+                                  },
+                                  "depth": 13,
+                                  "gain": 0.10113484040866542,
+                                  "left": {
+                                    "label": 0.52,
+                                    "split_info": {
+                                      "dimension": 0,
+                                      "threshold": 0
+                                    },
+                                    "depth": 14,
+                                    "gain": 0,
+                                    "left": null,
+                                    "right": null
+                                  },
+                                  "right": {
+                                    "label": 0,
+                                    "split_info": {
+                                      "dimension": 0,
+                                      "threshold": 12.5
+                                    },
+                                    "depth": 14,
+                                    "gain": 0.10140969612374473,
+                                    "left": {
+                                      "label": 0.84,
+                                      "split_info": {
+                                        "dimension": 0,
+                                        "threshold": 0
+                                      },
+                                      "depth": 15,
+                                      "gain": 0,
+                                      "left": null,
+                                      "right": null
+                                    },
+                                    "right": {
+                                      "label": 0,
+                                      "split_info": {
+                                        "dimension": 0,
+                                        "threshold": 15.5
+                                      },
+                                      "depth": 15,
+                                      "gain": 0.10168621212847549,
+                                      "left": {
+                                        "label": 0.78,
+                                        "split_info": {
+                                          "dimension": 0,
+                                          "threshold": 0
+                                        },
+                                        "depth": 16,
+                                        "gain": 0,
+                                        "left": null,
+                                        "right": null
+                                      },
+                                      "right": {
+                                        "label": 0,
+                                        "split_info": {
+                                          "dimension": 0,
+                                          "threshold": 18.5
+                                        },
+                                        "depth": 16,
+                                        "gain": 0.10196440406339029,
+                                        "left": {
+                                          "label": 0.65,
+                                          "split_info": {
+                                            "dimension": 0,
+                                            "threshold": 0
+                                          },
+                                          "depth": 17,
+                                          "gain": 0,
+                                          "left": null,
+                                          "right": null
+                                        },
+                                        "right": {
+                                          "label": 0,
+                                          "split_info": {
+                                            "dimension": 0,
+                                            "threshold": 19.5
+                                          },
+                                          "depth": 17,
+                                          "gain": 0.10224428776936113,
+                                          "left": {
+                                            "label": 0.63,
+                                            "split_info": {
+                                              "dimension": 0,
+                                              "threshold": 0
+                                            },
+                                            "depth": 18,
+                                            "gain": 0,
+                                            "left": null,
+                                            "right": null
+                                          },
+                                          "right": {
+                                            "label": 0,
+                                            "split_info": {
+                                              "dimension": 0,
+                                              "threshold": 20.5
+                                            },
+                                            "depth": 18,
+                                            "gain": 0.10252587929083871,
+                                            "left": {
+                                              "label": 0.62,
+                                              "split_info": {
+                                                "dimension": 0,
+                                                "threshold": 0
+                                              },
+                                              "depth": 19,
+                                              "gain": 0,
+                                              "left": null,
+                                              "right": null
+                                            },
+                                            "right": {
+                                              "label": 0,
+                                              "split_info": {
+                                                "dimension": 0,
+                                                "threshold": 21.5
+                                              },
+                                              "depth": 19,
+                                              "gain": 0.1028091948791612,
+                                              "left": {
+                                                "label": 0.64,
+                                                "split_info": {
+                                                  "dimension": 0,
+                                                  "threshold": 0
+                                                },
+                                                "depth": 20,
+                                                "gain": 0,
+                                                "left": null,
+                                                "right": null
+                                              },
+                                              "right": {
+                                                "label": 0,
+                                                "split_info": {
+                                                  "dimension": 0,
+                                                  "threshold": 22.5
+                                                },
+                                                "depth": 20,
+                                                "gain": 0.10309425099592144,
+                                                "left": {
+                                                  "label": 0.7,
+                                                  "split_info": {
+                                                    "dimension": 0,
+                                                    "threshold": 0
+                                                  },
+                                                  "depth": 21,
+                                                  "gain": 0,
+                                                  "left": null,
+                                                  "right": null
+                                                },
+                                                "right": {
+                                                  "label": 0,
+                                                  "split_info": {
+                                                    "dimension": 0,
+                                                    "threshold": 23.5
+                                                  },
+                                                  "depth": 21,
+                                                  "gain": 0.10338106431640542,
+                                                  "left": {
+                                                    "label": 0.94,
+                                                    "split_info": {
+                                                      "dimension": 0,
+                                                      "threshold": 0
+                                                    },
+                                                    "depth": 22,
+                                                    "gain": 0,
+                                                    "left": null,
+                                                    "right": null
+                                                  },
+                                                  "right": {
+                                                    "label": 0,
+                                                    "split_info": {
+                                                      "dimension": 0,
+                                                      "threshold": 27
+                                                    },
+                                                    "depth": 22,
+                                                    "gain": 0.10366965173309588,
+                                                    "left": {
+                                                      "label": 0.95,
+                                                      "split_info": {
+                                                        "dimension": 0,
+                                                        "threshold": 0
+                                                      },
+                                                      "depth": 23,
+                                                      "gain": 0,
+                                                      "left": null,
+                                                      "right": null
+                                                    },
+                                                    "right": {
+                                                      "label": 0,
+                                                      "split_info": {
+                                                        "dimension": 0,
+                                                        "threshold": 30.5
+                                                      },
+                                                      "depth": 23,
+                                                      "gain": 0.10396003035924412,
+                                                      "left": {
+                                                        "label": 0.54,
+                                                        "split_info": {
+                                                          "dimension": 0,
+                                                          "threshold": 0
+                                                        },
+                                                        "depth": 24,
+                                                        "gain": 0,
+                                                        "left": null,
+                                                        "right": null
+                                                      },
+                                                      "right": {
+                                                        "label": 0,
+                                                        "split_info": {
+                                                          "dimension": 0,
+                                                          "threshold": 31.5
+                                                        },
+                                                        "depth": 24,
+                                                        "gain": 0.10425221753251696,
+                                                        "left": {
+                                                          "label": 0.65,
+                                                          "split_info": {
+                                                            "dimension": 0,
+                                                            "threshold": 0
+                                                          },
+                                                          "depth": 25,
+                                                          "gain": 0,
+                                                          "left": null,
+                                                          "right": null
+                                                        },
+                                                        "right": {
+                                                          "label": 0,
+                                                          "split_info": {
+                                                            "dimension": 0,
+                                                            "threshold": 32.5
+                                                          },
+                                                          "depth": 25,
+                                                          "gain": 0.10454623081871166,
+                                                          "left": {
+                                                            "label": 0.74,
+                                                            "split_info": {
+                                                              "dimension": 0,
+                                                              "threshold": 0
+                                                            },
+                                                            "depth": 26,
+                                                            "gain": 0,
+                                                            "left": null,
+                                                            "right": null
+                                                          },
+                                                          "right": {
+                                                            "label": 0,
+                                                            "split_info": {
+                                                              "dimension": 0,
+                                                              "threshold": 33.5
+                                                            },
+                                                            "depth": 26,
+                                                            "gain": 0.10484208801554731,
+                                                            "left": {
+                                                              "label": 0.91,
+                                                              "split_info": {
+                                                                "dimension": 0,
+                                                                "threshold": 0
+                                                              },
+                                                              "depth": 27,
+                                                              "gain": 0,
+                                                              "left": null,
+                                                              "right": null
+                                                            },
+                                                            "right": {
+                                                              "label": 0,
+                                                              "split_info": {
+                                                                "dimension": 0,
+                                                                "threshold": 34.5
+                                                              },
+                                                              "depth": 27,
+                                                              "gain": 0.10513980715653277,
+                                                              "left": {
+                                                                "label": 0.9,
+                                                                "split_info": {
+                                                                  "dimension": 0,
+                                                                  "threshold": 0
+                                                                },
+                                                                "depth": 28,
+                                                                "gain": 0,
+                                                                "left": null,
+                                                                "right": null
+                                                              },
+                                                              "right": {
+                                                                "label": 0,
+                                                                "split_info": {
+                                                                  "dimension": 0,
+                                                                  "threshold": 35.5
+                                                                },
+                                                                "depth": 28,
+                                                                "gain": 0.10543940651491097,
+                                                                "left": {
+                                                                  "label": 0.94,
+                                                                  "split_info": {
+                                                                    "dimension": 0,
+                                                                    "threshold": 0
+                                                                  },
+                                                                  "depth": 29,
+                                                                  "gain": 0,
+                                                                  "left": null,
+                                                                  "right": null
+                                                                },
+                                                                "right": {
+                                                                  "label": 0,
+                                                                  "split_info": {
+                                                                    "dimension": 0,
+                                                                    "threshold": 36.5
+                                                                  },
+                                                                  "depth": 29,
+                                                                  "gain": 0.10574090460768205,
+                                                                  "left": {
+                                                                    "label": 0.88,
+                                                                    "split_info": {
+                                                                      "dimension": 0,
+                                                                      "threshold": 0
+                                                                    },
+                                                                    "depth": 30,
+                                                                    "gain": 0,
+                                                                    "left": null,
+                                                                    "right": null
+                                                                  },
+                                                                  "right": {
+                                                                    "label": 0,
+                                                                    "split_info": {
+                                                                      "dimension": 0,
+                                                                      "threshold": 37.5
+                                                                    },
+                                                                    "depth": 30,
+                                                                    "gain": 0.10604432019971148,
+                                                                    "left": {
+                                                                      "label": 0.64,
+                                                                      "split_info": {
+                                                                        "dimension": 0,
+                                                                        "threshold": 0
+                                                                      },
+                                                                      "depth": 31,
+                                                                      "gain": 0,
+                                                                      "left": null,
+                                                                      "right": null
+                                                                    },
+                                                                    "right": {
+                                                                      "label": 0,
+                                                                      "split_info": {
+                                                                        "dimension": 0,
+                                                                        "threshold": 38.5
+                                                                      },
+                                                                      "depth": 31,
+                                                                      "gain": 0.106349672307917,
+                                                                      "left": {
+                                                                        "label": 0.58,
+                                                                        "split_info": {
+                                                                          "dimension": 0,
+                                                                          "threshold": 0
+                                                                        },
+                                                                        "depth": 32,
+                                                                        "gain": 0,
+                                                                        "left": null,
+                                                                        "right": null
+                                                                      },
+                                                                      "right": {
+                                                                        "label": 0,
+                                                                        "split_info": {
+                                                                          "dimension": 0,
+                                                                          "threshold": 39.5
+                                                                        },
+                                                                        "depth": 32,
+                                                                        "gain": 0.10665698020554432,
+                                                                        "left": {
+                                                                          "label": 0.52,
+                                                                          "split_info": {
+                                                                            "dimension": 0,
+                                                                            "threshold": 0
+                                                                          },
+                                                                          "depth": 33,
+                                                                          "gain": 0,
+                                                                          "left": null,
+                                                                          "right": null
+                                                                        },
+                                                                        "right": {
+                                                                          "label": 0,
+                                                                          "split_info": {
+                                                                            "dimension": 0,
+                                                                            "threshold": 42
+                                                                          },
+                                                                          "depth": 33,
+                                                                          "gain": 0.1182672965078158,
+                                                                          "left": {
+                                                                            "label": 0.47,
+                                                                            "split_info": {
+                                                                              "dimension": 0,
+                                                                              "threshold": 0
+                                                                            },
+                                                                            "depth": 34,
+                                                                            "gain": 0,
+                                                                            "left": null,
+                                                                            "right": null
+                                                                          },
+                                                                          "right": {
+                                                                            "label": 0.7312000000000001,
+                                                                            "split_info": {
+                                                                              "dimension": 0,
+                                                                              "threshold": 0
+                                                                            },
+                                                                            "depth": 34,
+                                                                            "gain": 0.09600412301342334,
+                                                                            "left": null,
+                                                                            "right": null
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "right": {
+                    "label": 0.88,
+                    "split_info": {
+                      "dimension": 0,
+                      "threshold": 0
+                    },
+                    "depth": 6,
+                    "gain": 0,
+                    "left": null,
+                    "right": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "impurity": {
+        "val": 0.5
+      },
+      "MinGain": 0.1
+    }
+  ],
+  "coeffs": [
+    2.7689054768234844,
+    2.7689054768234844,
+    3.051821740205036
+  ]
+}

@@ -1,11 +1,11 @@
-package tree
+package ch09
 
 import (
 	"testing"
 )
 
 func TestNewDataSet(t *testing.T) {
-	ds := NewDataSet("test.csv")
+	ds := NewDataSet("../../data/applicants.csv")
 	exp1 := 24
 	if ds.Size != exp1 {
 		t.Errorf("Expected %d, got %d", exp1, ds.Size)
@@ -19,7 +19,7 @@ func TestNewDataSet(t *testing.T) {
 }
 
 func TestSplit(t *testing.T) {
-	ds := NewDataSet("test.csv")
+	ds := NewDataSet("../../data/applicants.csv")
 	train, test := ds.Split(0.2)
 	exp1 := 20
 	if train.Size != exp1 {

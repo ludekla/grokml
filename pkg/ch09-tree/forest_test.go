@@ -1,4 +1,4 @@
-package tree
+package ch09
 
 import (
 	// "fmt"
@@ -24,10 +24,10 @@ func TestForestClassifier(t *testing.T) {
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
 	}
-	fc.Save("jsons/forest.json")
+	fc.Save("../../models/forest.json")
 
 	fc2 := &ForestClassifier{}
-	fc2.Load("jsons/forest.json")
+	fc2.Load("../../models/forest.json")
 	rep = fc2.Score(trainSet)
 	exp = 1.0
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
@@ -53,10 +53,10 @@ func TestAdaBoostClassifier(t *testing.T) {
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
 	}
-	ac.Save("jsons/adaBoost.json")
+	ac.Save("../../models/adaBoost.json")
 
 	ac2 := &AdaBoostClassifier{}
-	ac2.Load("jsons/adaBoost.json")
+	ac2.Load("../../models/adaBoost.json")
 	rep = ac2.Score(trainSet)
 	exp = 0.9230769
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
@@ -81,10 +81,10 @@ func TestGradBoostRegressor(t *testing.T) {
 	if math.Abs(got-exp) > 1e-5 {
 		t.Errorf("expected R2 score %.7f, got %.7f", exp, got)
 	}
-	gb.Save("jsons/gradboost.json")
+	gb.Save("../../models/gradboost.json")
 
 	gb2 := GradBoostRegressor{}
-	gb2.Load("jsons/gradboost.json")
+	gb2.Load("../../models/gradboost.json")
 	got = gb2.Score(trainSet)
 	if math.Abs(got-exp) > 1e-5 {
 		t.Errorf("expected R2 score %.7f, got %.7f", exp, got)

@@ -5,7 +5,7 @@ import (
 )
 
 func TestNewNaiveBayes(t *testing.T) {
-	ds := NewDataSet("data/synreviews.csv")
+	ds := NewDataSet("../../data/synreviews.csv")
 	nb := NewNaiveBayes(0.5)
 	nb.Fit(ds)
 
@@ -13,7 +13,7 @@ func TestNewNaiveBayes(t *testing.T) {
 
 func TestNaiveBayesPredict(t *testing.T) {
 	nb := NewNaiveBayes(0.5)
-	ds := NewDataSet("data/synreviews.csv")
+	ds := NewDataSet("../../data/synreviews.csv")
 	trainSet, testSet := ds.Split(0.2)
 	nb.Fit(trainSet)
 	for _, x := range testSet.Data {

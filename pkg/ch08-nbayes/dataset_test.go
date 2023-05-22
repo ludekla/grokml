@@ -5,7 +5,7 @@ import (
 )
 
 func TestNewDataSet(t *testing.T) {
-	ds := NewDataSet("data/synreviews.csv")
+	ds := NewDataSet("../../data/synreviews.csv")
 	exp := 22
 	if exp != ds.Size {
 		t.Errorf("Expected size %d, got %d instead", exp, ds.Size)
@@ -13,7 +13,7 @@ func TestNewDataSet(t *testing.T) {
 }
 
 func TestDataSplit(t *testing.T) {
-	ds := NewDataSet("data/synreviews.csv")
+	ds := NewDataSet("../../data/synreviews.csv")
 	train, test := ds.Split(0.1)
 	exp := 20
 	if train.Size != exp {

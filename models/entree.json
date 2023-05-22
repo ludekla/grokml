@@ -10,19 +10,19 @@
     "left": {
       "label": 0,
       "split_info": {
-        "dimension": 0,
-        "threshold": 5
+        "dimension": 1,
+        "threshold": 8
       },
       "depth": 1,
-      "gain": 0.4362826337248298,
+      "gain": 0.35727698547460385,
       "left": {
         "label": 0,
         "split_info": {
           "dimension": 0,
-          "threshold": 1
+          "threshold": 1.5
         },
         "depth": 2,
-        "gain": 0.45056120886630463,
+        "gain": 0.18483571385525663,
         "left": {
           "label": 0,
           "split_info": {
@@ -38,12 +38,12 @@
           "label": 0,
           "split_info": {
             "dimension": 0,
-            "threshold": 1.5
+            "threshold": 2
           },
           "depth": 3,
-          "gain": 0.5004024235381879,
+          "gain": 0.2003599970972107,
           "left": {
-            "label": 1,
+            "label": 0,
             "split_info": {
               "dimension": 0,
               "threshold": 0
@@ -57,12 +57,92 @@
             "label": 0,
             "split_info": {
               "dimension": 0,
-              "threshold": 0
+              "threshold": 2.5
             },
             "depth": 4,
-            "gain": 0,
-            "left": null,
-            "right": null
+            "gain": 0.21923485122878372,
+            "left": {
+              "label": 0,
+              "split_info": {
+                "dimension": 0,
+                "threshold": 0
+              },
+              "depth": 5,
+              "gain": 0,
+              "left": null,
+              "right": null
+            },
+            "right": {
+              "label": 0,
+              "split_info": {
+                "dimension": 0,
+                "threshold": 3.5
+              },
+              "depth": 5,
+              "gain": 0.2440780604714019,
+              "left": {
+                "label": 0,
+                "split_info": {
+                  "dimension": 0,
+                  "threshold": 0
+                },
+                "depth": 6,
+                "gain": 0,
+                "left": null,
+                "right": null
+              },
+              "right": {
+                "label": 0,
+                "split_info": {
+                  "dimension": 0,
+                  "threshold": 5
+                },
+                "depth": 6,
+                "gain": 0.28994057801484013,
+                "left": {
+                  "label": 0,
+                  "split_info": {
+                    "dimension": 0,
+                    "threshold": 0
+                  },
+                  "depth": 7,
+                  "gain": 0,
+                  "left": null,
+                  "right": null
+                },
+                "right": {
+                  "label": 0,
+                  "split_info": {
+                    "dimension": 0,
+                    "threshold": 6.5
+                  },
+                  "depth": 7,
+                  "gain": 0.6931471805599453,
+                  "left": {
+                    "label": 1,
+                    "split_info": {
+                      "dimension": 0,
+                      "threshold": 0
+                    },
+                    "depth": 8,
+                    "gain": 0,
+                    "left": null,
+                    "right": null
+                  },
+                  "right": {
+                    "label": 0,
+                    "split_info": {
+                      "dimension": 0,
+                      "threshold": 0
+                    },
+                    "depth": 8,
+                    "gain": 0,
+                    "left": null,
+                    "right": null
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -79,35 +159,15 @@
       }
     },
     "right": {
-      "label": 0,
+      "label": 1,
       "split_info": {
         "dimension": 0,
-        "threshold": 7.5
+        "threshold": 0
       },
       "depth": 1,
-      "gain": 0.5623351446188083,
-      "left": {
-        "label": 0,
-        "split_info": {
-          "dimension": 0,
-          "threshold": 0
-        },
-        "depth": 2,
-        "gain": 0,
-        "left": null,
-        "right": null
-      },
-      "right": {
-        "label": 1,
-        "split_info": {
-          "dimension": 0,
-          "threshold": 0
-        },
-        "depth": 2,
-        "gain": 0,
-        "left": null,
-        "right": null
-      }
+      "gain": 0,
+      "left": null,
+      "right": null
     }
   },
   "impurity": {

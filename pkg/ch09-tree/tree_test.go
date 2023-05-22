@@ -1,4 +1,4 @@
-package tree
+package ch09
 
 import (
 	// "fmt"
@@ -24,10 +24,10 @@ func TestTreeEntropy(t *testing.T) {
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
 	}
-	dt.Save("jsons/entree.json")
+	dt.Save("../../models/entree.json")
 
 	dt2 := TreeClassifier{}
-	dt2.Load("jsons/entree.json")
+	dt2.Load("../../models/entree.json")
 	rep = dt2.Score(trainSet)
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
@@ -52,10 +52,10 @@ func TestTreeGini(t *testing.T) {
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
 	}
-	dt.Save("jsons/ginitree.json")
+	dt.Save("../../models/ginitree.json")
 
 	dt2 := TreeClassifier{}
-	dt2.Load("jsons/ginitree.json")
+	dt2.Load("../../models/ginitree.json")
 	rep = dt2.Score(trainSet)
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
@@ -79,10 +79,10 @@ func TestTreeMSE(t *testing.T) {
 	if math.Abs(got-exp) > 1e-5 {
 		t.Errorf("expected R2 score %.7f, got %.7f", exp, got)
 	}
-	dt.Save("jsons/msetree.json")
+	dt.Save("../../models/msetree.json")
 
 	dt2 := TreeRegressor{}
-	dt2.Load("jsons/msetree.json")
+	dt2.Load("../../models/msetree.json")
 	got = dt2.Score(trainSet)
 	if math.Abs(got-exp) > 1e-5 {
 		t.Errorf("expected R2 score %.7f, got %.7f", exp, got)
