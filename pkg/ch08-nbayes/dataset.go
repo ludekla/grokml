@@ -1,4 +1,4 @@
-package nbayes
+package ch08
 
 import (
 	"encoding/csv"

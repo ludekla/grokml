@@ -5,12 +5,15 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"flag"
 
-	"goc/nbayes"
+	"grokml/pkg/ch08-nbayes"
 )
 
-func ROC(model nbayes.NaiveBayes, ds nbayes.DataSet, N int) {
-	file, err := os.Create("roc.csv")
+var train = flag.Bool("t", false, "train model before prediction")
+
+func ROC(model ch08.NaiveBayes, ds ch08.DataSet, N int) {
+	file, err := os.Create("data/roc.csv")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -27,17 +30,19 @@ func ROC(model nbayes.NaiveBayes, ds nbayes.DataSet, N int) {
 	writer.Flush()
 }
 
-func nbayesMain() {
-	ds := nbayes.NewDataSet("../manning/Chapter_8_Naive_Bayes/emails.csv")
+func main() {
+	flag.Parse()
+
+	ds := ch08.NewDataSet("data/emails.csv")
 	trainSet, testSet := ds.Split(0.2)
-	var nb nbayes.NaiveBayes
+	var nb ch08.NaiveBayes
 	if *train {
 		fmt.Printf("Training model on %d examples.\n", trainSet.Size)
-		nb = nbayes.NewNaiveBayes(0.5)
+		nb = ch08.NewNaiveBayes(0.5)
 		nb.Fit(trainSet)
-		nb.Save("nb.json")
+		nb.Save("models/nb.json")
 	} else {
-		nb = nbayes.FromJSON("nb.json")
+		nb = ch08.FromJSON("models/nb.json")
 	}
 	rep := nb.Score(testSet)
 	fmt.Printf("testset: %d emails\n", testSet.Size)
