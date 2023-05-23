@@ -116,7 +116,7 @@ func Mean(vecs []Vector) Vector {
 }
 
 // Computes the vectorial mean and the standard deviation vector.
-func VecStats(vecs []Vector) (Vector, Vector) {
+func VectorStats(vecs []Vector) (Vector, Vector) {
 	mean := Mean(vecs)
 	std := NewVector(len(mean))
 	for _, vec := range vecs {

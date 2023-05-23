@@ -12,9 +12,9 @@ import (
 )
 
 type Regression interface {
-	Fit(ds utils.DataSet) []float64
+	Fit(ds utils.DataSet[utils.Vector, float64]) []float64
 	Predict(points []utils.Vector) []float64
-	Score(ds utils.DataSet) float64
+	Score(ds utils.DataSet[utils.Vector, float64]) float64
 	Save(filepath string) error
 }
 
@@ -29,9 +29,9 @@ func NewLinReg(lr float64, epochs int) *LinReg {
 	return &LinReg{LRate: lr, NEpochs: epochs}
 }
 
-func (l *LinReg) Fit(ds utils.DataSet) []float64 {
-	stats := ds.Stats()
-	nds := ds.Normalise(stats)
+func (l *LinReg) Fit(ds utils.DataSet[utils.Vector, float64]) []float64 {
+	stats := utils.NewDataStats(ds)
+	nds := stats.Normalise(ds)
 	l.Weights = utils.RandVector(len(stats.XMean))
 	l.Bias = rand.Float64()
 	errs := make([]float64, 0, l.NEpochs)
@@ -62,7 +62,7 @@ func (l LinReg) Predict(points []utils.Vector) []float64 {
 }
 
 // Computes the coefficient of determination
-func (l LinReg) Score(ds utils.DataSet) float64 {
+func (l LinReg) Score(ds utils.DataSet[utils.Vector, float64]) float64 {
 	preds := l.Predict(ds.X())
 	ym := mean(preds)
 	// Residual Sum of Squares, Total Sum of Squares

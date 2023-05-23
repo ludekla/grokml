@@ -6,13 +6,13 @@ import (
 )
 
 func TestStats(t *testing.T) {
-	ds := DataSet{
-		x: []Vector{
+	ds := DataSet[Vector, float64]{
+		dpoints: []Vector{
 			Vector{1.0, 3.5, -1.0},
 			Vector{0.1, 1.0, 2.4},
 		},
-		y:    []float64{2.1, 3.2},
-		size: 2,
+		labels: []float64{2.1, 3.2},
+		size:   2,
 	}
 	expDS := DataStats{
 		XMean: Vector{0.55, 2.25, 0.7},
@@ -21,7 +21,7 @@ func TestStats(t *testing.T) {
 		YStd:  0.55,
 	}
 
-	stats := ds.Stats()
+	stats := NewDataStats(ds)
 	if !equal(expDS.XMean, stats.XMean) {
 		t.Errorf("Expected %v, got %v", expDS.XMean, stats.XMean)
 	}
@@ -37,30 +37,30 @@ func TestStats(t *testing.T) {
 }
 
 func TestNormalise(t *testing.T) {
-	ds := DataSet{
-		x: []Vector{
+	ds := DataSet[Vector, float64]{
+		dpoints: []Vector{
 			Vector{1.0, 3.5, -1.0},
 			Vector{0.1, 1.0, 2.4},
 		},
-		y:    []float64{2.1, 3.2},
-		size: 2,
+		labels: []float64{2.1, 3.2},
+		size:   2,
 	}
-	expDS := DataSet{
-		x: []Vector{
+	expDS := DataSet[Vector, float64]{
+		dpoints: []Vector{
 			Vector{1.0, 1.0, -1.0},
 			Vector{-1.0, -1.0, 1.0},
 		},
-		y:    []float64{-1.0, 1.0},
-		size: 2,
+		labels: []float64{-1.0, 1.0},
+		size:   2,
 	}
-	stats := ds.Stats()
-	nDS := ds.Normalise(stats)
-	for i, vec := range nDS.x {
-		if !equal(expDS.x[i], vec) {
-			t.Errorf("Expected %v, got %v", expDS.x[i], vec)
+	stats := NewDataStats(ds)
+	nDS := stats.Normalise(ds)
+	for i, vec := range nDS.dpoints {
+		if !equal(expDS.dpoints[i], vec) {
+			t.Errorf("Expected %v, got %v", expDS.dpoints[i], vec)
 		}
-		if math.Abs(expDS.y[i]-nDS.y[i]) > 1e-6 {
-			t.Errorf("Expected %v, got %v", expDS.y[i], nDS.y[i])
+		if math.Abs(expDS.labels[i]-nDS.labels[i]) > 1e-6 {
+			t.Errorf("Expected %v, got %v", expDS.labels[i], nDS.labels[i])
 		}
 	}
 }
