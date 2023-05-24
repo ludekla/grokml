@@ -6,30 +6,36 @@ import (
 	"math/rand"
 )
 
-type DataSet[D DataPoint, L Label] struct {
+type DataPoint interface {
+	string | Vector | TokenMap
+}
+
+type DataSet[D DataPoint] struct {
 	size    int
 	header  []string
 	dpoints []D
-	labels  []L
+	labels  []float64
 }
 
+type Converter[D DataPoint] func(row []string) (D, error)
+
 // fetch data from csv file with specified columns
-func NewDataSet[D DataPoint, L Label](rd *CSVReader, conv Converter[D, L]) DataSet[D, L] {
-	ds := DataSet[D, L]{header: rd.header}
+func NewDataSet[D DataPoint](rd *CSVReader, conv Converter[D]) DataSet[D] {
+	ds := DataSet[D]{header: rd.header}
 	for {
 		row, ok := rd.Read()
 		if !ok {
 			break
 		}
 		// label
-		label, err := conv.Str2Label(row[0])
+		label, err := Str2Label(row[0])
 		if err != nil {
 			rd.Close()
 			log.Fatal(err)
 		}
 		ds.labels = append(ds.labels, label)
 		// datapoint
-		dpoint, err := conv.Row2DataPoint(row[1:])
+		dpoint, err := conv(row[1:])
 		if err != nil {
 			rd.Close()
 			log.Fatal(err)
@@ -40,46 +46,46 @@ func NewDataSet[D DataPoint, L Label](rd *CSVReader, conv Converter[D, L]) DataS
 	return ds
 }
 
-func (ds DataSet[D, L]) Size() int {
+func (ds DataSet[D]) Size() int {
 	return ds.size
 }
 
-func (ds DataSet[D, L]) Header() []string {
+func (ds DataSet[D]) Header() []string {
 	return ds.header
 }
 
-func (ds DataSet[D, L]) X() []D {
+func (ds DataSet[D]) X() []D {
 	return ds.dpoints
 }
 
-func (ds DataSet[D, L]) Y() []L {
+func (ds DataSet[D]) Y() []float64 {
 	return ds.labels
 }
 
-func (ds DataSet[D, L]) String() string {
+func (ds DataSet[D]) String() string {
 	return fmt.Sprintf(
 		"DataSet{size: %d, target: %s, features: %v}",
 		ds.size, ds.header[0], ds.header[1:],
 	)
 }
 
-func (ds DataSet[D, L]) Random() (D, L) {
+func (ds DataSet[D]) Random() (D, float64) {
 	i := rand.Intn(ds.size)
 	return ds.dpoints[i], ds.labels[i]
 }
 
-func (ds DataSet[D, L]) Split(ratio float64) (DataSet[D, L], DataSet[D, L]) {
+func (ds DataSet[D]) Split(ratio float64) (DataSet[D], DataSet[D]) {
 	nTest := int(float64(ds.size) * ratio)
 	rand.Shuffle(ds.size, func(i, j int) {
 		ds.dpoints[i], ds.dpoints[j] = ds.dpoints[j], ds.dpoints[i]
 		ds.labels[i], ds.labels[j] = ds.labels[j], ds.labels[i]
 	})
-	testSet := DataSet[D, L]{
+	testSet := DataSet[D]{
 		dpoints: ds.dpoints[:nTest],
 		labels:  ds.labels[:nTest],
 		size:    nTest,
 	}
-	trainSet := DataSet[D, L]{
+	trainSet := DataSet[D]{
 		dpoints: ds.dpoints[nTest:],
 		labels:  ds.labels[nTest:],
 		size:    ds.size - nTest,

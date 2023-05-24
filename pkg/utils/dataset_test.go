@@ -6,13 +6,10 @@ import (
 )
 
 func TestStats(t *testing.T) {
-	ds := DataSet[Vector, float64]{
-		dpoints: []Vector{
-			Vector{1.0, 3.5, -1.0},
-			Vector{0.1, 1.0, 2.4},
-		},
-		labels: []float64{2.1, 3.2},
-		size:   2,
+	ds := DataSet[Vector]{
+		dpoints: []Vector{Vector{1.0, 3.5, -1.0}, Vector{0.1, 1.0, 2.4}},
+		labels:  []float64{2.1, 3.2},
+		size:    2,
 	}
 	expDS := DataStats{
 		XMean: Vector{0.55, 2.25, 0.7},
@@ -37,21 +34,15 @@ func TestStats(t *testing.T) {
 }
 
 func TestNormalise(t *testing.T) {
-	ds := DataSet[Vector, float64]{
-		dpoints: []Vector{
-			Vector{1.0, 3.5, -1.0},
-			Vector{0.1, 1.0, 2.4},
-		},
-		labels: []float64{2.1, 3.2},
-		size:   2,
+	ds := DataSet[Vector]{
+		dpoints: []Vector{Vector{1.0, 3.5, -1.0}, Vector{0.1, 1.0, 2.4}},
+		labels:  []float64{2.1, 3.2},
+		size:    2,
 	}
-	expDS := DataSet[Vector, float64]{
-		dpoints: []Vector{
-			Vector{1.0, 1.0, -1.0},
-			Vector{-1.0, -1.0, 1.0},
-		},
-		labels: []float64{-1.0, 1.0},
-		size:   2,
+	expDS := DataSet[Vector]{
+		dpoints: []Vector{Vector{1.0, 1.0, -1.0}, Vector{-1.0, -1.0, 1.0}},
+		labels:  []float64{-1.0, 1.0},
+		size:    2,
 	}
 	stats := NewDataStats(ds)
 	nDS := stats.Normalise(ds)
@@ -62,5 +53,24 @@ func TestNormalise(t *testing.T) {
 		if math.Abs(expDS.labels[i]-nDS.labels[i]) > 1e-6 {
 			t.Errorf("Expected %v, got %v", expDS.labels[i], nDS.labels[i])
 		}
+	}
+}
+
+func TestDataSetSplit(t *testing.T) {
+	path := "../../data/reviews.csv"
+	csv := NewCSVReader(path, []string{"sentiment", "review"})
+	ds := NewDataSet[string](csv, ToStr)
+	exp := 22
+	if ds.Size() != exp {
+		t.Errorf("expected dataset size %d, got %d instead", exp, ds.Size())
+	}
+	train, test := ds.Split(0.1)
+	exp = 20
+	if train.Size() != exp {
+		t.Errorf("Expected %d, got %d", exp, train.Size())
+	}
+	exp = 2
+	if test.Size() != exp {
+		t.Errorf("Expected %d, got %d", exp, test.Size())
 	}
 }

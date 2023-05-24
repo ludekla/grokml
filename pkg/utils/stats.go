@@ -11,7 +11,7 @@ type DataStats struct {
 	YStd  float64 `json:"ystd"`
 }
 
-func NewDataStats(ds DataSet[Vector, float64]) DataStats {
+func NewDataStats(ds DataSet[Vector]) DataStats {
 	var ymean float64
 	for _, y := range ds.labels {
 		ymean += y
@@ -28,7 +28,7 @@ func NewDataStats(ds DataSet[Vector, float64]) DataStats {
 	return DataStats{XMean: xmean, XStd: xstd, YMean: ymean, YStd: ystd}
 }
 
-func (stats DataStats) Normalise(ds DataSet[Vector, float64]) DataSet[Vector, float64] {
+func (stats DataStats) Normalise(ds DataSet[Vector]) DataSet[Vector] {
 	xmean := stats.XMean
 	nf := NewVector(len(xmean))
 	for i, val := range stats.XStd {
@@ -36,7 +36,7 @@ func (stats DataStats) Normalise(ds DataSet[Vector, float64]) DataSet[Vector, fl
 	}
 	ymean, ystd := stats.YMean, stats.YStd
 
-	nds := DataSet[Vector, float64]{
+	nds := DataSet[Vector]{
 		size:    ds.size,
 		dpoints: make([]Vector, ds.size),
 		labels:  make([]float64, ds.size),

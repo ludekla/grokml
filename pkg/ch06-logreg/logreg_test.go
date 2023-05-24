@@ -3,12 +3,15 @@ package ch06
 import (
 	"math"
 	"testing"
+
+	"grokml/pkg/utils"
 )
 
 func TestLogReg(t *testing.T) {
 	lr := NewLogReg(20, 0.7)
-	path := "../../data/reviews.csv"
-	ds := NewDataSet(path)
+	csv := utils.NewCSVReader("../../data/reviews.csv", []string{"sentiment", "review"})
+	dsraw := utils.NewDataSet[string](csv, utils.ToStr)
+	ds := utils.Transform(dsraw)
 	trainSet, testSet := ds.Split(0.2)
 	lr.Fit(trainSet)
 	got := lr.Accuracy(trainSet) + lr.Accuracy(testSet)

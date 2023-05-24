@@ -3,8 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	
+
 	"grokml/pkg/ch06-logreg"
+	"grokml/pkg/utils"
 )
 
 var train = flag.Bool("t", false, "train model before prediction")
@@ -15,10 +16,11 @@ func main() {
 
 	fmt.Println("Hello Logistic Regression! Train? ", *train)
 
-	path := "data/IMDB_Dataset.csv"
+	csv := utils.NewCSVReader("data/IMDB_Dataset.csv", []string{"sentiment", "review"})
 	modelfile := "models/logr.json"
 
-	ds := ch06.NewDataSet(path)
+	dsraw := utils.NewDataSet[string](csv, utils.ToStr)
+	ds := utils.Transform(dsraw)
 	trainSet, testSet := ds.Split(0.1)
 	var lr ch06.LogReg
 

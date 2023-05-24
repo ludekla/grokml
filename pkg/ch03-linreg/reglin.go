@@ -25,7 +25,7 @@ func NewRegLin(lrate float64, nEpochs int, lpen, rpen float64) *RegLin {
 	}
 }
 
-func (l *RegLin) Fit(ds utils.DataSet[utils.Vector, float64]) []float64 {
+func (l *RegLin) Fit(ds utils.DataSet[utils.Vector]) []float64 {
 	stats := utils.NewDataStats(ds)
 	nds := stats.Normalise(ds)
 	l.Weights = utils.RandVector(len(stats.XMean))

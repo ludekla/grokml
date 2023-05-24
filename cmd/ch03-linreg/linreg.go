@@ -24,7 +24,7 @@ func main() {
 		fmt.Println("Training")
 		header := []string{"Price", "Area", "No. of Bedrooms"}
 		csv := utils.NewCSVReader("data/Hyderabad.csv", header)
-		dset := utils.NewDataSet[utils.Vector, float64](csv, utils.ConvertFloat{})
+		dset := utils.NewDataSet[utils.Vector](csv, utils.ToVector)
 		trainSet, testSet := dset.Split(0.1)
 		// Learning rate, number of epochs
 		lr = ch03.NewLinReg(1e-2, 1000)

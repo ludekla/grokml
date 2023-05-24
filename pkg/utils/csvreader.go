@@ -9,8 +9,8 @@ import (
 
 func findCols(row []string, header []string) []int {
 	cols := make([]int, 0, len(header))
-	for i, word := range row {
-		for _, title := range header {
+	for _, title := range header {
+		for i, word := range row {
 			if title == word {
 				cols = append(cols, i)
 			}

@@ -6,13 +6,15 @@ import (
 	"math"
 	"math/rand"
 	"os"
+
+	"grokml/pkg/utils"
 )
 
 type LogReg struct {
-	Weights TokenMap `json:"weights"`
-	Bias    float64  `json:"bias"`
-	NEpochs int      `json:"nepochs"`
-	LRate   float64  `json:"lrate"`
+	Weights utils.TokenMap `json:"weights"`
+	Bias    float64        `json:"bias"`
+	NEpochs int            `json:"nepochs"`
+	LRate   float64        `json:"lrate"`
 }
 
 func NewLogReg(nEpo int, lrate float64) LogReg {
@@ -30,8 +32,8 @@ func (lr *LogReg) Save(filepath string) {
 	}
 }
 
-func FromJSON(filepath string) LogReg {
-	fileBytes, err := os.ReadFile(filepath)
+func FromJSON(jsonfile string) LogReg {
+	fileBytes, err := os.ReadFile(jsonfile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -43,28 +45,33 @@ func FromJSON(filepath string) LogReg {
 	return lr
 }
 
-func (lr *LogReg) Fit(ds DataSet) []float64 {
-	weights := TokenMap{}
-	for _, example := range ds.Examples {
-		weights.Update(example.tokens)
-	}
-	for w, _ := range weights {
-		weights[w] = rand.Float64()
+func (lr *LogReg) Fit(ds utils.DataSet[utils.TokenMap]) []float64 {
+	// initialise weights with
+	weights := utils.TokenMap{}
+	for _, dpoint := range ds.X() {
+		for token, _ := range dpoint {
+			if _, ok := weights[token]; !ok {
+				weights[token] = rand.Float64()
+			}
+		}
 	}
 	lr.Weights = weights
 	errs := make([]float64, lr.NEpochs)
+	dpoints := ds.X()
+	labels := ds.Y()
+	size := float64(ds.Size())
 	for i := 0; i < lr.NEpochs; i++ {
 		var sum float64
-		for _, example := range ds.Examples {
-			err := lr.update(example.tokens, example.label)
+		for j, dpoint := range dpoints {
+			err := lr.update(dpoint, labels[j])
 			sum += err
 		}
-		errs[i] = sum / float64(ds.Size)
+		errs[i] = sum / size
 	}
 	return errs
 }
 
-func (lr LogReg) predict(tokens TokenMap) float64 {
+func (lr LogReg) predict(tokens utils.TokenMap) float64 {
 	var sum float64
 	for w, val := range tokens {
 		sum += lr.Weights[w] * val
@@ -72,9 +79,9 @@ func (lr LogReg) predict(tokens TokenMap) float64 {
 	return sigmoid(sum + lr.Bias)
 }
 
-func (lr *LogReg) update(tokens TokenMap, label string) float64 {
+func (lr *LogReg) update(tokens utils.TokenMap, label float64) float64 {
 	pred := lr.predict(tokens)
-	diff := delta(pred, label)
+	diff := label - pred
 	for w, val := range tokens {
 		lr.Weights[w] += lr.LRate * diff * val
 	}
@@ -82,35 +89,28 @@ func (lr *LogReg) update(tokens TokenMap, label string) float64 {
 	return xentropy(pred, label)
 }
 
-func (lr LogReg) Accuracy(ds DataSet) float64 {
+func (lr LogReg) Accuracy(ds utils.DataSet[utils.TokenMap]) float64 {
 	var acc float64
-	for _, example := range ds.Examples {
-		pred := lr.predict(example.tokens)
-		if pred > 0.5 && example.label == "positive" {
+	labels := ds.Y()
+	for i, dpoint := range ds.X() {
+		pred := lr.predict(dpoint)
+		if pred > 0.5 && labels[i] == 1.0 {
 			acc++
-		} else if pred < 0.5 && example.label == "negative" {
+		} else if pred < 0.5 && labels[i] == 0.0 {
 			acc++
 		}
 	}
-	return acc / float64(ds.Size)
+	return acc / float64(ds.Size())
 }
 
 func sigmoid(val float64) float64 {
 	return 1.0 / (1.0 + math.Exp(-val))
 }
 
-func xentropy(pred float64, label string) float64 {
-	if label == "positive" {
+func xentropy(pred float64, label float64) float64 {
+	if label == 1.0 {
 		return -math.Log(pred)
 	} else {
 		return -math.Log(1.0 - pred)
-	}
-}
-
-func delta(pred float64, label string) float64 {
-	if label == "positive" {
-		return 1.0 - pred
-	} else {
-		return -pred
 	}
 }
