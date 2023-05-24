@@ -5,6 +5,8 @@ import (
 	"log"
 	"os"
 	"strings"
+
+	"grokml/pkg/utils"
 )
 
 type Count struct {
@@ -33,17 +35,18 @@ func (nb *NaiveBayes) Set(th float64) {
 	nb.threshold = th
 }
 
-func (nb *NaiveBayes) Fit(ds DataSet) {
+func (nb *NaiveBayes) Fit(ds utils.DataSet[string]) {
 	var spam, ham int
-	for _, example := range ds.Data {
-		for _, token := range strings.Split(example.Text, " ") {
+	labels := ds.Y()
+	for i, dpoint := range ds.X() {
+		for _, token := range strings.Split(dpoint, " ") {
 			if token == "" {
 				continue
 			}
 			count, ok := nb.vocab[token]
 			if !ok {
 				count = Count{Spam: 1.0, Ham: 1.0}
-			} else if example.Spam {
+			} else if labels[i] == 1.0 {
 				count.Spam++
 				spam++
 			} else {
@@ -82,15 +85,16 @@ func (nb NaiveBayes) Prob(email string) float64 {
 	return spam / (spam + ham)
 }
 
-func (nb NaiveBayes) Score(ds DataSet) Report {
+func (nb NaiveBayes) Score(ds utils.DataSet[string]) Report {
 	var tn, tp, fp, fn int
-	for _, example := range ds.Data {
-		spam := nb.Predict(example.Text)
-		if spam && example.Spam {
+	labels := ds.Y()
+	for i, dpoint := range ds.X() {
+		spam := nb.Predict(dpoint)
+		if spam && labels[i] == 1.0 {
 			tp++
-		} else if !spam && !example.Spam {
+		} else if !spam && labels[i] == 0.0 {
 			tn++
-		} else if !spam && example.Spam {
+		} else if !spam && labels[i] == 1.0 {
 			fn++
 		} else {
 			fp++
@@ -142,8 +146,8 @@ func FromJSON(filepath string) NaiveBayes {
 		log.Fatal(err)
 	}
 	return NaiveBayes{
-		vocab: nb.Vocab,
-		count: nb.Count,
+		vocab:     nb.Vocab,
+		count:     nb.Count,
 		threshold: nb.Threshold,
 	}
 }

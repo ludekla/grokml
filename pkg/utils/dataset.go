@@ -24,7 +24,7 @@ func NewDataSet[D DataPoint](rd *CSVReader, conv Converter[D]) DataSet[D] {
 	ds := DataSet[D]{header: rd.header}
 	for {
 		row, ok := rd.Read()
-		if !ok {
+		if !ok || len(row) == 0 {
 			break
 		}
 		// label

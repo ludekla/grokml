@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 func ToVector(row []string) (Vector, error) {
@@ -21,7 +22,7 @@ func ToStr(row []string) (string, error) {
 	if len(row) == 0 {
 		return "", fmt.Errorf("ConvertText: no data.")
 	}
-	return row[0], nil
+	return strings.ToLower(row[0]), nil
 }
 
 func Str2Label(str string) (float64, error) {

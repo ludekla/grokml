@@ -2,24 +2,21 @@ package ch08
 
 import (
 	"testing"
+
+	"grokml/pkg/utils"
 )
 
-func TestNewNaiveBayes(t *testing.T) {
-	ds := NewDataSet("../../data/synreviews.csv")
-	nb := NewNaiveBayes(0.5)
-	nb.Fit(ds)
-
-}
-
 func TestNaiveBayesPredict(t *testing.T) {
+	csv := utils.NewCSVReader("../../data/synreviews.csv", []string{"sentiment", "review"})
+	ds := utils.NewDataSet[string](csv, utils.ToStr)
 	nb := NewNaiveBayes(0.5)
-	ds := NewDataSet("../../data/synreviews.csv")
 	trainSet, testSet := ds.Split(0.2)
 	nb.Fit(trainSet)
-	for _, x := range testSet.Data {
-		got := nb.Predict(x.Text)
-		if x.Spam != got {
-			t.Errorf("expected %v (spam), got %v", x.Spam, got)
+	labels := ds.Y()
+	for i, dpoint := range testSet.X() {
+		isSpam := nb.Predict(dpoint)
+		if isSpam != (labels[i] == 1.0) {
+			t.Errorf("expected %v (spam), got %v", labels[i] == 1.0, isSpam)
 		}
 	}
 	rep := nb.Score(testSet)
