@@ -1,4 +1,4 @@
-package utils
+package dataset
 
 import (
 	"encoding/csv"
@@ -26,7 +26,7 @@ type CSVReader struct {
 	cols   []int
 }
 
-func NewCSVReader(path string, header []string) *CSVReader {
+func NewCSVReader(path string, header ...string) *CSVReader {
 	file, err := os.Open(path)
 	if err != nil {
 		log.Fatal(err)

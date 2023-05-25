@@ -25,29 +25,31 @@ func NewRegLin(lrate float64, nEpochs int, lpen, rpen float64) *RegLin {
 	}
 }
 
-func (l *RegLin) Fit(ds utils.DataSet[utils.Vector]) []float64 {
-	stats := utils.NewDataStats(ds)
-	nds := stats.Normalise(ds)
-	l.Weights = utils.RandVector(len(stats.XMean))
-	l.Bias = rand.Float64()
+func (l *RegLin) Fit(dpoints [][]float64, labels []float64) []float64 {
+	vecs := utils.ToVectors(dpoints)
+	stats := utils.GetDataStats(vecs, labels)
+	vecs, labels = stats.Normalise(vecs, labels)
+	weights := utils.RandVector(len(stats.XMean))
+	bias := rand.Float64()
 	errs := make([]float64, 0, l.NEpochs)
-	size := nds.Size()
+	size := float64(len(vecs))
 	for ep := 0; ep < l.NEpochs; ep++ {
 		var err float64
-		for i := 0; i < size; i++ {
-			x, y := nds.Random()
-			delta := l.Weights.Dot(x) + l.Bias - y
-			l.Weights = l.Weights.
-				Add(x.ScaMul(-l.LRate * delta)).
-				Add(l1grad(l.Weights).ScaMul(-l.LassoPen)).
-				Add(l.Weights.ScaMul(-l.RidgePen))
-			l.Bias -= l.LRate * delta
+		for i, vec := range vecs {
+			delta := weights.Dot(vec) + bias - labels[i]
+			weights = weights.Add(vec.ScaMul(-l.LRate * delta)).
+				Add(l1grad(weights).
+				ScaMul(-l.LassoPen)).
+				Add(weights.ScaMul(-l.RidgePen))
+			bias -= l.LRate * delta
 			err += delta * delta
 		}
 		errs = append(errs, math.Sqrt(err/float64(size)))
 	}
-	l.Weights = l.Weights.Div(stats.XStd).ScaMul(stats.YStd)
-	l.Bias = stats.YMean + stats.YStd*l.Bias - l.Weights.Dot(stats.XMean)
+	weights.IDiv(stats.XStd)
+	weights.IScaMul(stats.YStd)
+	l.Bias = stats.YMean + stats.YStd*bias - weights.Dot(stats.XMean)
+	l.Weights = weights
 	return errs
 }
 

@@ -12,9 +12,9 @@ import (
 )
 
 type Regression interface {
-	Fit(ds utils.DataSet[utils.Vector]) []float64
-	Predict(points []utils.Vector) []float64
-	Score(ds utils.DataSet[utils.Vector]) float64
+	Fit(dpoints [][]float64, labels []float64) []float64
+	Predict(points [][]float64) []float64
+	Score(dpoints [][]float64, labels []float64) float64
 	Save(filepath string) error
 }
 
@@ -29,48 +29,51 @@ func NewLinReg(lr float64, epochs int) *LinReg {
 	return &LinReg{LRate: lr, NEpochs: epochs}
 }
 
-func (l *LinReg) Fit(ds utils.DataSet[utils.Vector]) []float64 {
-	stats := utils.NewDataStats(ds)
-	nds := stats.Normalise(ds)
-	l.Weights = utils.RandVector(len(stats.XMean))
-	l.Bias = rand.Float64()
+func (l *LinReg) Fit(dpoints [][]float64, labels []float64) []float64 {
+	vecs := utils.ToVectors(dpoints)
+	stats := utils.GetDataStats(vecs, labels)
+	vecs, labels = stats.Normalise(vecs, labels)
+	weights := utils.RandVector(len(stats.XMean))
+	bias := rand.Float64()
 	errs := make([]float64, 0, l.NEpochs)
-	size := nds.Size()
+	size := float64(len(vecs))
 	for ep := 0; ep < l.NEpochs; ep++ {
 		var err float64
-		for i := 0; i < size; i++ {
-			x, y := nds.Random()
-			delta := l.Weights.Dot(x) + l.Bias - y
-			l.Weights.IAdd(x.ScaMul(-l.LRate * delta))
-			l.Bias -= l.LRate * delta
+		for i, vec := range vecs {
+			delta := weights.Dot(vec) + bias - labels[i]
+			weights.IAdd(vec.ScaMul(-l.LRate * delta))
+			bias -= l.LRate * delta
 			err += delta * delta
 		}
-		errs = append(errs, math.Sqrt(err/float64(size)))
+		errs = append(errs, math.Sqrt(err/size))
 	}
-	l.Weights.IDiv(stats.XStd)
-	l.Weights.IScaMul(stats.YStd)
-	l.Bias = stats.YMean + stats.YStd*l.Bias - l.Weights.Dot(stats.XMean)
+	weights.IDiv(stats.XStd)
+	weights.IScaMul(stats.YStd)
+	l.Bias = stats.YMean + stats.YStd*bias - weights.Dot(stats.XMean)
+	l.Weights = weights
 	return errs
 }
 
-func (l LinReg) Predict(points []utils.Vector) []float64 {
-	preds := make([]float64, len(points))
-	for i, point := range points {
-		preds[i] = l.Weights.Dot(point) + l.Bias
+func (l LinReg) Predict(points [][]float64) []float64 {
+	vecs := utils.ToVectors(points)
+	preds := make([]float64, len(vecs))
+	for i, vec := range vecs {
+		preds[i] = l.Weights.Dot(vec) + l.Bias
 	}
 	return preds
 }
 
 // Computes the coefficient of determination
-func (l LinReg) Score(ds utils.DataSet[utils.Vector]) float64 {
-	preds := l.Predict(ds.X())
+func (l LinReg) Score(dpoints [][]float64, labels []float64) float64 {
+	preds := l.Predict(dpoints)
 	ym := mean(preds)
 	// Residual Sum of Squares, Total Sum of Squares
 	var rss, tss float64
-	y := ds.Y()
-	for i, pred := range preds {
-		rss += (y[i] - pred) * (y[i] - pred)
-		tss += (y[i] - ym) * (y[i] - ym)
+	for i, label := range labels {
+		// Residual Sum of Squares
+		rss += (label - preds[i]) * (label - preds[i])
+		// Total Sum of Squares
+		tss += (label - ym) * (label - ym)
 	}
 	return 1.0 - rss/tss
 }

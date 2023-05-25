@@ -100,3 +100,39 @@ func TestIDiv(t *testing.T) {
 		t.Errorf("Expected %v, got %v", exp, v)
 	}
 }
+
+func TestVectorStats(t *testing.T) {
+	vecs := []Vector{
+		Vector{1.0, 3.5, -1.0},
+		Vector{0.1, 1.0, 2.4},
+	}
+	expMean := Vector{0.55, 2.25, 0.7}
+	expStd := Vector{0.45, 1.25, 1.7}
+	mean, std := VectorStats(vecs)
+	if !equal(expMean, mean) {
+		t.Errorf("Expected %v, got %v", expMean, mean)
+	}
+	if !equal(expStd, std) {
+		t.Errorf("Expected %v, got %v", expMean, mean)
+	}
+}
+
+func TestMean(t *testing.T) {
+	vecs := []Vector{
+		Vector{1.0, 3.5, -1.0},
+		Vector{0.1, 1.0, 2.4},
+	}
+	got, exp := Mean(vecs), Vector{0.55, 2.25, 0.7}
+	if !equal(got, exp) {
+		t.Errorf("Expected %v, got %v", exp, got)
+	}
+}
+
+func TestToVector(t *testing.T) {
+	fs := [][]float64{{1.2, -3.4}, {0.1, 9.2}}
+	vs := ToVectors(fs)
+	vs[0].IScaMul(0.0)
+	if fs[0][0] == 0.0 {
+		t.Errorf("original data has been changed")
+	}
+}
