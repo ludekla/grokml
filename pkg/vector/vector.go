@@ -1,4 +1,4 @@
-package utils
+package vector
 
 import (
 	"math"
@@ -16,16 +16,6 @@ type Vector []float64
 // Makes vector with zeros.
 func NewVector(size int) Vector {
 	return make(Vector, size)
-}
-
-func ToVectors(slices [][]float64) []Vector {
-	vecs := make([]Vector, len(slices))
-	for i, dpoint := range slices {
-		vec := NewVector(len(dpoint))
-		copy(vec, dpoint)
-		vecs[i] = vec
-	}
-	return vecs
 }
 
 // Makes vector with random values from a uniform distribution over [0, 1].

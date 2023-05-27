@@ -8,7 +8,7 @@ import (
 )
 
 type dtype interface {
-	string | float64
+	float64 | string
 }
 
 type sample[T dtype] struct {
@@ -16,7 +16,7 @@ type sample[T dtype] struct {
 	label  float64
 }
 
-type converter[T dtype] func(string) T
+type converter[T float64 | string] func(string) T
 
 func AtoF(str string) float64 {
 	val, err := strconv.ParseFloat(str, 64)
