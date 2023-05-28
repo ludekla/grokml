@@ -3,6 +3,7 @@ package pipeline
 import (
 	"testing"
 
+	"grokml/pkg/ch03-linreg"
 	tk "grokml/pkg/tokens"
 	vc "grokml/pkg/vector"
 )
@@ -51,4 +52,13 @@ func TestTransformerII(t *testing.T) {
 	} else if sum(dpoints[0]) == 0.0 {
 		t.Errorf("Expected sum to be %f, got %f", exp, sum(dpoints[0]))
 	}
+
+	var est Estimator[vc.Vector] = ch03.NewLinReg(0.1, 100)
+	est.Fit(vecs, []float64{1.0, 0.0})
+	score := est.Score(vecs, []float64{1.0, 0.0})
+	exp = 1.0
+	if score != exp {
+		t.Errorf("Expected score to be %f, got %f", exp, score)
+	}
+
 }

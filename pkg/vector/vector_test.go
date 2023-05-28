@@ -27,7 +27,7 @@ func TestDot(t *testing.T) {
 func TestScalMul(t *testing.T) {
 	v := Vector{1.0, 3.5, 1.0}
 	fs := []float64{2.0, -20.0, 0.0}
-	exps := []Vector{{2.0, 7.0, 2.0}, {-20.0, -70.0, -20.0}, NewVector(3)}
+	exps := []Vector{{2.0, 7.0, 2.0}, {-20.0, -70.0, -20.0}, New(3)}
 	for i, f := range fs {
 		got, exp := v.ScaMul(f), exps[i]
 		if !equal(got, exp) {
@@ -39,7 +39,7 @@ func TestScalMul(t *testing.T) {
 func TestIScalMul(t *testing.T) {
 	v := Vector{1.0, 3.5, 1.0}
 	fs := []float64{2.0, -3.0, 0.0}
-	exps := []Vector{{2.0, 7.0, 2.0}, {-6.0, -21.0, -6.0}, NewVector(3)}
+	exps := []Vector{{2.0, 7.0, 2.0}, {-6.0, -21.0, -6.0}, New(3)}
 	for i, f := range fs {
 		v.IScaMul(f)
 		exp := exps[i]

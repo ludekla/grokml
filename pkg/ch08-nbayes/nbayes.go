@@ -28,8 +28,8 @@ type NaiveBayes struct {
 	report    Report
 }
 
-func NewNaiveBayes(th float64) NaiveBayes {
-	return NaiveBayes{vocab: make(map[string]Count), threshold: th}
+func NewNaiveBayes(th float64) *NaiveBayes {
+	return &NaiveBayes{vocab: make(map[string]Count), threshold: th}
 }
 
 func (nb NaiveBayes) GetThreshold() float64 {

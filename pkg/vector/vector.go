@@ -14,7 +14,7 @@ func init() {
 type Vector []float64
 
 // Makes vector with zeros.
-func NewVector(size int) Vector {
+func New(size int) Vector {
 	return make(Vector, size)
 }
 
@@ -108,7 +108,7 @@ func (v Vector) L1Norm() float64 {
 
 // Computes the vectorial mean of a slice of vectors.
 func Mean(vecs []Vector) Vector {
-	mean := NewVector(len(vecs[0]))
+	mean := New(len(vecs[0]))
 	for _, vec := range vecs {
 		mean.IAdd(vec)
 	}
@@ -118,7 +118,7 @@ func Mean(vecs []Vector) Vector {
 // Computes the vectorial mean and the standard deviation vector.
 func VectorStats(vecs []Vector) (Vector, Vector) {
 	mean := Mean(vecs)
-	std := NewVector(len(mean))
+	std := New(len(mean))
 	for _, vec := range vecs {
 		delta := vec.Add(mean.ScaMul(-1.0))
 		std.IAdd(delta.Mul(delta))
@@ -132,7 +132,7 @@ func VectorStats(vecs []Vector) (Vector, Vector) {
 
 // Normalises the vector by its mean and standard deviation.
 func (v Vector) Normalise(mean, std Vector) Vector {
-	inv := NewVector(len(std))
+	inv := New(len(std))
 	for i, val := range std {
 		inv[i] = 1.0 / val
 	}
@@ -154,7 +154,7 @@ func (v Vectoriser) Transform(slices [][]float64) []Vector {
 		if v.wrap {
 			vec = Vector(dpoint)
 		} else {
-			vec = NewVector(len(dpoint))
+			vec = New(len(dpoint))
 			copy(vec, dpoint)
 		}
 		vecs[i] = vec

@@ -24,3 +24,8 @@ type Estimator[O outtype] interface {
 	Load(jsonfile string) error
 	Save(jsonfile string) error
 }
+
+type Pipeline[I intype, O outtype] struct {
+	transformer Transformer[I, O]
+	estimator   Estimator[O]
+}
