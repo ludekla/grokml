@@ -3,24 +3,34 @@ package ch08
 import (
 	"testing"
 
-	"grokml/pkg/utils"
+	ds "grokml/pkg/dataset"
+	tk "grokml/pkg/tokens"
 )
 
 func TestNaiveBayesPredict(t *testing.T) {
-	csv := utils.NewCSVReader("../../data/synreviews.csv", []string{"sentiment", "review"})
-	ds := utils.NewDataSet[string](csv, utils.ToStr)
+	csv := ds.NewCSVReader("../../data/synreviews.csv", "spam", "text")
+	ds := ds.NewDataSet[string](csv, ds.AtoA)
 	nb := NewNaiveBayes(0.5)
 	trainSet, testSet := ds.Split(0.2)
-	nb.Fit(trainSet)
-	labels := ds.Y()
-	for i, dpoint := range testSet.X() {
-		isSpam := nb.Predict(dpoint)
-		if isSpam != (labels[i] == 1.0) {
-			t.Errorf("expected %v (spam), got %v", labels[i] == 1.0, isSpam)
+	// Tokenise.
+	tokeniser := tk.NewTokeniser(true)
+	tmaps := tokeniser.Transform(trainSet.DPoints())
+	// Learn.
+	labels := trainSet.Labels()
+	nb.Fit(tmaps, labels)
+	preds := nb.Predict(tmaps)
+	for i, spam := range preds {
+		if spam != (labels[i] == 1.0) {
+			t.Errorf("expected %v (spam), got %v", labels[i] == 1.0, spam)
 		}
 	}
-	rep := nb.Score(testSet)
-	if rep.Accuracy < 1.0 {
-		t.Errorf("expected accuracy of 1.0, got %.3f", rep.Accuracy)
+	// Test set.
+	tmaps = tokeniser.Transform(testSet.DPoints())
+	score := nb.Score(tmaps, testSet.Labels())
+	if score < 1.0 {
+		t.Errorf("expected accuracy of 1.0, got %.3f", score)
+	}
+	if score != nb.report.Accuracy {
+		t.Errorf("reported accuracy %.2f != %.2f score", nb.report.Accuracy, score)
 	}
 }

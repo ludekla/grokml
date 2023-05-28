@@ -2,22 +2,16 @@ package ch08
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
-	"strings"
 
-	"grokml/pkg/utils"
+	tk "grokml/pkg/tokens"
 )
 
 type Count struct {
 	Ham  float64 `json:"ham"`
 	Spam float64 `json:"spam"`
-}
-
-type NaiveBayes struct {
-	vocab     map[string]Count
-	count     Count
-	threshold float64
 }
 
 type Report struct {
@@ -27,22 +21,29 @@ type Report struct {
 	Specificity float64
 }
 
+type NaiveBayes struct {
+	vocab     map[string]Count
+	count     Count
+	threshold float64
+	report    Report
+}
+
 func NewNaiveBayes(th float64) NaiveBayes {
 	return NaiveBayes{vocab: make(map[string]Count), threshold: th}
 }
 
-func (nb *NaiveBayes) Set(th float64) {
+func (nb NaiveBayes) GetThreshold() float64 {
+	return nb.threshold
+}
+
+func (nb *NaiveBayes) SetThreshold(th float64) {
 	nb.threshold = th
 }
 
-func (nb *NaiveBayes) Fit(ds utils.DataSet[string]) {
+func (nb *NaiveBayes) Fit(tmaps []tk.TokenMap, labels []float64) {
 	var spam, ham int
-	labels := ds.Y()
-	for i, dpoint := range ds.X() {
-		for _, token := range strings.Split(dpoint, " ") {
-			if token == "" {
-				continue
-			}
+	for i, tmap := range tmaps {
+		for token, _ := range tmap {
 			count, ok := nb.vocab[token]
 			if !ok {
 				count = Count{Spam: 1.0, Ham: 1.0}
@@ -60,24 +61,26 @@ func (nb *NaiveBayes) Fit(ds utils.DataSet[string]) {
 }
 
 func (nb NaiveBayes) Get(token string) Count {
-	count, ok := nb.vocab[token]
-	if !ok {
+	if count, ok := nb.vocab[token]; !ok {
 		return Count{Spam: 1.0, Ham: 1.0}
 	} else {
 		return count
 	}
 }
 
-func (nb NaiveBayes) Predict(email string) bool {
-	return nb.Prob(email) > nb.threshold
+func (nb NaiveBayes) Predict(tmaps []tk.TokenMap) []bool {
+	res := make([]bool, len(tmaps))
+	for i, tmap := range tmaps {
+		res[i] = nb.Prob(tmap) > nb.threshold
+	}
+	return res
 }
 
-func (nb NaiveBayes) Prob(email string) float64 {
-	txt := strings.ToLower(email)
+func (nb NaiveBayes) Prob(tmap tk.TokenMap) float64 {
 	var ham, spam float64 = 1.0, 1.0
 	totalHam, totalSpam := nb.count.Ham, nb.count.Spam
 	total := totalHam + totalSpam
-	for _, token := range strings.Split(txt, " ") {
+	for token, _ := range tmap {
 		count := nb.Get(token)
 		ham *= count.Ham / totalHam * total
 		spam *= count.Spam / totalSpam * total
@@ -85,11 +88,10 @@ func (nb NaiveBayes) Prob(email string) float64 {
 	return spam / (spam + ham)
 }
 
-func (nb NaiveBayes) Score(ds utils.DataSet[string]) Report {
+func (nb *NaiveBayes) Score(tmaps []tk.TokenMap, labels []float64) float64 {
 	var tn, tp, fp, fn int
-	labels := ds.Y()
-	for i, dpoint := range ds.X() {
-		spam := nb.Predict(dpoint)
+	preds := nb.Predict(tmaps)
+	for i, spam := range preds {
 		if spam && labels[i] == 1.0 {
 			tp++
 		} else if !spam && labels[i] == 0.0 {
@@ -100,16 +102,18 @@ func (nb NaiveBayes) Score(ds utils.DataSet[string]) Report {
 			fp++
 		}
 	}
-	return Report{
-		Accuracy:    float64(tp+tn) / float64(tp+tn+fn+fp),
+	acc := float64(tp+tn) / float64(tp+tn+fn+fp)
+	nb.report = Report{
+		Accuracy:    acc,
 		Recall:      float64(tp) / float64(tp+fn),
 		Precision:   float64(tp) / float64(tp+fp),
 		Specificity: float64(tn) / float64(tn+fp),
 	}
+	return acc
 }
 
 func (nb NaiveBayes) Save(filepath string) {
-	nbBytes, err := json.MarshalIndent(
+	nBytes, err := json.MarshalIndent(
 		struct {
 			Vocab     map[string]Count `json:"vocab"`
 			Count     Count            `json:"count"`
@@ -125,33 +129,40 @@ func (nb NaiveBayes) Save(filepath string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = os.WriteFile(filepath, nbBytes, 0666)
+	err = os.WriteFile(filepath, nBytes, 0666)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func FromJSON(filepath string) NaiveBayes {
+func (nb *NaiveBayes) Load(filepath string) error {
 	nbBytes, err := os.ReadFile(filepath)
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("cannot open model file: %v", err)
 	}
-	nb := struct {
+	nbay := struct {
 		Vocab     map[string]Count `json:"vocab"`
 		Count     Count            `json:"count"`
 		Threshold float64          `json:"threshold"`
 	}{}
-	err = json.Unmarshal(nbBytes, &nb)
+	err = json.Unmarshal(nbBytes, &nbay)
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("cannot unmarshal the model file: %v", err)
 	}
-	return NaiveBayes{
-		vocab:     nb.Vocab,
-		count:     nb.Count,
-		threshold: nb.Threshold,
-	}
+	nb.vocab = nbay.Vocab
+	nb.count = nbay.Count
+	nb.threshold = nbay.Threshold
+	return nil
+}
+
+func (nb NaiveBayes) GetReport() Report {
+	return nb.report
 }
 
 func (r Report) FScore(beta float64) float64 {
 	return (1.0 + beta*beta) * r.Recall * r.Precision / (beta*beta*r.Precision + r.Recall)
+}
+
+func (nb *NaiveBayes) Reset() {
+	nb = &NaiveBayes{vocab: make(map[string]Count), threshold: nb.threshold}
 }

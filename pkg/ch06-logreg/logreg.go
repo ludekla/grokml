@@ -67,15 +67,19 @@ func (lr *LogReg) Fit(tmaps []tk.TokenMap, labels []float64) []float64 {
 	return errs
 }
 
-func (lr LogReg) Predict(tmap tk.TokenMap) float64 {
-	return sigmoid(lr.Weights.Dot(tmap) + lr.Bias)
+func (lr LogReg) Predict(tmaps []tk.TokenMap) []float64 {
+	res := make([]float64, len(tmaps))
+	for i, tmap := range tmaps {
+		res[i] = sigmoid(lr.Weights.Dot(tmap) + lr.Bias)
+	}
+	return res
 }
 
 // Computes the accuracy.
 func (lr LogReg) Score(tmaps []tk.TokenMap, labels []float64) float64 {
 	var acc float64
-	for i, tmap := range tmaps {
-		pred := lr.Predict(tmap)
+	preds := lr.Predict(tmaps)
+	for i, pred := range preds {
 		if pred > 0.5 && labels[i] == 1.0 {
 			acc++
 		} else if pred < 0.5 && labels[i] == 0.0 {
