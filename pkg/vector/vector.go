@@ -138,3 +138,26 @@ func (v Vector) Normalise(mean, std Vector) Vector {
 	}
 	return v.Add(mean.ScaMul(-1.0)).Mul(inv)
 }
+
+type Vectoriser struct {
+	wrap bool
+}
+
+func NewVectoriser(wrap bool) Vectoriser {
+	return Vectoriser{wrap}
+}
+
+func (v Vectoriser) Transform(slices [][]float64) []Vector {
+	vecs := make([]Vector, len(slices))
+	var vec Vector
+	for i, dpoint := range slices {
+		if v.wrap {
+			vec = Vector(dpoint)
+		} else {
+			vec = NewVector(len(dpoint))
+			copy(vec, dpoint)
+		}
+		vecs[i] = vec
+	}
+	return vecs
+}

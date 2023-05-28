@@ -5,7 +5,8 @@ import (
 	"fmt"
 
 	"grokml/pkg/ch06-logreg"
-	"grokml/pkg/utils"
+	ds "grokml/pkg/dataset"
+	tk "grokml/pkg/tokens"
 )
 
 var train = flag.Bool("t", false, "train model before prediction")
@@ -16,24 +17,37 @@ func main() {
 
 	fmt.Println("Hello Logistic Regression! Train? ", *train)
 
-	csv := utils.NewCSVReader("data/IMDB_Dataset.csv", []string{"sentiment", "review"})
-	modelfile := "models/logr.json"
+	csv := ds.NewCSVReader("data/IMDB_Dataset.csv", "sentiment", "review")
+	modelfile := "models/ch06-logreg/logr.json"
 
-	dsraw := utils.NewDataSet[string](csv, utils.ToStr)
-	ds := utils.Transform(dsraw)
-	trainSet, testSet := ds.Split(0.1)
-	var lr ch06.LogReg
+	dset := ds.NewDataSet[string](csv, ds.AtoA)
+	// Sets all tokens to lower case.
+	tokeniser := tk.NewTokeniser(true)
+
+	var lr *ch06.LogReg
 
 	if *train {
 		fmt.Println("Training")
+		trainSet, testSet := dset.Split(0.1)
+		// Fetch a machine.
 		lr = ch06.NewLogReg(10, 0.7)
-		lr.Fit(trainSet)
+		// Make strings into token maps.
+		tmaps := tokeniser.Transform(trainSet.DPoints())
+		// Learn.
+		lr.Fit(tmaps, trainSet.Labels())
+		// Transform test set.
+		tmaps = tokeniser.Transform(testSet.DPoints())
+		// Compute accuracy on testset.
+		acc := lr.Score(tmaps, testSet.Labels())
+		fmt.Printf("score on testset: %.3f\n", acc)
 		lr.Save(modelfile)
 	} else {
-		lr = ch06.FromJSON(modelfile)
+		// Load trained model.
+		lr = &ch06.LogReg{}
+		lr.Load(modelfile)
 	}
 
-	accTrain := lr.Accuracy(trainSet)
-	accTest := lr.Accuracy(testSet)
-	fmt.Println(accTrain, accTest)
+	tmaps := tokeniser.Transform(dset.DPoints())
+	acc := lr.Score(tmaps, dset.Labels())
+	fmt.Printf("score on dataset: %.3f\n", acc)
 }

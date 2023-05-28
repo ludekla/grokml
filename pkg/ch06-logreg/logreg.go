@@ -2,23 +2,24 @@ package ch06
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"math"
 	"math/rand"
 	"os"
 
-	"grokml/pkg/utils"
+	tk "grokml/pkg/tokens"
 )
 
 type LogReg struct {
-	Weights utils.TokenMap `json:"weights"`
-	Bias    float64        `json:"bias"`
-	NEpochs int            `json:"nepochs"`
-	LRate   float64        `json:"lrate"`
+	Weights tk.TokenMap `json:"weights"`
+	Bias    float64     `json:"bias"`
+	NEpochs int         `json:"nepochs"`
+	LRate   float64     `json:"lrate"`
 }
 
-func NewLogReg(nEpo int, lrate float64) LogReg {
-	return LogReg{Bias: rand.Float64(), NEpochs: nEpo, LRate: lrate}
+func NewLogReg(nEpo int, lrate float64) *LogReg {
+	return &LogReg{Bias: rand.Float64(), NEpochs: nEpo, LRate: lrate}
 }
 
 func (lr *LogReg) Save(filepath string) {
@@ -32,75 +33,56 @@ func (lr *LogReg) Save(filepath string) {
 	}
 }
 
-func FromJSON(jsonfile string) LogReg {
+func (lr *LogReg) Load(jsonfile string) error {
 	fileBytes, err := os.ReadFile(jsonfile)
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("cannot read model file %v", err)
 	}
-	lr := LogReg{}
-	err = json.Unmarshal(fileBytes, &lr)
+	err = json.Unmarshal(fileBytes, lr)
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("cannot load model %v", err)
 	}
-	return lr
+	return nil
 }
 
-func (lr *LogReg) Fit(ds utils.DataSet[utils.TokenMap]) []float64 {
-	// initialise weights with
-	weights := utils.TokenMap{}
-	for _, dpoint := range ds.X() {
-		for token, _ := range dpoint {
-			if _, ok := weights[token]; !ok {
-				weights[token] = rand.Float64()
-			}
-		}
-	}
-	lr.Weights = weights
+func (lr *LogReg) Fit(tmaps []tk.TokenMap, labels []float64) []float64 {
+	// Initialise weights and bias.
+	weights := make(tk.TokenMap)
+	var bias float64
 	errs := make([]float64, lr.NEpochs)
-	dpoints := ds.X()
-	labels := ds.Y()
-	size := float64(ds.Size())
+	size := float64(len(tmaps))
 	for i := 0; i < lr.NEpochs; i++ {
 		var sum float64
-		for j, dpoint := range dpoints {
-			err := lr.update(dpoint, labels[j])
-			sum += err
+		for j, tmap := range tmaps {
+			pred := sigmoid(weights.Dot(tmap) + bias)
+			diff := pred - labels[j]
+			weights.IAdd(tmap.ScaMul(-lr.LRate * diff))
+			bias -= lr.LRate * diff
+			sum += xentropy(pred, labels[j])
 		}
 		errs[i] = sum / size
 	}
+	lr.Weights = weights
+	lr.Bias = bias
 	return errs
 }
 
-func (lr LogReg) predict(tokens utils.TokenMap) float64 {
-	var sum float64
-	for w, val := range tokens {
-		sum += lr.Weights[w] * val
-	}
-	return sigmoid(sum + lr.Bias)
+func (lr LogReg) Predict(tmap tk.TokenMap) float64 {
+	return sigmoid(lr.Weights.Dot(tmap) + lr.Bias)
 }
 
-func (lr *LogReg) update(tokens utils.TokenMap, label float64) float64 {
-	pred := lr.predict(tokens)
-	diff := label - pred
-	for w, val := range tokens {
-		lr.Weights[w] += lr.LRate * diff * val
-	}
-	lr.Bias += lr.LRate * diff
-	return xentropy(pred, label)
-}
-
-func (lr LogReg) Accuracy(ds utils.DataSet[utils.TokenMap]) float64 {
+// Computes the accuracy.
+func (lr LogReg) Score(tmaps []tk.TokenMap, labels []float64) float64 {
 	var acc float64
-	labels := ds.Y()
-	for i, dpoint := range ds.X() {
-		pred := lr.predict(dpoint)
+	for i, tmap := range tmaps {
+		pred := lr.Predict(tmap)
 		if pred > 0.5 && labels[i] == 1.0 {
 			acc++
 		} else if pred < 0.5 && labels[i] == 0.0 {
 			acc++
 		}
 	}
-	return acc / float64(ds.Size())
+	return acc / float64(len(tmaps))
 }
 
 func sigmoid(val float64) float64 {

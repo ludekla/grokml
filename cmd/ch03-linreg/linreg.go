@@ -5,7 +5,8 @@ import (
 	"fmt"
 
 	"grokml/pkg/ch03-linreg"
-	"grokml/pkg/utils"
+	ds "grokml/pkg/dataset"
+	vc "grokml/pkg/vector"
 )
 
 var train = flag.Bool("t", false, "train model before prediction")
@@ -16,29 +17,39 @@ func main() {
 
 	fmt.Println("Hello Linear Regression!")
 
-	var lr ch03.Regression
+	var lr *ch03.LinReg
 
-	modelfile := "models/linreg.json"
+	vectoriser := vc.NewVectoriser(true)
+
+	modelfile := "models/ch03-linreg/linreg.json"
+	var dpoints []vc.Vector
+
+	csv := ds.NewCSVReader("data/Hyderabad.csv", "Price", "Area", "No. of Bedrooms")
+	dset := ds.NewDataSet[float64](csv, ds.AtoF)
 
 	if *train {
 		fmt.Println("Training")
-		csv := utils.NewCSVReader("data/Hyderabad.csv", "Price", "Area", "No. of Bedrooms")
-		dset := utils.NewDataSet[float64](csv, utils.AtoF)
 		trainSet, testSet := dset.Split(0.1)
+		dpoints = vectoriser.Transform(trainSet.DPoints())
 		// Learning rate, number of epochs
 		lr = ch03.NewLinReg(1e-2, 1000)
-		lr.Fit(trainSet.DPoints(), trainSet.Labels())
-		fmt.Printf("test score: %.3f\n", lr.Score(testSet.DPoints(), testSet.Labels()))
+		lr.Fit(dpoints, trainSet.Labels())
+		dpoints = vectoriser.Transform(testSet.DPoints())
+		fmt.Printf("score on testset: %.3f\n", lr.Score(dpoints, testSet.Labels()))
 		lr.Save(modelfile)
 	} else {
 		fmt.Println("Use already trained model")
-		lr = ch03.LinRegFromJSON(modelfile)
+		lr = &ch03.LinReg{}
+		lr.Load(modelfile)
 	}
 
-	vecs := [][]float64{{600, 1}, {1000, 2}, {1500, 3}, {2000, 4}}
+	vecs := []vc.Vector{{600, 1}, {1000, 2}, {1500, 3}, {2000, 4}}
 	preds := lr.Predict(vecs)
 	for i, vec := range vecs {
 		fmt.Printf("Predicted: %v -> %.3f\n", vec, preds[i])
 	}
+
+	dpoints = vectoriser.Transform(dset.DPoints())
+	fmt.Printf("score on dataset: %.3f\n", lr.Score(dpoints, dset.Labels()))
 
 }

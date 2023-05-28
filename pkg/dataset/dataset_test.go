@@ -4,6 +4,7 @@ import (
 	"testing"
 )
 
+// Data must be split correctly into training and test set.
 func TestDataSetSplit(t *testing.T) {
 	path := "../../data/reviews.csv"
 	csv := NewCSVReader(path, "sentiment", "review")
