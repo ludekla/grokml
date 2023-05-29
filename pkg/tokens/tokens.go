@@ -6,6 +6,10 @@ import (
 
 type TokenMap map[string]float64
 
+func New(size int) TokenMap {
+	return make(TokenMap, size)
+}
+
 func (tm TokenMap) IAdd(other TokenMap) {
 	for token, val := range other {
 		tm[token] += val

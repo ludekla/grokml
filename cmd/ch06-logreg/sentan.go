@@ -24,13 +24,13 @@ func main() {
 	// Sets all tokens to lower case.
 	tokeniser := tk.NewTokeniser(true)
 
-	var lr *ch06.LogReg
+	var lr *ch06.LogReg[tk.TokenMap]
 
 	if *train {
 		fmt.Println("Training")
 		trainSet, testSet := dset.Split(0.1)
 		// Fetch a machine.
-		lr = ch06.NewLogReg(10, 0.7)
+		lr = ch06.NewLogReg[tk.TokenMap](new(ch06.TokenMapUpdater), 10, 0.7)
 		// Make strings into token maps.
 		tmaps := tokeniser.Transform(trainSet.DPoints())
 		// Learn.
@@ -43,7 +43,7 @@ func main() {
 		lr.Save(modelfile)
 	} else {
 		// Load trained model.
-		lr = &ch06.LogReg{}
+		lr = ch06.NewLogReg[tk.TokenMap](new(ch06.TokenMapUpdater), 0.0, 0.0)
 		lr.Load(modelfile)
 	}
 

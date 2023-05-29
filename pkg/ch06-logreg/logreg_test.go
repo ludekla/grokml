@@ -9,7 +9,7 @@ import (
 )
 
 func TestLogReg(t *testing.T) {
-	lr := NewLogReg(20, 0.7)
+	lr := NewLogReg[tk.TokenMap](new(TokenMapUpdater), 20, 0.7)
 	csv := ds.NewCSVReader("../../data/reviews.csv", "sentiment", "review")
 	dset := ds.NewDataSet[string](csv, ds.AtoA)
 	trainSet, testSet := dset.Split(0.2)
