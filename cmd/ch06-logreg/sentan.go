@@ -30,7 +30,7 @@ func main() {
 		fmt.Println("Training")
 		trainSet, testSet := dset.Split(0.1)
 		// Fetch a machine.
-		lr = ch06.NewLogReg[tk.TokenMap](new(ch06.TokenMapUpdater), 10, 0.7)
+		lr = ch06.NewTextLogReg(10, 0.7)
 		// Make strings into token maps.
 		tmaps := tokeniser.Transform(trainSet.DPoints())
 		// Learn.
@@ -43,7 +43,7 @@ func main() {
 		lr.Save(modelfile)
 	} else {
 		// Load trained model.
-		lr = ch06.NewLogReg[tk.TokenMap](new(ch06.TokenMapUpdater), 0.0, 0.0)
+		lr = ch06.NewTextLogReg(0.0, 0.0)
 		lr.Load(modelfile)
 	}
 

@@ -7,6 +7,9 @@ import (
 	"math"
 	"math/rand"
 	"os"
+
+	tk "grokml/pkg/tokens"
+	vc "grokml/pkg/vector"
 )
 
 type LogReg[D DataPoint] struct {
@@ -16,12 +19,21 @@ type LogReg[D DataPoint] struct {
 	LRate   float64    `json:"lrate"`
 }
 
-func NewLogReg[D DataPoint](upd Updater[D], nEpo int, lrate float64) *LogReg[D] {
-	return &LogReg[D]{
+func NewTextLogReg(nEpo int, lrate float64) *LogReg[tk.TokenMap] {
+	return &LogReg[tk.TokenMap]{
 		Bias:    rand.Float64(),
 		NEpochs: nEpo,
 		LRate:   lrate,
-		Updater: upd,
+		Updater: new(TokenMapUpdater),
+	}
+}
+
+func NewNumLogReg(nEpo int, lrate float64) *LogReg[vc.Vector] {
+	return &LogReg[vc.Vector]{
+		Bias:    rand.Float64(),
+		NEpochs: nEpo,
+		LRate:   lrate,
+		Updater: new(VectorUpdater),
 	}
 }
 
