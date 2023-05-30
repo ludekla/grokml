@@ -11,7 +11,7 @@ func TestNode(t *testing.T) {
 		{[]float64{21, 32000, 1}, 0.12},
 	}
 	nd := NewNode(examples, 0)
-	nd.Fit(NewImpurity(0.5, Gini), 0.1)
+	nd.Fit(NewGini(0.5), 0.1)
 	exp := 0.910
 	if nd.Left.Label != exp {
 		t.Errorf("Expected label %.3f, got %.3f", exp, nd.Left.Label)

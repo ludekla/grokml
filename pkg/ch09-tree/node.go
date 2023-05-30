@@ -2,7 +2,6 @@ package ch09
 
 import (
 	"fmt"
-	"math"
 	"sort"
 )
 
@@ -12,12 +11,7 @@ type SplitInfo struct {
 	Threshold float64 `json:"threshold"`
 }
 
-type EvalFunc func(examples []Example, val float64) float64
 
-type Impurity struct {
-	Val  float64 `json:"val"`
-	eval EvalFunc
-}
 
 type Node struct {
 	Label    float64   `json:"label"`
@@ -27,56 +21,6 @@ type Node struct {
 	Left     *Node     `json:"left"`
 	Right    *Node     `json:"right"`
 	examples []Example
-}
-
-// Helper Functions
-func prob(examples []Example, val float64) float64 {
-	var sum float64
-	for _, example := range examples {
-		if example.target > val {
-			sum += 1
-		}
-	}
-	return sum / float64(len(examples))
-}
-
-func Entropy(examples []Example, val float64) float64 {
-	p := prob(examples, val)
-	if math.Abs(p-1.0) < 1e-4 || p < 1e-4 {
-		return 0.0
-	}
-	return -p*math.Log(p) - (1.0-p)*math.Log(1.0-p)
-}
-
-func Gini(examples []Example, val float64) float64 {
-	p := prob(examples, val)
-	return 2.0 * p * (1.0 - p)
-}
-
-func mse(examples []Example, val float64) float64 {
-	var mean float64
-	size := float64(len(examples))
-	for _, example := range examples {
-		mean += example.target
-	}
-	mean /= size
-	val = 0.0
-	for _, example := range examples {
-		val += (example.target - mean) * (example.target - mean)
-	}
-	val /= size
-	return val
-}
-
-// Methods and Associated Functions
-func NewImpurity(value float64, evalfun EvalFunc) Impurity {
-	return Impurity{Val: value, eval: evalfun}
-}
-
-func (im Impurity) Eval(examples []Example, split int) float64 {
-	oldVal := im.eval(examples, im.Val)
-	newVal := 0.5 * (im.eval(examples[:split], im.Val) + im.eval(examples[split:], im.Val))
-	return oldVal - newVal
 }
 
 func NewNode(examps []Example, d int) *Node {
@@ -108,7 +52,7 @@ func (n *Node) Fit(imp Impurity, minGain float64) {
 			return n.examples[k].features[i] < n.examples[j].features[i]
 		})
 		for j := 1; j < size; j++ {
-			newGain := imp.Eval(n.examples, j)
+			newGain := computeGain(imp, n.examples, j)
 			if newGain > gain {
 				gain = newGain
 				th := 0.5 * (n.examples[j-1].features[i] + n.examples[j].features[i])

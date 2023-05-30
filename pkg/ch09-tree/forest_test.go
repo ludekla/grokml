@@ -17,7 +17,7 @@ func TestForestClassifier(t *testing.T) {
 			{[]float64{7, 8}, 1}, {[]float64{8, 4}, 1}, {[]float64{9, 6}, 1},
 		},
 	}
-	fc := NewForestClassifier(3, NewImpurity(0.5, Entropy), 0.1)
+	fc := NewForestClassifier(3, NewEntropy(0.5), 0.1)
 	fc.Fit(trainSet)
 	rep := fc.Score(trainSet)
 	exp := 1.0
@@ -46,7 +46,7 @@ func TestAdaBoostClassifier(t *testing.T) {
 			{[]float64{7, 8}, 1}, {[]float64{8, 4}, 1}, {[]float64{9, 6}, 1},
 		},
 	}
-	ac := NewAdaBoostClassifier(3, NewImpurity(0.5, Entropy), 0.1)
+	ac := NewAdaBoostClassifier(3, NewEntropy(0.5), 0.1)
 	ac.Fit(trainSet)
 	rep := ac.Score(trainSet)
 	exp := 0.9230769

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"flag"
+	"fmt"
 
 	"grokml/pkg/ch09-tree"
 )
@@ -15,18 +15,18 @@ func main() {
 
 	ds := ch09.NewDataSet("data/Admission_Predict.csv")
 	trainSet, testSet := ds.Split(0.1)
-	
+
 	var ac1, ac2 *ch09.AdaBoostClassifier
 	// var dt3 TreeRegressor
 
 	if *train {
 		fmt.Printf("Training on Dataset\nheader: %v size: %d\n", ds.Header, ds.Size)
 		// Entropy
-		ac1 = ch09.NewAdaBoostClassifier(3, ch09.NewImpurity(0.5, ch09.Entropy), 0.1)
+		ac1 = ch09.NewAdaBoostClassifier(3, ch09.NewEntropy(0.5), 0.1)
 		ac1.Fit(trainSet)
 		ac1.Save("models/adaBoost_entropy.json")
 		// Gini
-		ac2 = ch09.NewAdaBoostClassifier(3, ch09.NewImpurity(0.5, ch09.Gini), 0.1)
+		ac2 = ch09.NewAdaBoostClassifier(3, ch09.NewGini(0.5), 0.1)
 		ac2.Fit(trainSet)
 		ac2.Save("models/adaBoost_gini.json")
 	} else {

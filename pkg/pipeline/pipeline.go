@@ -29,3 +29,18 @@ type Pipeline[I intype, O outtype] struct {
 	transformer Transformer[I, O]
 	estimator   Estimator[O]
 }
+
+type Report struct {
+	Accuracy    float64
+	Precision   float64
+	Recall      float64
+	Specificity float64
+}
+
+func (rp Report) FScore(beta float64) float64 {
+	denominator := beta*rp.Recall + rp.Precision
+	if denominator == 0.0 {
+		return 0.0
+	}
+	return (1 + beta*beta) * rp.Recall * rp.Precision / denominator
+}

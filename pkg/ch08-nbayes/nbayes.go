@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	pl "grokml/pkg/pipeline"
 	tk "grokml/pkg/tokens"
 )
 
@@ -14,18 +15,11 @@ type Count struct {
 	Spam float64 `json:"spam"`
 }
 
-type Report struct {
-	Accuracy    float64
-	Precision   float64
-	Recall      float64
-	Specificity float64
-}
-
 type NaiveBayes struct {
 	vocab     map[string]Count
 	count     Count
 	threshold float64
-	report    Report
+	report    pl.Report
 }
 
 func NewNaiveBayes(th float64) *NaiveBayes {
@@ -103,7 +97,7 @@ func (nb *NaiveBayes) Score(tmaps []tk.TokenMap, labels []float64) float64 {
 		}
 	}
 	acc := float64(tp+tn) / float64(tp+tn+fn+fp)
-	nb.report = Report{
+	nb.report = pl.Report{
 		Accuracy:    acc,
 		Recall:      float64(tp) / float64(tp+fn),
 		Precision:   float64(tp) / float64(tp+fp),
@@ -155,12 +149,8 @@ func (nb *NaiveBayes) Load(filepath string) error {
 	return nil
 }
 
-func (nb NaiveBayes) GetReport() Report {
+func (nb NaiveBayes) GetReport() pl.Report {
 	return nb.report
-}
-
-func (r Report) FScore(beta float64) float64 {
-	return (1.0 + beta*beta) * r.Recall * r.Precision / (beta*beta*r.Precision + r.Recall)
 }
 
 func (nb *NaiveBayes) Reset() {

@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	pl "grokml/pkg/pipeline"
 )
 
 // Helper functions
@@ -28,13 +30,6 @@ func load(obj interface{}, filename string) {
 	}
 }
 
-type Report struct {
-	Accuracy    float64
-	Precision   float64
-	Recall      float64
-	Specificity float64
-}
-
 type Tree struct {
 	Root    *Node    `json:"root"`
 	Imp     Impurity `json:"impurity"`
@@ -49,20 +44,12 @@ type TreeRegressor struct {
 	Tree
 }
 
-func (rp Report) FScore(beta float64) float64 {
-	denominator := beta*rp.Recall + rp.Precision
-	if denominator == 0.0 {
-		return 0.0
-	}
-	return (1 + beta*beta) * rp.Recall * rp.Precision / denominator
-}
-
 func NewTreeClassifier(imp Impurity, ming float64) TreeClassifier {
 	return TreeClassifier{Tree{Imp: imp, MinGain: ming}}
 }
 
 func NewTreeRegressor(ming float64) TreeRegressor {
-	return TreeRegressor{Tree{Imp: Impurity{eval: mse}, MinGain: ming}}
+	return TreeRegressor{Tree{Imp: NewMSE(), MinGain: ming}}
 }
 
 func (dt Tree) String() string {
@@ -101,8 +88,8 @@ func (dt TreeClassifier) Equals(other TreeClassifier) bool {
 	return dt.Root.Equals(other.Root)
 }
 
-func (dt TreeClassifier) Score(ds DataSet) Report {
-	return getReport(dt.Predict, ds.Examples, dt.Imp.Val)
+func (dt TreeClassifier) Score(ds DataSet) pl.Report {
+	return getReport(dt.Predict, ds.Examples, dt.Imp.Value())
 }
 
 func (dt TreeRegressor) Equals(other TreeRegressor) bool {
@@ -116,7 +103,7 @@ func (dt TreeRegressor) Score(ds DataSet) float64 {
 
 type predFunc func(features []float64) float64
 
-func getReport(predict predFunc, examples []Example, threshold float64) Report {
+func getReport(predict predFunc, examples []Example, threshold float64) pl.Report {
 	var tp, tn, fp, fn float64
 	for _, example := range examples {
 		p := predict(example.features)
@@ -143,7 +130,7 @@ func getReport(predict predFunc, examples []Example, threshold float64) Report {
 	} else {
 		specificity = tn / (tn + fp)
 	}
-	return Report{
+	return pl.Report{
 		Accuracy:    (tp + tn) / (tp + tn + fp + fn),
 		Precision:   precision,
 		Recall:      recall,
@@ -153,12 +140,13 @@ func getReport(predict predFunc, examples []Example, threshold float64) Report {
 
 // Coefficient of Determination
 func getCoD(predict predFunc, examples []Example) float64 {
-	msq := mse(examples, 0.0)
-	var sum float64
+	// residual square sum
+	rss := NewMSE().Eval(examples)
+	var tss float64
 	for _, example := range examples {
 		p := predict(example.features)
-		sum += (p - example.target) * (p - example.target)
+		tss += (p - example.target) * (p - example.target)
 	}
-	sum /= float64(len(examples))
-	return 1.0 - sum/msq
+	tss /= float64(len(examples))
+	return 1.0 - rss/tss
 }

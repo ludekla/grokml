@@ -9,6 +9,7 @@ fmt:
 	go fmt cmd/ch03-linreg/linreg.go
 	go fmt cmd/ch03-linreg/reglin.go
 	go fmt cmd/ch06-logreg/sentan.go
+	go fmt cmd/ch09-tree/*
 
 vet:
 	go vet pkg/vector/*
@@ -18,9 +19,13 @@ vet:
 	go vet pkg/ch03-linreg/*
 	go vet pkg/ch06-logreg/*
 	go vet pkg/ch08-nbayes/*
+	go vet pkg/ch09-tree/*
 	go vet cmd/ch03-linreg/linreg.go
 	go vet cmd/ch03-linreg/reglin.go
 	go vet cmd/ch06-logreg/sentan.go
+	go vet cmd/ch09-tree/tree.go
+	go vet cmd/ch09-tree/ada.go
+	go vet cmd/ch09-tree/forest.go
 
 test:
 	go test pkg/vector/*

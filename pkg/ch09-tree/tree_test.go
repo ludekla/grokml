@@ -17,7 +17,7 @@ func TestTreeEntropy(t *testing.T) {
 			{[]float64{7, 8}, 1}, {[]float64{8, 4}, 1}, {[]float64{9, 6}, 1},
 		},
 	}
-	dt := NewTreeClassifier(NewImpurity(0.5, Entropy), 0.1)
+	dt := NewTreeClassifier(NewEntropy(0.5), 0.1)
 	dt.Fit(trainSet)
 	rep := dt.Score(trainSet)
 	exp := 0.83333
@@ -45,7 +45,7 @@ func TestTreeGini(t *testing.T) {
 			{[]float64{7, 8}, 1}, {[]float64{8, 4}, 1}, {[]float64{9, 6}, 1},
 		},
 	}
-	dt := NewTreeClassifier(NewImpurity(0.5, Gini), 0.1)
+	dt := NewTreeClassifier(NewGini(0.5), 0.1)
 	dt.Fit(trainSet)
 	rep := dt.Score(trainSet)
 	exp := 0.83333

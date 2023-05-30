@@ -2,6 +2,8 @@ package ch09
 
 import (
 	"math"
+
+	pl "grokml/pkg/pipeline"
 )
 
 // Types
@@ -22,7 +24,7 @@ type AdaBoostClassifier struct {
 type GradBoostRegressor struct {
 	Size       int              `json:"size"`
 	Estimators []*TreeRegressor `json:"trees"`
-	lRate      float64          `json:"learning_rate"`
+	lRate      float64          `json:"-"`
 }
 
 // Forest Classifier: Constructor Function
@@ -49,8 +51,8 @@ func (f *Forest) Predict(features []float64) float64 {
 	return avg / float64(f.Size)
 }
 
-func (f *Forest) Score(ds DataSet) Report {
-	return getReport(f.Predict, ds.Examples, f.Estimators[0].Imp.Val)
+func (f *Forest) Score(ds DataSet) pl.Report {
+	return getReport(f.Predict, ds.Examples, f.Estimators[0].Imp.Value())
 }
 
 func (f *Forest) Save(filename string) {
@@ -95,7 +97,7 @@ func (ad *AdaBoostClassifier) Predict(features []float64) float64 {
 	return sum
 }
 
-func (ad *AdaBoostClassifier) Score(ds DataSet) Report {
+func (ad *AdaBoostClassifier) Score(ds DataSet) pl.Report {
 	return getReport(ad.Predict, ds.Examples, 0.0)
 }
 

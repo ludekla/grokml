@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"flag"
+	"fmt"
 
 	"grokml/pkg/ch09-tree"
 )
@@ -15,18 +15,18 @@ func main() {
 
 	ds := ch09.NewDataSet("data/Admission_Predict.csv")
 	trainSet, testSet := ds.Split(0.1)
-	
+
 	var dt1, dt2 ch09.TreeClassifier
 	// var dt3 TreeRegressor
 
 	if *train {
 		fmt.Printf("Training on Dataset\nheader: %v size: %d\n", ds.Header, ds.Size)
 		// Entropy
-		dt1 = ch09.NewTreeClassifier(ch09.NewImpurity(0.5, ch09.Entropy), 0.1)
+		dt1 = ch09.NewTreeClassifier(ch09.NewEntropy(0.5), 0.1)
 		dt1.Fit(trainSet)
 		dt1.Save("models/tree_entropy.json")
 		// Gini
-		dt2 = ch09.NewTreeClassifier(ch09.NewImpurity(0.5, ch09.Gini), 0.1)
+		dt2 = ch09.NewTreeClassifier(ch09.NewGini(0.5), 0.1)
 		dt2.Fit(trainSet)
 		dt2.Save("models/tree_gini.json")
 	} else {
