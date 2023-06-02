@@ -51,6 +51,7 @@ func TestAdaBoostClassifier(t *testing.T) {
 	exp := 0.9230769
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
+		t.Errorf("Report %v", rep)
 	}
 	ac.Save("../../models/ch09-tree/adaBoost.json")
 

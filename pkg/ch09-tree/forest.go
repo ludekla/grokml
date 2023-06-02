@@ -97,10 +97,12 @@ func (ad *AdaBoostClassifier) Fit(dpoints [][]float64, labels []float64) {
 	for i, tree := range ad.Estimators {
 		tree.Fit(dpoints, labels)
 		acc := tree.Score(dpoints, labels)
-		if acc > 0.99 {
-			ad.Report.Accuracy = 0.99
+		if acc > 0.9999 {
+			acc = 0.9999
+		} else if acc < 0.0001 {
+			acc = 0.0001
 		}
-		ad.Coeffs[i] = math.Log(ad.Report.Accuracy / (1.0 - ad.Report.Accuracy))
+		ad.Coeffs[i] = math.Log(acc / (1.0 - acc))
 	}
 }
 

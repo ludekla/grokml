@@ -100,7 +100,7 @@ func (dt *Tree) Load(jsonfile string) {
 	load(obj, jsonfile)
 }
 
-func (dt TreeClassifier) Score(dpoints [][]float64, labels []float64) float64 {
+func (dt *TreeClassifier) Score(dpoints [][]float64, labels []float64) float64 {
 	predictions := dt.Predict(dpoints)
 	dt.Report = getReport(predictions, labels)
 	return dt.Report.Accuracy
