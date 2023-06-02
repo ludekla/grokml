@@ -4,85 +4,50 @@ import (
 	"math"
 )
 
+const threshold = 0.5
+
 // Helper Functions
-func prob(examples []Example, val float64) float64 {
+func prob(examples []Example) float64 {
 	var sum float64
 	for _, example := range examples {
-		if example.target > val {
-			sum += 1
+		if example.label > threshold {
+			sum++
 		}
 	}
 	return sum / float64(len(examples))
 }
 
-type Impurity interface {
-	Eval(examples []Example) float64
-	Value() float64
-}
+type Impurity func(examples []Example) float64
 
-func computeGain(im Impurity, examples []Example, split int) float64 {
-	oldVal := im.Eval(examples)
-	newVal := 0.5 * (im.Eval(examples[:split]) + im.Eval(examples[split:]))
+func computeGain(eval Impurity, examples []Example, split int) float64 {
+	oldVal := eval(examples)
+	newVal := 0.5 * (eval(examples[:split]) + eval(examples[split:]))
 	return oldVal - newVal
 }
-
-type Entropy struct {
-	value float64
-}
-
-func NewEntropy(val float64) Entropy {
-	return Entropy{val}
-}
-
-func (en Entropy) Value() float64 {
-	return en.value
-}
  
-func (en Entropy) Eval(examples []Example) float64 {
-	p := prob(examples, en.value)
+func Entropy(examples []Example) float64 {
+	p := prob(examples)
 	if math.Abs(p-1.0) < 1e-4 || p < 1e-4 {
 		return 0.0
 	}
 	return -p*math.Log(p) - (1.0-p)*math.Log(1.0-p)
 }
 
-type Gini struct {
-	value float64
-}
-
-func NewGini(val float64) Gini {
-	return Gini{val}
-}
-
-func (gn Gini) Value() float64 {
-	return gn.value
-}
-
-func (gn Gini) Eval(examples []Example) float64 {
-	p := prob(examples, gn.value)
+func Gini(examples []Example) float64 {
+	p := prob(examples)
 	return 2.0 * p * (1.0 - p)
 }
 
-type MSE struct {}
-
-func NewMSE() MSE {
-	return MSE{}
-}
-
-func (m MSE) Value() float64 {
-	return 0.0
-}
-
-func (m MSE) Eval(examples []Example) float64 {
+func MSE(examples []Example) float64 {
 	var mean float64
 	size := float64(len(examples))
 	for _, example := range examples {
-		mean += example.target
+		mean += example.label
 	}
 	mean /= size
-	val := 0.0
+	var val float64
 	for _, example := range examples {
-		val += (example.target - mean) * (example.target - mean)
+		val += (example.label - mean) * (example.label - mean)
 	}
 	val /= size
 	return val

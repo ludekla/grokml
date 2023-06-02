@@ -34,12 +34,19 @@ test:
 	go test pkg/pipeline/*
 	go test pkg/ch06-logreg/*
 	go test pkg/ch08-nbayes/*
+	go test pkg/ch09-tree/*
 
 run:
 	go run cmd/ch03-linreg/linreg.go -t
 	go run cmd/ch03-linreg/linreg.go 
 	go run cmd/ch03-linreg/reglin.go -t
 	go run cmd/ch03-linreg/reglin.go
+	go run cmd/ch09-tree/ada.go -t
+	go run cmd/ch09-tree/ada.go
+	go run cmd/ch09-tree/forest.go -t
+	go run cmd/ch09-tree/forest.go
+	go run cmd/ch09-tree/tree.go -t
+	go run cmd/ch09-tree/tree.go
 
 build:
 	go build -o bin/linreg cmd/ch03-linreg/linreg.go

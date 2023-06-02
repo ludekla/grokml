@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"grokml/pkg/ch09-tree"
+	ds "grokml/pkg/dataset"
 )
 
 var train = flag.Bool("t", false, "train model before prediction")
@@ -13,36 +14,43 @@ func main() {
 
 	flag.Parse()
 
-	ds := ch09.NewDataSet("data/Admission_Predict.csv")
-	trainSet, testSet := ds.Split(0.1)
+	csv := ds.NewCSVReader(
+		"data/Admission_Predict.csv", "Chance of Admit",
+		"GRE Score", "TOEFL Score", "University Rating",
+		"SOP", "LOR", "CGPA", "Research",
+	)
+	dset := ds.NewDataSet(csv, ds.AtoF)
+	trainSet, testSet := dset.Split(0.1)
 
 	var fc1, fc2 *ch09.ForestClassifier
 	// var dt3 TreeRegressor
 
 	if *train {
-		fmt.Printf("Training on Dataset\nheader: %v size: %d\n", ds.Header, ds.Size)
+		fmt.Printf("Training on Dataset\nheader: %v size: %d\n", dset.Header(), dset.Size())
 		// Entropy
-		fc1 = ch09.NewForestClassifier(3, ch09.NewEntropy(0.5), 0.1)
-		fc1.Fit(trainSet)
-		fc1.Save("models/forest_entropy.json")
+		fc1 = ch09.NewForestClassifier(3, ch09.Entropy, 0.1)
+		fc1.Fit(trainSet.DPoints(), trainSet.Labels())
+		fc1.Save("models/ch09-tree/forest_entropy.json")
 		// Gini
-		fc2 = ch09.NewForestClassifier(3, ch09.NewGini(0.5), 0.1)
-		fc2.Fit(trainSet)
-		fc2.Save("models/forest_gini.json")
+		fc2 = ch09.NewForestClassifier(3, ch09.Gini, 0.1)
+		fc2.Fit(trainSet.DPoints(), trainSet.Labels())
+		fc2.Save("models/ch09-tree/forest_gini.json")
 	} else {
 		// Entropy
 		fc1 = &ch09.ForestClassifier{}
-		fc1.Load("models/forest_entropy.json")
+		fc1.Load("models/ch09-tree/forest_entropy.json")
 		// Gini
 		fc2 = &ch09.ForestClassifier{}
-		fc2.Load("models/forest_gini.json")
+		fc2.Load("models/ch09-tree/forest_gini.json")
 	}
 	// Scoring tests
-	rep := fc1.Score(testSet)
+	fc1.Score(testSet.DPoints(), testSet.Labels())
+	rep := fc1.Report
 	fmt.Println("Impurity: Entropy")
 	fmt.Printf("report: %+v F-Score: %.4f\n", rep, rep.FScore(1.0))
 
-	rep = fc2.Score(testSet)
+	fc2.Score(testSet.DPoints(), testSet.Labels())
+	rep = fc2.Report
 	fmt.Println("Impurity: Gini")
 	fmt.Printf("report: %+v F-Score: %.4f\n", rep, rep.FScore(1.0))
 }

@@ -1,34 +1,36 @@
 package ch09
 
 import (
-	// "fmt"
 	"math"
+	"math/rand"
 	"testing"
 )
 
+func init() {
+	rand.Seed(1)
+}
+
 func TestForestClassifier(t *testing.T) {
-	trainSet := DataSet{
-		Size:   12,
-		Header: []string{"x0", "x1", "y"},
-		Examples: []Example{
-			{[]float64{7, 1}, 0}, {[]float64{3, 2}, 0}, {[]float64{2, 3}, 0},
-			{[]float64{1, 5}, 0}, {[]float64{2, 6}, 0}, {[]float64{4, 7}, 0},
-			{[]float64{1, 9}, 1}, {[]float64{8, 10}, 1}, {[]float64{6, 5}, 1},
-			{[]float64{7, 8}, 1}, {[]float64{8, 4}, 1}, {[]float64{9, 6}, 1},
-		},
+	dpoints := [][]float64{
+		{7, 1}, {3, 2}, {2, 3}, {1, 5}, {2, 6}, {4, 7}, 
+		{1, 9}, {8, 10},{6, 5}, {7, 8}, {8, 4}, {9, 6},
 	}
-	fc := NewForestClassifier(3, NewEntropy(0.5), 0.1)
-	fc.Fit(trainSet)
-	rep := fc.Score(trainSet)
+	labels := []float64{0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1} 
+
+	fc := NewForestClassifier(3, Entropy, 0.1)
+	fc.Fit(dpoints, labels)
+	fc.Score(dpoints, labels)
+	rep := fc.Report
 	exp := 1.0
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
 	}
-	fc.Save("../../models/forest.json")
+	fc.Save("../../models/ch09-tree/forest.json")
 
 	fc2 := &ForestClassifier{}
-	fc2.Load("../../models/forest.json")
-	rep = fc2.Score(trainSet)
+	fc2.Load("../../models/ch09-tree/forest.json")
+	fc2.Score(dpoints, labels)
+	rep = fc2.Report
 	exp = 1.0
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
@@ -36,28 +38,26 @@ func TestForestClassifier(t *testing.T) {
 }
 
 func TestAdaBoostClassifier(t *testing.T) {
-	trainSet := DataSet{
-		Size:   12,
-		Header: []string{"x0", "x1", "y"},
-		Examples: []Example{
-			{[]float64{7, 1}, 0}, {[]float64{3, 2}, 0}, {[]float64{2, 3}, 0},
-			{[]float64{1, 5}, 0}, {[]float64{2, 6}, 0}, {[]float64{4, 7}, 0},
-			{[]float64{1, 9}, 1}, {[]float64{8, 10}, 1}, {[]float64{6, 5}, 1},
-			{[]float64{7, 8}, 1}, {[]float64{8, 4}, 1}, {[]float64{9, 6}, 1},
-		},
+	dpoints := [][]float64{
+		{7, 1}, {3, 2}, {2, 3}, {1, 5}, {2, 6}, {4, 7}, 
+		{1, 9}, {8, 10},{6, 5}, {7, 8}, {8, 4}, {9, 6},
 	}
-	ac := NewAdaBoostClassifier(3, NewEntropy(0.5), 0.1)
-	ac.Fit(trainSet)
-	rep := ac.Score(trainSet)
+	labels := []float64{0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1} 
+
+	ac := NewAdaBoostClassifier(3, Entropy, 0.1)
+	ac.Fit(dpoints, labels)
+	ac.Score(dpoints, labels)
+	rep := ac.Report
 	exp := 0.9230769
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
 	}
-	ac.Save("../../models/adaBoost.json")
+	ac.Save("../../models/ch09-tree/adaBoost.json")
 
 	ac2 := &AdaBoostClassifier{}
-	ac2.Load("../../models/adaBoost.json")
-	rep = ac2.Score(trainSet)
+	ac2.Load("../../models/ch09-tree/adaBoost.json")
+	ac2.Score(dpoints, labels)
+	rep = ac2.Report
 	exp = 0.9230769
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
@@ -65,27 +65,21 @@ func TestAdaBoostClassifier(t *testing.T) {
 }
 
 func TestGradBoostRegressor(t *testing.T) {
-	trainSet := DataSet{
-		Size:   9,
-		Header: []string{"Age", "Engagement"},
-		Examples: []Example{
-			{[]float64{10}, 7}, {[]float64{20}, 5}, {[]float64{30}, 7},
-			{[]float64{40}, 1}, {[]float64{50}, 2}, {[]float64{60}, 1},
-			{[]float64{70}, 5}, {[]float64{80}, 4}, {[]float64{86}, 3.6},
-		},
-	}
+	dpoints := [][]float64{{10}, {20}, {30}, {40}, {50}, {60}, {70}, {80}, {86}}
+	labels := []float64{7, 5,7, 1, 2, 1, 5, 4, 3.6}
+
 	gb := NewGradBoostRegressor(2, 0.1, 0.8)
-	gb.Fit(trainSet)
-	got := gb.Score(trainSet)
+	gb.Fit(dpoints, labels)
+	got := gb.Score(dpoints, labels)
 	exp := 0.9822822
 	if math.Abs(got-exp) > 1e-5 {
 		t.Errorf("expected R2 score %.7f, got %.7f", exp, got)
 	}
-	gb.Save("../../models/gradboost.json")
+	gb.Save("../../models/ch09-tree/gradboost.json")
 
 	gb2 := GradBoostRegressor{}
-	gb2.Load("../../models/gradboost.json")
-	got = gb2.Score(trainSet)
+	gb2.Load("../../models/ch09-tree/gradboost.json")
+	got = gb2.Score(dpoints, labels)
 	if math.Abs(got-exp) > 1e-5 {
 		t.Errorf("expected R2 score %.7f, got %.7f", exp, got)
 	}

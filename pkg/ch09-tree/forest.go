@@ -2,6 +2,7 @@ package ch09
 
 import (
 	"math"
+	"math/rand"
 
 	pl "grokml/pkg/pipeline"
 )
@@ -10,6 +11,7 @@ import (
 type Forest struct {
 	Size       int               `json:"size"`
 	Estimators []*TreeClassifier `json:"trees"`
+	Report pl.Report `json:"-"`
 }
 
 type ForestClassifier struct {
@@ -28,31 +30,46 @@ type GradBoostRegressor struct {
 }
 
 // Forest Classifier: Constructor Function
-func NewForestClassifier(n int, imp Impurity, ming float64) *ForestClassifier {
-	trees := make([]*TreeClassifier, n)
+func NewForestClassifier(nTrees int, imp Impurity, ming float64) *ForestClassifier {
+	trees := make([]*TreeClassifier, nTrees)
 	for i, _ := range trees {
 		clf := NewTreeClassifier(imp, ming)
 		trees[i] = &clf
 	}
-	return &ForestClassifier{Forest{Size: n, Estimators: trees}}
+	return &ForestClassifier{Forest{Size: nTrees, Estimators: trees}}
 }
+
 // Forest Classifier: Methods
-func (f *Forest) Fit(ds DataSet) {
+func (f *Forest) Fit(dpoints [][]float64, labels []float64) {
+	chunkSize := int(0.9*float64(len(dpoints)))
 	for _, tree := range f.Estimators {
-		tree.Fit(ds)
+		tree.Fit(dpoints[:chunkSize], labels[:chunkSize])
+		rand.Shuffle(len(labels), func(i, j int) {
+			dpoints[i], dpoints[j] = dpoints[j], dpoints[i]
+			labels[i], labels[j] = labels[j], labels[i]
+		})
 	}
 }
 
-func (f *Forest) Predict(features []float64) float64 {
-	var avg float64
+func (f *Forest) Predict(dpoints [][]float64) []float64 {
+	avg := make([]float64, len(dpoints))
 	for _, tree := range f.Estimators {
-		avg += tree.Predict(features)
+		preds := tree.Predict(dpoints)
+		for i, pred := range preds {
+			avg[i] += pred	
+		}	 
 	}
-	return avg / float64(f.Size)
+	size := float64(f.Size)
+	for i, val := range avg {
+		avg[i] = val / size
+	}
+	return avg
 }
 
-func (f *Forest) Score(ds DataSet) pl.Report {
-	return getReport(f.Predict, ds.Examples, f.Estimators[0].Imp.Value())
+func (f *Forest) Score(dpoints [][]float64, labels []float64) float64 {
+	preds := f.Predict(dpoints)
+	f.Report = getReport(preds, labels)
+	return f.Report.Accuracy
 }
 
 func (f *Forest) Save(filename string) {
@@ -75,30 +92,32 @@ func NewAdaBoostClassifier(n int, imp Impurity, ming float64) *AdaBoostClassifie
 	return &AdaBoostClassifier{Forest{Size: n, Estimators: trees}, nil}
 }
 // AdaBoost Classifier: Methods
-func (ad *AdaBoostClassifier) Fit(ds DataSet) {
+func (ad *AdaBoostClassifier) Fit(dpoints [][]float64, labels []float64) {
 	ad.Coeffs = make([]float64, ad.Size)
 	for i, tree := range ad.Estimators {
-		trainSet, _ := ds.Split(0.2)
-		tree.Fit(trainSet)
-		rep := tree.Score(trainSet)
-		if rep.Accuracy > 0.99 {
-			rep.Accuracy = 0.99
+		tree.Fit(dpoints, labels)
+		acc := tree.Score(dpoints, labels)
+		if acc > 0.99 {
+			ad.Report.Accuracy = 0.99
 		}
-		ad.Coeffs[i] = math.Log(rep.Accuracy / (1.0 - rep.Accuracy))
+		ad.Coeffs[i] = math.Log(ad.Report.Accuracy / (1.0 - ad.Report.Accuracy))
 	}
 }
 
-func (ad *AdaBoostClassifier) Predict(features []float64) float64 {
-	var sum float64
+func (ad *AdaBoostClassifier) Predict(dpoints [][]float64) []float64 {
+	preds := make([]float64, len(dpoints))
 	for i, tree := range ad.Estimators {
-		p := tree.Predict(features)
-		sum += ad.Coeffs[i] * (2*p - 1.0)
+		for j, pred := range tree.Predict(dpoints) {
+			preds[j] += ad.Coeffs[i] * (2*pred - 1.0)
+		}
 	}
-	return sum
+	return preds
 }
 
-func (ad *AdaBoostClassifier) Score(ds DataSet) pl.Report {
-	return getReport(ad.Predict, ds.Examples, 0.0)
+func (ad *AdaBoostClassifier) Score(dpoints [][]float64, labels []float64) float64 {
+	predictions := ad.Predict(dpoints)
+	ad.Report = getReport(predictions, labels)
+	return ad.Report.Accuracy
 }
 
 func (ad *AdaBoostClassifier) Save(filename string) {
@@ -121,28 +140,31 @@ func NewGradBoostRegressor(n int, ming float64, lrate float64) *GradBoostRegress
 	return &GradBoostRegressor{Size: n, Estimators: trees, lRate: lrate}
 }
 // Gradient Boosting Regressor: Methods
-func (gb *GradBoostRegressor) Fit(ds DataSet) {
-	dset := ds.Copy()
+func (gb *GradBoostRegressor) Fit(dpoints [][]float64, labels []float64) {
+	clabels := make([]float64, len(labels))
+	copy(clabels, labels)
 	for _, tree := range gb.Estimators {
-		tree.Fit(dset)
-		for j, example := range dset.Examples {
-			example.target -= tree.Predict(example.features)
-			dset.Examples[j] = example
+		tree.Fit(dpoints, clabels)
+		for j, pred := range tree.Predict(dpoints) {
+			clabels[j] -= pred
 		}
 	}
 }
 
-func (gb *GradBoostRegressor) Predict(features []float64) float64 {
-	pred := gb.Estimators[0].Predict(features)
+func (gb *GradBoostRegressor) Predict(dpoints [][]float64) []float64 {
+	preds := gb.Estimators[0].Predict(dpoints)
 	for _, tree := range gb.Estimators[1:] {
-		pred += gb.lRate * tree.Predict(features)
+		for i, pred := range tree.Predict(dpoints) {
+			preds[i] += gb.lRate * pred
+		} 
 	}
-	return pred
+	return preds
 }
 
 // coefficient of determination
-func (gb *GradBoostRegressor) Score(ds DataSet) float64 {
-	return getCoD(gb.Predict, ds.Examples)
+func (gb *GradBoostRegressor) Score(dpoints [][]float64, labels []float64) float64 {
+	preds := gb.Predict(dpoints)
+	return getCoD(preds, labels)
 }
 
 func (gb *GradBoostRegressor) Save(filename string) {

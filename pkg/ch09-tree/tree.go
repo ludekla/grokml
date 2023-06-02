@@ -30,14 +30,24 @@ func load(obj interface{}, filename string) {
 	}
 }
 
+func Mean(vals []float64) float64 {
+	var mean float64
+	for _, val := range vals {
+		mean += val
+	}
+	mean /= float64(len(vals))
+	return mean
+}
+
 type Tree struct {
 	Root    *Node    `json:"root"`
-	Imp     Impurity `json:"impurity"`
+	Imp     Impurity `json:"-"`
 	MinGain float64
 }
 
 type TreeClassifier struct {
 	Tree
+	Report pl.Report `json:"-"`
 }
 
 type TreeRegressor struct {
@@ -45,11 +55,11 @@ type TreeRegressor struct {
 }
 
 func NewTreeClassifier(imp Impurity, ming float64) TreeClassifier {
-	return TreeClassifier{Tree{Imp: imp, MinGain: ming}}
+	return TreeClassifier{Tree{Imp: imp, MinGain: ming}, pl.Report{}}
 }
 
 func NewTreeRegressor(ming float64) TreeRegressor {
-	return TreeRegressor{Tree{Imp: NewMSE(), MinGain: ming}}
+	return TreeRegressor{Tree{Imp: MSE, MinGain: ming}}
 }
 
 func (dt Tree) String() string {
@@ -57,21 +67,27 @@ func (dt Tree) String() string {
 	return s
 }
 
-func (dt *Tree) Fit(ds DataSet) {
-	dt.Root = NewNode(ds.Examples, 0)
-	dt.Root.Fit(dt.Imp, dt.MinGain)
+func (dt *Tree) Fit(dpoints [][]float64, labels []float64) {
+	examples := MakeExamples(dpoints, labels)
+	dt.Root = NewNode(0, dt.MinGain)
+	dt.Root.Fit(examples, dt.Imp)
 }
 
-func (dt Tree) Predict(features []float64) float64 {
-	nd := dt.Root
-	for nd.Left != nil {
-		if features[nd.Split.Dimension] < nd.Split.Threshold {
-			nd = nd.Left
-		} else {
-			nd = nd.Right
+func (dt Tree) Predict(dpoints [][]float64) []float64 {
+	labels := make([]float64, len(dpoints))
+	for i, dpoint := range dpoints {
+		nd := dt.Root
+		// Loop until you hit a leaf.
+		for nd.Left != nil {
+			if dpoint[nd.Split.Dimension] < nd.Split.Threshold {
+				nd = nd.Left
+			} else {
+				nd = nd.Right
+			}
 		}
+		labels[i] = nd.Label
 	}
-	return nd.Label
+	return labels
 }
 
 func (dt Tree) Save(jsonfile string) {
@@ -84,37 +100,29 @@ func (dt *Tree) Load(jsonfile string) {
 	load(obj, jsonfile)
 }
 
-func (dt TreeClassifier) Equals(other TreeClassifier) bool {
-	return dt.Root.Equals(other.Root)
-}
-
-func (dt TreeClassifier) Score(ds DataSet) pl.Report {
-	return getReport(dt.Predict, ds.Examples, dt.Imp.Value())
-}
-
-func (dt TreeRegressor) Equals(other TreeRegressor) bool {
-	return dt.Root.Equals(other.Root)
+func (dt TreeClassifier) Score(dpoints [][]float64, labels []float64) float64 {
+	predictions := dt.Predict(dpoints)
+	dt.Report = getReport(predictions, labels)
+	return dt.Report.Accuracy
 }
 
 // coefficient of determination
-func (dt TreeRegressor) Score(ds DataSet) float64 {
-	return getCoD(dt.Predict, ds.Examples)
+func (dt TreeRegressor) Score(dpoints [][]float64, labels []float64) float64 {
+	predictions := dt.Predict(dpoints)
+	return getCoD(predictions, labels)
 }
 
-type predFunc func(features []float64) float64
-
-func getReport(predict predFunc, examples []Example, threshold float64) pl.Report {
+func getReport(predictions []float64, labels []float64) pl.Report {
 	var tp, tn, fp, fn float64
-	for _, example := range examples {
-		p := predict(example.features)
-		if p > threshold && example.target > threshold {
-			tp += 1.0
-		} else if p > threshold && example.target <= threshold {
-			fp += 1.0
-		} else if p <= threshold && example.target > threshold {
-			fn += 1.0
+	for i, p := range predictions {
+		if p > threshold && labels[i] > threshold {
+			tp++
+		} else if p > threshold && labels[i] <= threshold {
+			fp++
+		} else if p <= threshold && labels[i] > threshold {
+			fn++
 		} else {
-			tn += 1.0
+			tn++
 		}
 	}
 	var precision, recall, specificity float64
@@ -139,14 +147,13 @@ func getReport(predict predFunc, examples []Example, threshold float64) pl.Repor
 }
 
 // Coefficient of Determination
-func getCoD(predict predFunc, examples []Example) float64 {
-	// residual square sum
-	rss := NewMSE().Eval(examples)
-	var tss float64
-	for _, example := range examples {
-		p := predict(example.features)
-		tss += (p - example.target) * (p - example.target)
+func getCoD(predictions []float64, labels []float64) float64 {
+	mean := Mean(labels)
+	var rss float64 // residual square sum
+	var tss float64 // total square sum
+	for i, pred := range predictions {
+		rss += (pred - labels[i]) * (pred - labels[i])
+		tss += (mean - labels[i]) * (mean - labels[i])
 	}
-	tss /= float64(len(examples))
 	return 1.0 - rss/tss
 }
