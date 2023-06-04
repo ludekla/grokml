@@ -6,9 +6,9 @@ fmt:
 	go fmt pkg/ch03-linreg/*
 	go fmt pkg/ch06-logreg/*
 	go fmt pkg/ch08-nbayes/*
-	go fmt cmd/ch03-linreg/linreg.go
-	go fmt cmd/ch03-linreg/reglin.go
-	go fmt cmd/ch06-logreg/sentan.go
+	go fmt cmd/ch03-linreg/*
+	go fmt cmd/ch05-percept/*
+	go fmt cmd/ch06-logreg/*
 	go fmt cmd/ch09-tree/*
 
 vet:
@@ -17,11 +17,13 @@ vet:
 	go vet pkg/dataset/*
 	go vet pkg/pipeline/*
 	go vet pkg/ch03-linreg/*
+	go vet pkg/ch05-percept/*
 	go vet pkg/ch06-logreg/*
 	go vet pkg/ch08-nbayes/*
 	go vet pkg/ch09-tree/*
 	go vet cmd/ch03-linreg/linreg.go
 	go vet cmd/ch03-linreg/reglin.go
+	go vet cmd/ch05-percept/sentan.go
 	go vet cmd/ch06-logreg/sentan.go
 	go vet cmd/ch09-tree/tree.go
 	go vet cmd/ch09-tree/ada.go
@@ -32,6 +34,7 @@ test:
 	go test pkg/tokens/*
 	go test pkg/dataset/*
 	go test pkg/pipeline/*
+	go test pkg/ch05-percept/*
 	go test pkg/ch06-logreg/*
 	go test pkg/ch08-nbayes/*
 	go test pkg/ch09-tree/*
