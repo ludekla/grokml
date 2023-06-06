@@ -15,13 +15,13 @@ func main() {
 
 	flag.Parse()
 
-	fmt.Println("Hello Linear Regression!")
+	fmt.Println("Hello Regularised Linear Regression!")
 
-	var lr *ch03.LinReg
+	var lr *ch03.RegLin
 
 	vectoriser := vc.NewVectoriser(true)
 
-	modelfile := "models/ch03-linreg/linreg.json"
+	modelfile := "models/ch03-linreg/reglin.json"
 	var dpoints []vc.Vector
 
 	csv := ds.NewCSVReader("data/Hyderabad.csv", "Price", "Area", "No. of Bedrooms")
@@ -32,15 +32,14 @@ func main() {
 		trainSet, testSet := dset.Split(0.1)
 		dpoints = vectoriser.Transform(trainSet.DPoints())
 		// Learning rate, number of epochs
-		lr = ch03.NewLinReg(1e-2, 1000)
+		lr = ch03.NewRegLin(1e-2, 100, 0.001, 0.0)
 		lr.Fit(dpoints, trainSet.Labels())
-		fmt.Printf("score on training set: %.3f\n", lr.Score(dpoints, trainSet.Labels()))
 		dpoints = vectoriser.Transform(testSet.DPoints())
 		fmt.Printf("score on testset: %.3f\n", lr.Score(dpoints, testSet.Labels()))
 		lr.Save(modelfile)
 	} else {
 		fmt.Println("Use already trained model")
-		lr = &ch03.LinReg{}
+		lr = &ch03.RegLin{}
 		lr.Load(modelfile)
 	}
 

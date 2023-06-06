@@ -140,18 +140,19 @@ func (v Vector) Normalise(mean, std Vector) Vector {
 }
 
 type Vectoriser struct {
-	wrap bool
+	Wrap bool
 }
 
-func NewVectoriser(wrap bool) Vectoriser {
-	return Vectoriser{wrap}
+// Constructs Vectoriser. The parameter wrap
+func NewVectoriser(wrap bool) *Vectoriser {
+	return &Vectoriser{wrap}
 }
 
 func (v Vectoriser) Transform(slices [][]float64) []Vector {
 	vecs := make([]Vector, len(slices))
 	var vec Vector
 	for i, dpoint := range slices {
-		if v.wrap {
+		if v.Wrap {
 			vec = Vector(dpoint)
 		} else {
 			vec = New(len(dpoint))
@@ -161,3 +162,16 @@ func (v Vectoriser) Transform(slices [][]float64) []Vector {
 	}
 	return vecs
 }
+/*
+func (v Vectoriser) MarshalJSON() ([]byte, error) {
+	bs, err := json.Marshal(v)
+	if err != nil {
+		return bs, fmt.Errorf("cannot marshal vectoriser")
+	}
+	return bs, nil
+}
+
+func (v *Vectoriser) UnmarshalJSON(bs []byte) error {
+	return json.Unmarshal(bs, v)
+}
+*/

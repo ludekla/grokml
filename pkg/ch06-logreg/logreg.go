@@ -3,7 +3,6 @@ package ch06
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"math"
 	"math/rand"
 	"os"
@@ -37,15 +36,16 @@ func NewNumLogReg(nEpo int, lrate float64) *LogReg[vc.Vector] {
 	}
 }
 
-func (lr *LogReg[D]) Save(filepath string) {
+func (lr *LogReg[D]) Save(filepath string) error {
 	lrBytes, err := json.MarshalIndent(*lr, "", "   ")
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("cannot read model file %v", err)
 	}
 	err = os.WriteFile(filepath, lrBytes, 0666)
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("cannot write model file %v", err)
 	}
+	return nil
 }
 
 func (lr *LogReg[D]) Load(jsonfile string) error {

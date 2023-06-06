@@ -36,8 +36,8 @@ type Tokeniser struct {
 	ToLower bool
 }
 
-func NewTokeniser(toLower bool) Tokeniser {
-	return Tokeniser{toLower}
+func NewTokeniser(toLower bool) *Tokeniser {
+	return &Tokeniser{toLower}
 }
 
 func (t Tokeniser) Transform(docs [][]string) []TokenMap {
@@ -68,3 +68,16 @@ func (t Tokeniser) TokenFreqs(txt string) TokenMap {
 	}
 	return tmap
 }
+/*
+func (t Tokeniser) MarshalJSON() ([]byte, error) {
+	bs, err := json.Marshal(t)
+	if err != nil {
+		return bs, fmt.Errorf("cannot marshal vectoriser")
+	}
+	return bs, nil
+}
+
+func (t *Tokeniser) UnmarshalJSON(bs []byte) error {
+	return json.Unmarshal(bs, t)
+}
+*/

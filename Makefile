@@ -22,6 +22,7 @@ vet:
 	go vet pkg/ch08-nbayes/*
 	go vet pkg/ch09-tree/*
 	go vet cmd/ch03-linreg/linreg.go
+	go vet cmd/ch03-linreg/linregpl.go
 	go vet cmd/ch03-linreg/reglin.go
 	go vet cmd/ch05-percept/sentan.go
 	go vet cmd/ch06-logreg/sentan.go
