@@ -9,13 +9,14 @@ import (
 
 	"grokml/pkg/ch08-nbayes"
 	ds "grokml/pkg/dataset"
+	pl "grokml/pkg/pipeline"
 	tk "grokml/pkg/tokens"
 )
 
 var train = flag.Bool("t", false, "train model before prediction")
 
 func ROC(model ch08.NaiveBayes, dset ds.DataSet[string], N int) {
-	file, err := os.Create("data/roc.csv")
+	file, err := os.Create("data/nbplroc.csv")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -42,31 +43,40 @@ func main() {
 	csv := ds.NewCSVReader("data/emails.csv", "spam", "text")
 	dset := ds.NewDataSet[string](csv, ds.AtoA)
 
-	tokeniser := tk.NewTokeniser(true)
+	pline := pl.NewPipeline[string, tk.TokenMap](
+		tk.NewTokeniser(true),
+		ch08.NewNaiveBayes(0.5),
+	)
 
-	var nb *ch08.NaiveBayes
-	modelfile := "models/ch08-nbayes/nb.json"
+	modelfile := "models/ch08-nbayes/nbpl.json"
 
 	if *train {
 		trainSet, testSet := dset.Split(0.2)
 		fmt.Printf("Training model on %d examples.\n", trainSet.Size())
 
-		tmaps := tokeniser.Transform(trainSet.DPoints())
-		nb = ch08.NewNaiveBayes(0.5)
-		nb.Fit(tmaps, trainSet.Labels())
-		tmaps = tokeniser.Transform(testSet.DPoints())
-		nb.Score(tmaps, testSet.Labels())
+		pline.Fit(trainSet.DPoints(), trainSet.Labels())
+
+		var nb *ch08.NaiveBayes = pline.Estimator.(*ch08.NaiveBayes)
+
+		pline.Score(trainSet.DPoints(), trainSet.Labels())
 		rep := nb.GetReport()
-		fmt.Printf("testset: %d emails\n", testSet.Size())
+		fmt.Printf("training set: %d emails\n", trainSet.Size())
 		fmt.Printf("%+v\nF-Score: %.3f\n", rep, rep.FScore(1.0))
-		nb.Save(modelfile)
+
+		pline.Score(testSet.DPoints(), testSet.Labels())
+		rep = nb.GetReport()
+		fmt.Printf("test set: %d emails\n", testSet.Size())
+		fmt.Printf("%+v\nF-Score: %.3f\n", rep, rep.FScore(1.0))
+
+		pline.Save(modelfile)
 	} else {
-		nb = &ch08.NaiveBayes{}
-		nb.Load(modelfile)
+		fmt.Println("Using trained model.")
+		pline.Load(modelfile)
 	}
 
-	tmaps := tokeniser.Transform(dset.DPoints())
-	nb.Score(tmaps, dset.Labels())
+	var nb *ch08.NaiveBayes = pline.Estimator.(*ch08.NaiveBayes)
+
+	pline.Score(dset.DPoints(), dset.Labels())
 	rep := nb.GetReport()
 	fmt.Printf("dataset: %d emails\n", dset.Size())
 	fmt.Printf("%+v\nF-Score: %.3f\n", rep, rep.FScore(1.0))
@@ -77,18 +87,21 @@ func main() {
 		{"buy cheap lottery easy money now"},
 		{"asdfgh"},
 	}
-	tmaps = tokeniser.Transform(mails)
 
-	verbal := func(label float64) string {
-		if label == 1.0 {
+	verbal := func(pred float64) string {
+		if pred == 1.0 {
 			return "Spam"
 		} else {
 			return "Ham"
 		}
 	}
-	preds := nb.Predict(tmaps)
+	preds := pline.Predict(mails)
+
+	tmaps := pline.Transformer.Transform(mails)
+
 	for i, tmap := range tmaps {
 		fmt.Printf("%v -> %.3f (%s)\n", mails[i], nb.Prob(tmap), verbal(preds[i]))
 	}
 	// ROC(nb, testSet, 10000)
+
 }

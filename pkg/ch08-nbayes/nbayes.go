@@ -16,29 +16,21 @@ type Count struct {
 }
 
 type NaiveBayes struct {
-	vocab     map[string]Count
-	count     Count
-	threshold float64
-	report    pl.Report
+	Vocab     map[string]Count `json:"vocab"`
+	Count     Count            `json:"count"`
+	Threshold float64          `json:"threshold"`
+	report    pl.Report        `json:"-"`
 }
 
 func NewNaiveBayes(th float64) *NaiveBayes {
-	return &NaiveBayes{vocab: make(map[string]Count), threshold: th}
+	return &NaiveBayes{Vocab: make(map[string]Count), Threshold: th}
 }
 
-func (nb NaiveBayes) GetThreshold() float64 {
-	return nb.threshold
-}
-
-func (nb *NaiveBayes) SetThreshold(th float64) {
-	nb.threshold = th
-}
-
-func (nb *NaiveBayes) Fit(tmaps []tk.TokenMap, labels []float64) {
+func (nb *NaiveBayes) Fit(tmaps []tk.TokenMap, labels []float64) []float64 {
 	var spam, ham int
 	for i, tmap := range tmaps {
 		for token, _ := range tmap {
-			count, ok := nb.vocab[token]
+			count, ok := nb.Vocab[token]
 			if !ok {
 				count = Count{Spam: 1.0, Ham: 1.0}
 			} else if labels[i] == 1.0 {
@@ -48,31 +40,34 @@ func (nb *NaiveBayes) Fit(tmaps []tk.TokenMap, labels []float64) {
 				count.Ham++
 				ham++
 			}
-			nb.vocab[token] = count
+			nb.Vocab[token] = count
 		}
 	}
-	nb.count = Count{Ham: float64(ham), Spam: float64(spam)}
+	nb.Count = Count{Ham: float64(ham), Spam: float64(spam)}
+	return nil
 }
 
 func (nb NaiveBayes) Get(token string) Count {
-	if count, ok := nb.vocab[token]; !ok {
+	if count, ok := nb.Vocab[token]; !ok {
 		return Count{Spam: 1.0, Ham: 1.0}
 	} else {
 		return count
 	}
 }
 
-func (nb NaiveBayes) Predict(tmaps []tk.TokenMap) []bool {
-	res := make([]bool, len(tmaps))
+func (nb NaiveBayes) Predict(tmaps []tk.TokenMap) []float64 {
+	res := make([]float64, len(tmaps))
 	for i, tmap := range tmaps {
-		res[i] = nb.Prob(tmap) > nb.threshold
+		if nb.Prob(tmap) > nb.Threshold {
+			res[i] = 1.0
+		}
 	}
 	return res
 }
 
 func (nb NaiveBayes) Prob(tmap tk.TokenMap) float64 {
 	var ham, spam float64 = 1.0, 1.0
-	totalHam, totalSpam := nb.count.Ham, nb.count.Spam
+	totalHam, totalSpam := nb.Count.Ham, nb.Count.Spam
 	total := totalHam + totalSpam
 	for token, _ := range tmap {
 		count := nb.Get(token)
@@ -85,12 +80,12 @@ func (nb NaiveBayes) Prob(tmap tk.TokenMap) float64 {
 func (nb *NaiveBayes) Score(tmaps []tk.TokenMap, labels []float64) float64 {
 	var tn, tp, fp, fn int
 	preds := nb.Predict(tmaps)
-	for i, spam := range preds {
-		if spam && labels[i] == 1.0 {
+	for i, pred := range preds {
+		if pred == 1.0 && labels[i] == 1.0 {
 			tp++
-		} else if !spam && labels[i] == 0.0 {
+		} else if pred == 0.0 && labels[i] == 0.0 {
 			tn++
-		} else if !spam && labels[i] == 1.0 {
+		} else if pred == 0.0 && labels[i] == 1.0 {
 			fn++
 		} else {
 			fp++
@@ -107,19 +102,7 @@ func (nb *NaiveBayes) Score(tmaps []tk.TokenMap, labels []float64) float64 {
 }
 
 func (nb NaiveBayes) Save(filepath string) {
-	nBytes, err := json.MarshalIndent(
-		struct {
-			Vocab     map[string]Count `json:"vocab"`
-			Count     Count            `json:"count"`
-			Threshold float64          `json:"threshold"`
-		}{
-			nb.vocab,
-			nb.count,
-			nb.threshold,
-		},
-		"",
-		"    ",
-	)
+	nBytes, err := json.MarshalIndent(nb, "", "    ")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -134,18 +117,10 @@ func (nb *NaiveBayes) Load(filepath string) error {
 	if err != nil {
 		return fmt.Errorf("cannot open model file: %v", err)
 	}
-	nbay := struct {
-		Vocab     map[string]Count `json:"vocab"`
-		Count     Count            `json:"count"`
-		Threshold float64          `json:"threshold"`
-	}{}
-	err = json.Unmarshal(nbBytes, &nbay)
+	err = json.Unmarshal(nbBytes, nb)
 	if err != nil {
 		return fmt.Errorf("cannot unmarshal the model file: %v", err)
 	}
-	nb.vocab = nbay.Vocab
-	nb.count = nbay.Count
-	nb.threshold = nbay.Threshold
 	return nil
 }
 
@@ -154,5 +129,5 @@ func (nb NaiveBayes) GetReport() pl.Report {
 }
 
 func (nb *NaiveBayes) Reset() {
-	nb = &NaiveBayes{vocab: make(map[string]Count), threshold: nb.threshold}
+	nb = &NaiveBayes{Vocab: make(map[string]Count), Threshold: nb.Threshold}
 }

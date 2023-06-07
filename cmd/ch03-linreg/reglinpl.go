@@ -6,6 +6,7 @@ import (
 
 	"grokml/pkg/ch03-linreg"
 	ds "grokml/pkg/dataset"
+	pl "grokml/pkg/pipeline"
 	vc "grokml/pkg/vector"
 )
 
@@ -15,14 +16,14 @@ func main() {
 
 	flag.Parse()
 
-	fmt.Println("Hello Regularised Linear Regression!")
+	fmt.Println("Hello Regularised Linear Regression Pipeline!")
 
-	var lr *ch03.RegLin
+	pline := pl.NewPipeline[float64, vc.Vector](
+		vc.NewVectoriser(true),
+		ch03.NewRegLin(1e-2, 100, 0.001, 0.0),
+	)
 
-	vectoriser := vc.NewVectoriser(true)
-
-	modelfile := "models/ch03-linreg/reglin.json"
-	var dpoints []vc.Vector
+	modelfile := "models/ch03-linreg/reglinpl.json"
 
 	csv := ds.NewCSVReader("data/Hyderabad.csv", "Price", "Area", "No. of Bedrooms")
 	dset := ds.NewDataSet[float64](csv, ds.AtoF)
@@ -30,26 +31,21 @@ func main() {
 	if *train {
 		fmt.Println("Training")
 		trainSet, testSet := dset.Split(0.1)
-		dpoints = vectoriser.Transform(trainSet.DPoints())
-		// Learning rate, number of epochs
-		lr = ch03.NewRegLin(1e-2, 100, 0.001, 0.0)
-		lr.Fit(dpoints, trainSet.Labels())
-		dpoints = vectoriser.Transform(testSet.DPoints())
-		fmt.Printf("score on testset: %.3f\n", lr.Score(dpoints, testSet.Labels()))
-		lr.Save(modelfile)
+		pline.Fit(trainSet.DPoints(), trainSet.Labels())
+		fmt.Printf("score on training set: %.3f\n", pline.Score(trainSet.DPoints(), testSet.Labels()))
+		fmt.Printf("score on test set: %.3f\n", pline.Score(testSet.DPoints(), testSet.Labels()))
+		pline.Save(modelfile)
 	} else {
 		fmt.Println("Use already trained model")
-		lr = &ch03.RegLin{}
-		lr.Load(modelfile)
+		pline.Load(modelfile)
 	}
 
-	vecs := []vc.Vector{{600, 1}, {1000, 2}, {1500, 3}, {2000, 4}}
-	preds := lr.Predict(vecs)
-	for i, vec := range vecs {
-		fmt.Printf("Predicted: %v -> %.3f\n", vec, preds[i])
+	dpoints := [][]float64{{600, 1}, {1000, 2}, {1500, 3}, {2000, 4}}
+	preds := pline.Predict(dpoints)
+	for i, dpoint := range dpoints {
+		fmt.Printf("Predicted: %v -> %.3f\n", dpoint, preds[i])
 	}
 
-	dpoints = vectoriser.Transform(dset.DPoints())
-	fmt.Printf("score on dataset: %.3f\n", lr.Score(dpoints, dset.Labels()))
+	fmt.Printf("score on dataset: %.3f\n", pline.Score(dset.DPoints(), dset.Labels()))
 
 }

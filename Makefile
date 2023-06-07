@@ -9,6 +9,7 @@ fmt:
 	go fmt cmd/ch03-linreg/*
 	go fmt cmd/ch05-percept/*
 	go fmt cmd/ch06-logreg/*
+	go fmt cmd/ch08-nbayes/*
 	go fmt cmd/ch09-tree/*
 
 vet:
@@ -24,8 +25,12 @@ vet:
 	go vet cmd/ch03-linreg/linreg.go
 	go vet cmd/ch03-linreg/linregpl.go
 	go vet cmd/ch03-linreg/reglin.go
+	go vet cmd/ch03-linreg/reglinpl.go
 	go vet cmd/ch05-percept/sentan.go
+	go vet cmd/ch05-percept/sentanpl.go
 	go vet cmd/ch06-logreg/sentan.go
+	go vet cmd/ch08-nbayes/nbayes.go
+	go vet cmd/ch08-nbayes/nbayespl.go
 	go vet cmd/ch09-tree/tree.go
 	go vet cmd/ch09-tree/ada.go
 	go vet cmd/ch09-tree/forest.go

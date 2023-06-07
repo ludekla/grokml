@@ -20,8 +20,8 @@ func TestNaiveBayesPredict(t *testing.T) {
 	nb.Fit(tmaps, labels)
 	preds := nb.Predict(tmaps)
 	for i, spam := range preds {
-		if spam != (labels[i] == 1.0) {
-			t.Errorf("expected %v (spam), got %v", labels[i] == 1.0, spam)
+		if spam != labels[i] {
+			t.Errorf("expected spam %f, got spam %v", labels[i], spam)
 		}
 	}
 	// Test set.

@@ -1,11 +1,11 @@
 package ch03
 
 import (
+	"encoding/json"
 	"fmt"
 	"math"
 	"math/rand"
 	"os"
-	"encoding/json"
 
 	vc "grokml/pkg/vector"
 )
@@ -100,16 +100,3 @@ func (lr *LinReg) Load(filepath string) error {
 	}
 	return nil
 }
-/*
-func (lr LinReg) MarshalJSON() ([]byte, error) {
-	bs, err := json.Marshal(lr)
-	if err != nil {
-		return bs, fmt.Errorf("cannot marshal vectoriser")
-	}
-	return bs, nil
-}
-
-func (lr *LinReg) UnmarshalJSON(bs []byte) error {
-	return json.Unmarshal(bs, lr)
-}
-*/

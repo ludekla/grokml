@@ -162,6 +162,7 @@ func (v Vectoriser) Transform(slices [][]float64) []Vector {
 	}
 	return vecs
 }
+
 /*
 func (v Vectoriser) MarshalJSON() ([]byte, error) {
 	bs, err := json.Marshal(v)
