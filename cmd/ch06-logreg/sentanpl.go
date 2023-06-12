@@ -44,5 +44,5 @@ func main() {
 	}
 
 	acc := pline.Score(dset.DPoints(), dset.Labels())
-	fmt.Printf("score on dataset: %.3f\n", acc)
+	fmt.Printf("score on dataset (size: %d): %.3f\n", dset.Size(), acc)
 }
