@@ -6,16 +6,16 @@ import (
 	"os"
 )
 
-// type Record []string
-
+// CSVTable holds the whole data of a given CSV file.
 type CSVTable struct {
 	Header  []string
 	Records [][]string
 }
 
-func NewCSVTable(path string) (CSVTable, error) {
+// NewCSVTable implements the constructor for CSVTable. 
+func NewCSVTable(filepath string) (CSVTable, error) {
 	tb := CSVTable{}
-	fp, err := os.Open(path)
+	fp, err := os.Open(filepath)
 	if err != nil {
 		return tb, fmt.Errorf("NewCSVTable.Open: %w", err)
 	}

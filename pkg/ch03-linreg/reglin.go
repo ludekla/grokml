@@ -2,10 +2,8 @@ package ch03
 
 import (
 	"encoding/json"
-	"fmt"
 	"math"
 	"math/rand"
-	"os"
 
 	vc "grokml/pkg/vector"
 )
@@ -67,26 +65,11 @@ func l1grad(vec vc.Vector) vc.Vector {
 	return vec
 }
 
-func (rl RegLin) Save(filepath string) error {
-	asBytes, err := json.MarshalIndent(rl, "", "    ")
-	if err != nil {
-		return fmt.Errorf("unable to marshal LassoReg into JSON: %v", err)
-	}
-	err = os.WriteFile(filepath, asBytes, 0666)
-	if err != nil {
-		return fmt.Errorf("cannot write JSON bytes to file")
-	}
-	return nil
+// Marshal and Unmarshal implement the JSONable interface as defined in this package.
+func (rl RegLin) Marshal() ([]byte, error) {
+	return json.MarshalIndent(rl, "", "    ")
 }
 
-func (rl *RegLin) Load(filepath string) error {
-	asBytes, err := os.ReadFile(filepath)
-	if err != nil {
-		return fmt.Errorf("cannot read from file %s: %v", filepath, err)
-	}
-	err = json.Unmarshal(asBytes, rl)
-	if err != nil {
-		return fmt.Errorf("cannot unmarshal JSON bytes: %v", err)
-	}
-	return nil
+func (rl *RegLin) Unmarshal(bs []byte) error {
+	return json.Unmarshal(bs, rl)
 }

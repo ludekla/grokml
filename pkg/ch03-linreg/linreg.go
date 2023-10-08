@@ -77,10 +77,24 @@ func mean(numbers []float64) float64 {
 	return m / float64(len(numbers))
 }
 
-func (lr LinReg) Save(filepath string) error {
-	asBytes, err := json.MarshalIndent(lr, "", "    ")
+type JSONable interface {
+	Marshal() ([]byte, error)
+	Unmarshal(bs []byte) error
+}
+
+// Marshal and Unmarshal implement the JSONable interface.
+func (lr LinReg) Marshal() ([]byte, error) {
+	return json.MarshalIndent(lr, "", "    ")
+}
+
+func (lr *LinReg) Unmarshal(bs []byte) error {
+	return json.Unmarshal(bs, lr)
+}
+
+func Dump(jn JSONable, filepath string) error {
+	asBytes, err := jn.Marshal()
 	if err != nil {
-		return fmt.Errorf("cannot marshal %v into JSON bytes", lr)
+		return fmt.Errorf("cannot marshal %v into JSON bytes", jn)
 	}
 	err = os.WriteFile(filepath, asBytes, 0666)
 	if err != nil {
@@ -89,12 +103,12 @@ func (lr LinReg) Save(filepath string) error {
 	return nil
 }
 
-func (lr *LinReg) Load(filepath string) error {
+func Load(jn JSONable, filepath string) error {
 	asBytes, err := os.ReadFile(filepath)
 	if err != nil {
 		return fmt.Errorf("cannot read from file %s: %v", filepath, err)
 	}
-	err = json.Unmarshal(asBytes, lr)
+	err = jn.Unmarshal(asBytes)
 	if err != nil {
 		return fmt.Errorf("cannot unmarshal JSON bytes: %v", err)
 	}

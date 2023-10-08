@@ -36,11 +36,11 @@ func main() {
 		lr.Fit(dpoints, trainSet.Labels())
 		dpoints = vectoriser.Transform(testSet.DPoints())
 		fmt.Printf("score on testset: %.3f\n", lr.Score(dpoints, testSet.Labels()))
-		lr.Save(modelfile)
+		ch03.Dump(lr, modelfile)
 	} else {
 		fmt.Println("Use already trained model")
 		lr = &ch03.RegLin{}
-		lr.Load(modelfile)
+		ch03.Load(lr, modelfile)
 	}
 
 	vecs := []vc.Vector{{600, 1}, {1000, 2}, {1500, 3}, {2000, 4}}

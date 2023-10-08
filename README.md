@@ -8,6 +8,8 @@ Luis G. Serrano: Grokking Machine Learning, Manning Publications Co. (2021)
 
 /home/lutz/code/golang/grokml/data/Hyderabad.csv
 
+TODO: simplify stats.go code and put it into vector.go
+
 # Ch05 Perceptron
 
 /home/lutz/code/golang/grokml/data/returns.csv

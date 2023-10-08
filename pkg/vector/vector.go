@@ -1,3 +1,6 @@
+// Implements the basic data structure employed all over this ML repo.
+// It furnishes data points with a number of linear-algebraic methods
+// and helper functions.
 package vector
 
 import (
@@ -13,12 +16,13 @@ func init() {
 
 type Vector []float64
 
-// Makes vector with zeros.
+// New constructs a vector with zeros.
 func New(size int) Vector {
 	return make(Vector, size)
 }
 
-// Makes vector with random values from a uniform distribution over [0, 1].
+// RandVector makes vector with random values drawn
+// from a uniform distribution over [0, 1].
 func RandVector(size int) Vector {
 	vec := make(Vector, size)
 	for i, _ := range vec {
@@ -27,7 +31,7 @@ func RandVector(size int) Vector {
 	return vec
 }
 
-// Computes dot product against other vector.
+// Dot computes the dot product against the other vector.
 func (v Vector) Dot(other Vector) float64 {
 	if len(v) != len(other) {
 		panic("vectors do not have the same size")
@@ -39,7 +43,7 @@ func (v Vector) Dot(other Vector) float64 {
 	return sum
 }
 
-// Performs a multiplication with a scalar.
+// ScalMul performs a multiplication with a scalar.
 func (v Vector) ScaMul(factor float64) Vector {
 	res := make(Vector, len(v))
 	for i, val := range v {
@@ -48,14 +52,14 @@ func (v Vector) ScaMul(factor float64) Vector {
 	return res
 }
 
-// Performs an in-place scalar multiplication.
+// IScalMul performs an in-place scalar multiplication.
 func (v Vector) IScaMul(factor float64) {
 	for i, _ := range v {
 		v[i] *= factor
 	}
 }
 
-// Performs vector addition (component-wise) with other vector.
+// Add performs vector addition (component-wise) with the other vector.
 func (v Vector) Add(other Vector) Vector {
 	res := make(Vector, len(v))
 	for i, val := range other {
@@ -64,14 +68,15 @@ func (v Vector) Add(other Vector) Vector {
 	return res
 }
 
-// Performs in-place vector addition with other vector.
+// IAdd performs an in-place vector addition with the other vector.
 func (v Vector) IAdd(other Vector) {
 	for i, val := range other {
 		v[i] += val
 	}
 }
 
-// Computes component-wise vector multiplication (Hadamard product).
+// Mul computes component-wise vector multiplication (aka Hadamard product)
+// with the other vector.
 func (v Vector) Mul(other Vector) Vector {
 	res := make(Vector, len(v))
 	for i, val := range other {
@@ -80,7 +85,7 @@ func (v Vector) Mul(other Vector) Vector {
 	return res
 }
 
-// Computes component-wise vector division. Will panics if other vector
+// Div computes component-wise vector division. It panics if the other vector
 // has a zero component.
 func (v Vector) Div(other Vector) Vector {
 	res := make(Vector, len(v))
@@ -90,14 +95,14 @@ func (v Vector) Div(other Vector) Vector {
 	return res
 }
 
-// In-place version of component-wise vector division.
+// IDiv is the in-place version of component-wise vector division.
 func (v Vector) IDiv(other Vector) {
 	for i, val := range other {
 		v[i] /= val
 	}
 }
 
-// Computes the L1 norm of the vector.
+// L1Norm computes the L1 norm of the vector.
 func (v Vector) L1Norm() float64 {
 	var sum float64
 	for _, val := range v {
@@ -106,7 +111,7 @@ func (v Vector) L1Norm() float64 {
 	return sum
 }
 
-// Computes the vectorial mean of a slice of vectors.
+// Mean computes the vectorial mean of a slice of vectors.
 func Mean(vecs []Vector) Vector {
 	mean := New(len(vecs[0]))
 	for _, vec := range vecs {
@@ -115,7 +120,7 @@ func Mean(vecs []Vector) Vector {
 	return mean.ScaMul(1.0 / float64(len(vecs)))
 }
 
-// Computes the vectorial mean and the standard deviation vector.
+// VectorStats computes the vectorial mean and standard deviation.
 func VectorStats(vecs []Vector) (Vector, Vector) {
 	mean := Mean(vecs)
 	std := New(len(mean))
@@ -130,7 +135,7 @@ func VectorStats(vecs []Vector) (Vector, Vector) {
 	return mean, std
 }
 
-// Normalises the vector by its mean and standard deviation.
+// Normalise normalises the vector by the vectorial mean and standard deviation.
 func (v Vector) Normalise(mean, std Vector) Vector {
 	inv := New(len(std))
 	for i, val := range std {
@@ -139,15 +144,19 @@ func (v Vector) Normalise(mean, std Vector) Vector {
 	return v.Add(mean.ScaMul(-1.0)).Mul(inv)
 }
 
+// Vectoriser implements the Transformer interface needed for pipelines.
+// It makes slices floats into vectors, either by simply wrapping them
+// without using copies (when wrap is set to true) or using copies.
 type Vectoriser struct {
-	Wrap bool
+	Wrap bool `json:"wrap"`
 }
 
-// Constructs Vectoriser. The parameter wrap
+// NewVectoriser constructs Vectoriser.
 func NewVectoriser(wrap bool) *Vectoriser {
 	return &Vectoriser{wrap}
 }
 
+// Transform makes slices of floats into vectors.
 func (v Vectoriser) Transform(slices [][]float64) []Vector {
 	vecs := make([]Vector, len(slices))
 	var vec Vector
@@ -162,17 +171,3 @@ func (v Vectoriser) Transform(slices [][]float64) []Vector {
 	}
 	return vecs
 }
-
-/*
-func (v Vectoriser) MarshalJSON() ([]byte, error) {
-	bs, err := json.Marshal(v)
-	if err != nil {
-		return bs, fmt.Errorf("cannot marshal vectoriser")
-	}
-	return bs, nil
-}
-
-func (v *Vectoriser) UnmarshalJSON(bs []byte) error {
-	return json.Unmarshal(bs, v)
-}
-*/

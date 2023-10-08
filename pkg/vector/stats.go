@@ -1,3 +1,4 @@
+// Implements vector statistics.
 package vector
 
 import (
