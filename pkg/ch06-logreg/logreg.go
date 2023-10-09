@@ -2,15 +2,17 @@ package ch06
 
 import (
 	"encoding/json"
-	"fmt"
 	"math"
 	"math/rand"
-	"os"
 
 	tk "grokml/pkg/tokens"
 	vc "grokml/pkg/vector"
 )
 
+// LogReg implements a logistic regression engine. The weights are maintained by
+// an object that satisfies the Updater interface.
+// The weights are not held directly because their type must not be fixed
+// but kept hidden behind the interface.
 type LogReg[D DataPoint] struct {
 	Updater Updater[D] `json:"updater"`
 	Bias    float64    `json:"bias"`
@@ -18,48 +20,37 @@ type LogReg[D DataPoint] struct {
 	LRate   float64    `json:"lrate"`
 }
 
+// NewTextLogReg provides a variant of LogReg that works with text data.
+// Every word, ie token, found in the text corpus will be assigned a weight.
 func NewTextLogReg(nEpo int, lrate float64) *LogReg[tk.TokenMap] {
 	return &LogReg[tk.TokenMap]{
+		Updater: new(TokenMapUpdater),
 		Bias:    rand.Float64(),
 		NEpochs: nEpo,
 		LRate:   lrate,
-		Updater: new(TokenMapUpdater),
 	}
 }
 
+// NewNumLogReg provides a variant of LogReg that works with vectorial data points.
 func NewNumLogReg(nEpo int, lrate float64) *LogReg[vc.Vector] {
 	return &LogReg[vc.Vector]{
+		Updater: new(VectorUpdater),
 		Bias:    rand.Float64(),
 		NEpochs: nEpo,
 		LRate:   lrate,
-		Updater: new(VectorUpdater),
 	}
 }
 
-func (lr *LogReg[D]) Save(filepath string) error {
-	lrBytes, err := json.MarshalIndent(*lr, "", "   ")
-	if err != nil {
-		return fmt.Errorf("cannot read model file %v", err)
-	}
-	err = os.WriteFile(filepath, lrBytes, 0666)
-	if err != nil {
-		return fmt.Errorf("cannot write model file %v", err)
-	}
-	return nil
+// Marshal and Unmarhsal implement the JSONable interface from the persist package.
+func (lr LogReg[D]) Marshal() ([]byte, error) {
+	return json.MarshalIndent(lr, "", "   ")
 }
 
-func (lr *LogReg[D]) Load(jsonfile string) error {
-	fileBytes, err := os.ReadFile(jsonfile)
-	if err != nil {
-		return fmt.Errorf("cannot read model file %v", err)
-	}
-	err = json.Unmarshal(fileBytes, lr)
-	if err != nil {
-		return fmt.Errorf("cannot load model %v", err)
-	}
-	return nil
+func (lr *LogReg[D]) Unmarshal(bs []byte) error {
+	return json.Unmarshal(bs, lr)
 }
 
+// Fit performs the training.
 func (lr *LogReg[D]) Fit(dpoints []D, labels []float64) []float64 {
 	size := len(dpoints)
 	if size == 0 {
@@ -85,6 +76,7 @@ func (lr *LogReg[D]) Fit(dpoints []D, labels []float64) []float64 {
 	return errs
 }
 
+// Predict returns the output of the sigmoid squasher.
 func (lr LogReg[D]) Predict(dpoints []D) []float64 {
 	res := make([]float64, len(dpoints))
 	for i, dpoint := range dpoints {
@@ -93,7 +85,7 @@ func (lr LogReg[D]) Predict(dpoints []D) []float64 {
 	return res
 }
 
-// Computes the accuracy.
+// Score computes the accuracy.
 func (lr LogReg[D]) Score(dpoints []D, labels []float64) float64 {
 	var acc float64
 	preds := lr.Predict(dpoints)
@@ -107,10 +99,12 @@ func (lr LogReg[D]) Score(dpoints []D, labels []float64) float64 {
 	return acc / float64(len(dpoints))
 }
 
+// sigmoid is a helper function representing the squasher (activation function).
 func sigmoid(val float64) float64 {
 	return 1.0 / (1.0 + math.Exp(-val))
 }
 
+// xentropy is a helper function for computing the cost (cross-entropy).
 func xentropy(pred float64, label float64) float64 {
 	if label == 1.0 {
 		return -math.Log(pred)

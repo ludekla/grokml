@@ -2,16 +2,17 @@ package ch05
 
 import (
 	"encoding/json"
-	"fmt"
-	"log"
 	"math/rand"
-	"os"
 
 	"grokml/pkg/ch06-logreg"
 	tk "grokml/pkg/tokens"
 	vc "grokml/pkg/vector"
 )
 
+// Perceptron implements a perceptron classifier. The weights are maintained by
+// an object that satisfies the Updater interface.
+// The weights are not held directly because their type must not be fixed
+// but kept hidden behind the interface.
 type Perceptron[D ch06.DataPoint] struct {
 	Updater ch06.Updater[D] `json:"updater"`
 	Bias    float64         `json:"bias"`
@@ -19,6 +20,8 @@ type Perceptron[D ch06.DataPoint] struct {
 	LRate   float64         `json:"lrate"`
 }
 
+// NewTextPerceptron provides a variant of LogReg that works with text data.
+// Every word, ie token, found in the text corpus will be assigned a weight.
 func NewTextPerceptron(nEpo int, lrate float64) *Perceptron[tk.TokenMap] {
 	return &Perceptron[tk.TokenMap]{
 		Bias:    rand.Float64(),
@@ -28,6 +31,7 @@ func NewTextPerceptron(nEpo int, lrate float64) *Perceptron[tk.TokenMap] {
 	}
 }
 
+// NewNumPerceptron provides a variant of LogReg that works with vectorial data points.
 func NewNumPerceptron(nEpo int, lrate float64) *Perceptron[vc.Vector] {
 	return &Perceptron[vc.Vector]{
 		Bias:    rand.Float64(),
@@ -37,29 +41,16 @@ func NewNumPerceptron(nEpo int, lrate float64) *Perceptron[vc.Vector] {
 	}
 }
 
-func (pc *Perceptron[D]) Save(filepath string) {
-	pcBytes, err := json.MarshalIndent(*pc, "", "   ")
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = os.WriteFile(filepath, pcBytes, 0666)
-	if err != nil {
-		log.Fatal(err)
-	}
+// Marshal and Unmarhsal implement the JSONable interface from the persist package.
+func (pc Perceptron[D]) Marshal() ([]byte, error) {
+	return json.MarshalIndent(pc, "", "   ")
 }
 
-func (pc *Perceptron[D]) Load(jsonfile string) error {
-	fileBytes, err := os.ReadFile(jsonfile)
-	if err != nil {
-		return fmt.Errorf("cannot read model file %v", err)
-	}
-	err = json.Unmarshal(fileBytes, pc)
-	if err != nil {
-		return fmt.Errorf("cannot load model %v", err)
-	}
-	return nil
+func (pc *Perceptron[D]) Unmarshal(bs []byte) error {
+	return json.Unmarshal(bs, pc)
 }
 
+// Fit performs the training.
 func (pc *Perceptron[D]) Fit(dpoints []D, labels []float64) []float64 {
 	size := len(dpoints)
 	if size == 0 {
@@ -88,6 +79,7 @@ func (pc *Perceptron[D]) Fit(dpoints []D, labels []float64) []float64 {
 	return errs
 }
 
+// Predict computes the output pushed through a Heaviside function.
 func (pc Perceptron[D]) Predict(dpoints []D) []float64 {
 	res := make([]float64, len(dpoints))
 	for i, dpoint := range dpoints {
@@ -96,7 +88,7 @@ func (pc Perceptron[D]) Predict(dpoints []D) []float64 {
 	return res
 }
 
-// Computes the accuracy.
+// Score computes the accuracy.
 func (pc Perceptron[D]) Score(dpoints []D, labels []float64) float64 {
 	var acc float64
 	preds := pc.Predict(dpoints)
@@ -110,6 +102,7 @@ func (pc Perceptron[D]) Score(dpoints []D, labels []float64) float64 {
 	return acc / float64(len(dpoints))
 }
 
+// heaviside is a helper function representing the Heaviside function.
 func heaviside(val float64) float64 {
 	if val < 0.0 {
 		return 0.0

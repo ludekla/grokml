@@ -6,6 +6,7 @@ import (
 
 	"grokml/pkg/ch06-logreg"
 	ds "grokml/pkg/dataset"
+	"grokml/pkg/persist"
 	tk "grokml/pkg/tokens"
 )
 
@@ -40,11 +41,11 @@ func main() {
 		// Compute accuracy on testset.
 		acc := lr.Score(tmaps, testSet.Labels())
 		fmt.Printf("score on testset: %.3f\n", acc)
-		lr.Save(modelfile)
+		persist.Dump(lr, modelfile)
 	} else {
 		// Load trained model.
 		lr = ch06.NewTextLogReg(0.0, 0.0)
-		lr.Load(modelfile)
+		persist.Load(lr, modelfile)
 	}
 
 	tmaps := tokeniser.Transform(dset.DPoints())

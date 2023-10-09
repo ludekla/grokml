@@ -6,6 +6,7 @@ import (
 
 	"grokml/pkg/ch03-linreg"
 	ds "grokml/pkg/dataset"
+	"grokml/pkg/persist"
 	vc "grokml/pkg/vector"
 )
 
@@ -36,11 +37,11 @@ func main() {
 		lr.Fit(dpoints, trainSet.Labels())
 		dpoints = vectoriser.Transform(testSet.DPoints())
 		fmt.Printf("score on testset: %.3f\n", lr.Score(dpoints, testSet.Labels()))
-		ch03.Dump(lr, modelfile)
+		persist.Dump(lr, modelfile)
 	} else {
 		fmt.Println("Use already trained model")
 		lr = &ch03.RegLin{}
-		ch03.Load(lr, modelfile)
+		persist.Load(lr, modelfile)
 	}
 
 	vecs := []vc.Vector{{600, 1}, {1000, 2}, {1500, 3}, {2000, 4}}

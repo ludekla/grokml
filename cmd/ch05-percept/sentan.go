@@ -6,6 +6,7 @@ import (
 
 	"grokml/pkg/ch05-percept"
 	ds "grokml/pkg/dataset"
+	"grokml/pkg/persist"
 	tk "grokml/pkg/tokens"
 )
 
@@ -40,11 +41,11 @@ func main() {
 		// Compute accuracy on testset.
 		acc := pc.Score(tmaps, testSet.Labels())
 		fmt.Printf("score on testset: %.3f\n", acc)
-		pc.Save(modelfile)
+		persist.Dump(pc, modelfile)
 	} else {
 		// Load trained model.
 		pc = ch05.NewTextPerceptron(0.0, 0.0)
-		pc.Load(modelfile)
+		persist.Load(pc, modelfile)
 	}
 
 	tmaps := tokeniser.Transform(dset.DPoints())

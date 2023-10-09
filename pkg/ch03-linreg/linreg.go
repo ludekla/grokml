@@ -2,14 +2,13 @@ package ch03
 
 import (
 	"encoding/json"
-	"fmt"
 	"math"
 	"math/rand"
-	"os"
 
 	vc "grokml/pkg/vector"
 )
 
+// LinReg implements a linear regression engine.
 type LinReg struct {
 	Weights vc.Vector `json:"weights"`
 	Bias    float64   `json:"bias"`
@@ -17,10 +16,12 @@ type LinReg struct {
 	NEpochs int       `json:"nepochs"`
 }
 
+// NewLinReg is the constructor function for LinReg.
 func NewLinReg(lrate float64, epochs int) *LinReg {
 	return &LinReg{LRate: lrate, NEpochs: epochs}
 }
 
+// Fit performs the training.
 func (lr *LinReg) Fit(dpoints []vc.Vector, labels []float64) []float64 {
 	stats := vc.GetDataStats(dpoints, labels)
 	dpoints, labels = stats.Normalise(dpoints, labels)
@@ -45,6 +46,7 @@ func (lr *LinReg) Fit(dpoints []vc.Vector, labels []float64) []float64 {
 	return errs
 }
 
+// Predict returns the estimated output values.
 func (lr LinReg) Predict(dpoints []vc.Vector) []float64 {
 	preds := make([]float64, len(dpoints))
 	for i, vec := range dpoints {
@@ -53,7 +55,7 @@ func (lr LinReg) Predict(dpoints []vc.Vector) []float64 {
 	return preds
 }
 
-// Computes the coefficient of determination
+// Score computes the coefficient of determination.
 func (lr LinReg) Score(dpoints []vc.Vector, labels []float64) float64 {
 	preds := lr.Predict(dpoints)
 	ym := mean(preds)
@@ -68,7 +70,7 @@ func (lr LinReg) Score(dpoints []vc.Vector, labels []float64) float64 {
 	return 1.0 - rss/tss
 }
 
-// helper
+// mean is a helper function for computing the mean of a slice of floats.
 func mean(numbers []float64) float64 {
 	var m float64
 	for _, val := range numbers {
@@ -77,40 +79,11 @@ func mean(numbers []float64) float64 {
 	return m / float64(len(numbers))
 }
 
-type JSONable interface {
-	Marshal() ([]byte, error)
-	Unmarshal(bs []byte) error
-}
-
-// Marshal and Unmarshal implement the JSONable interface.
+// Marshal and Unmarshal implement the JSONable interface from the persist package.
 func (lr LinReg) Marshal() ([]byte, error) {
 	return json.MarshalIndent(lr, "", "    ")
 }
 
 func (lr *LinReg) Unmarshal(bs []byte) error {
 	return json.Unmarshal(bs, lr)
-}
-
-func Dump(jn JSONable, filepath string) error {
-	asBytes, err := jn.Marshal()
-	if err != nil {
-		return fmt.Errorf("cannot marshal %v into JSON bytes", jn)
-	}
-	err = os.WriteFile(filepath, asBytes, 0666)
-	if err != nil {
-		return fmt.Errorf("cannot write JSON bytes into file %s", filepath)
-	}
-	return nil
-}
-
-func Load(jn JSONable, filepath string) error {
-	asBytes, err := os.ReadFile(filepath)
-	if err != nil {
-		return fmt.Errorf("cannot read from file %s: %v", filepath, err)
-	}
-	err = jn.Unmarshal(asBytes)
-	if err != nil {
-		return fmt.Errorf("cannot unmarshal JSON bytes: %v", err)
-	}
-	return nil
 }

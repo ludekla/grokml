@@ -8,12 +8,15 @@ import (
 	vc "grokml/pkg/vector"
 )
 
+// RegLin implements a regularised linear regression engine. Two types of
+// regularisation can be switched on: Lasso and Ridge.
 type RegLin struct {
 	*LinReg
 	LassoPen float64 `json:"lasso_penalty"` // L1
 	RidgePen float64 `json:"ridge_penalty"` // L2
 }
 
+// NewRegLin is a constructor function for RegLin.
 func NewRegLin(lrate float64, nEpochs int, lpen, rpen float64) *RegLin {
 	return &RegLin{
 		LinReg:   NewLinReg(lrate, nEpochs),
@@ -22,6 +25,7 @@ func NewRegLin(lrate float64, nEpochs int, lpen, rpen float64) *RegLin {
 	}
 }
 
+// Fit performs the training.
 func (rl *RegLin) Fit(dpoints []vc.Vector, labels []float64) []float64 {
 	stats := vc.GetDataStats(dpoints, labels)
 	dpoints, labels = stats.Normalise(dpoints, labels)
@@ -49,7 +53,7 @@ func (rl *RegLin) Fit(dpoints []vc.Vector, labels []float64) []float64 {
 	return errs
 }
 
-// Helper
+// l1grad is a helper function that computes the L1 gradient.
 func l1grad(vec vc.Vector) vc.Vector {
 	res := make(vc.Vector, len(vec))
 	for i, val := range vec {
@@ -65,7 +69,7 @@ func l1grad(vec vc.Vector) vc.Vector {
 	return vec
 }
 
-// Marshal and Unmarshal implement the JSONable interface as defined in this package.
+// Marshal and Unmarshal implement the JSONable interface from the persist package.
 func (rl RegLin) Marshal() ([]byte, error) {
 	return json.MarshalIndent(rl, "", "    ")
 }

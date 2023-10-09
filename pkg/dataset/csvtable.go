@@ -12,7 +12,7 @@ type CSVTable struct {
 	Records [][]string
 }
 
-// NewCSVTable implements the constructor for CSVTable. 
+// NewCSVTable implements the constructor for CSVTable.
 func NewCSVTable(filepath string) (CSVTable, error) {
 	tb := CSVTable{}
 	fp, err := os.Open(filepath)

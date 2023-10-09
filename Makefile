@@ -2,10 +2,12 @@
 fmt:
 	go fmt pkg/vector/*
 	go fmt pkg/dataset/*
+	go fmt pkg/persist/*
 	go fmt pkg/pipeline/*
 	go fmt pkg/ch03-linreg/*
 	go fmt pkg/ch06-logreg/*
 	go fmt pkg/ch08-nbayes/*
+
 	go fmt cmd/ch03-linreg/*
 	go fmt cmd/ch05-percept/*
 	go fmt cmd/ch06-logreg/*
@@ -16,12 +18,14 @@ vet:
 	go vet pkg/vector/*
 	go vet pkg/tokens/*
 	go vet pkg/dataset/*
+	go vet pkg/persist/*
 	go vet pkg/pipeline/*
 	go vet pkg/ch03-linreg/*
 	go vet pkg/ch05-percept/*
 	go vet pkg/ch06-logreg/*
 	go vet pkg/ch08-nbayes/*
 	go vet pkg/ch09-tree/*
+	
 	go vet cmd/ch03-linreg/linreg.go
 	go vet cmd/ch03-linreg/linregpl.go
 	go vet cmd/ch03-linreg/reglin.go

@@ -85,7 +85,7 @@ func (ds DataSet[T]) Header() []string {
 }
 
 // DPoints returns a slice of copies of the datapoints to ensure that the original
-// data remains untouched when the data is further processed. 
+// data remains untouched when the data is further processed.
 func (ds DataSet[T]) DPoints() [][]T {
 	dpoints := make([][]T, ds.size)
 	for i, sample := range ds.samples {
@@ -119,8 +119,8 @@ func (ds DataSet[T]) Random() ([]T, float64) {
 }
 
 // Splits returns a random split of the dataset after shuffling its
-// samples. This changes the order of the dataset's samples. 
-// ratio represents the proportion of the test size. 
+// samples. This changes the order of the dataset's samples.
+// ratio represents the proportion of the test size.
 func (ds DataSet[T]) Split(ratio float64) (DataSet[T], DataSet[T]) {
 	nTest := int(float64(ds.size) * ratio)
 	rand.Shuffle(ds.size, func(i, j int) {

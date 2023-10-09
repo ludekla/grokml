@@ -68,16 +68,3 @@ func (t Tokeniser) TokenFreqs(txt string) TokenMap {
 	}
 	return tmap
 }
-/*
-func (t Tokeniser) MarshalJSON() ([]byte, error) {
-	bs, err := json.Marshal(t)
-	if err != nil {
-		return bs, fmt.Errorf("cannot marshal vectoriser")
-	}
-	return bs, nil
-}
-
-func (t *Tokeniser) UnmarshalJSON(bs []byte) error {
-	return json.Unmarshal(bs, t)
-}
-*/
