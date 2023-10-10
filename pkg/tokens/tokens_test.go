@@ -39,7 +39,7 @@ func TestTokeniserTransform(t *testing.T) {
 			t.Errorf("Expected %d tokens, got %d", sizes[i], len(tmap))
 		}
 	}
-	tokeniser.ToLower = true
+	tokeniser.toLower = true
 	texts = [][]string{{"The cat and", "the mouse."}, {"the cat and the mice"}}
 	tmaps = tokeniser.Transform(texts)
 	if len(tmaps) != len(texts) {
@@ -55,7 +55,7 @@ func TestTokeniserTokenFreqs(t *testing.T) {
 	txt := "Lutz hat Geburtstag heute heute"
 	exp := TokenMap{"Lutz": 0.2, "hat": 0.2, "Geburtstag": 0.2, "heute": 0.4}
 	tokeniser := NewTokeniser(false)
-	got := tokeniser.TokenFreqs(txt)
+	got := TokenFreqs(txt, tokeniser.toLower)
 	if len(exp) != len(got) {
 		t.Errorf("word counts do not have the same number of keys")
 	}
