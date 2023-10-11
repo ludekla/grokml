@@ -9,6 +9,7 @@ import (
 
 	"grokml/pkg/ch08-nbayes"
 	ds "grokml/pkg/dataset"
+	"grokml/pkg/persist"
 	tk "grokml/pkg/tokens"
 )
 
@@ -59,10 +60,10 @@ func main() {
 		rep := nb.GetReport()
 		fmt.Printf("testset: %d emails\n", testSet.Size())
 		fmt.Printf("%+v\nF-Score: %.3f\n", rep, rep.FScore(1.0))
-		nb.Save(modelfile)
+		persist.Dump(nb, modelfile)
 	} else {
 		nb = &ch08.NaiveBayes{}
-		nb.Load(modelfile)
+		persist.Load(nb, modelfile)
 	}
 
 	tmaps := tokeniser.Transform(dset.DPoints())
