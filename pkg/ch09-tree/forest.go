@@ -11,7 +11,7 @@ import (
 type Forest struct {
 	Size       int               `json:"size"`
 	Estimators []*TreeClassifier `json:"trees"`
-	Report pl.Report `json:"-"`
+	Report     pl.Report         `json:"-"`
 }
 
 type ForestClassifier struct {
@@ -41,7 +41,7 @@ func NewForestClassifier(nTrees int, imp Impurity, ming float64) *ForestClassifi
 
 // Forest Classifier: Methods
 func (f *Forest) Fit(dpoints [][]float64, labels []float64) {
-	chunkSize := int(0.9*float64(len(dpoints)))
+	chunkSize := int(0.9 * float64(len(dpoints)))
 	for _, tree := range f.Estimators {
 		tree.Fit(dpoints[:chunkSize], labels[:chunkSize])
 		rand.Shuffle(len(labels), func(i, j int) {
@@ -56,8 +56,8 @@ func (f *Forest) Predict(dpoints [][]float64) []float64 {
 	for _, tree := range f.Estimators {
 		preds := tree.Predict(dpoints)
 		for i, pred := range preds {
-			avg[i] += pred	
-		}	 
+			avg[i] += pred
+		}
 	}
 	size := float64(f.Size)
 	for i, val := range avg {
@@ -91,6 +91,7 @@ func NewAdaBoostClassifier(n int, imp Impurity, ming float64) *AdaBoostClassifie
 	}
 	return &AdaBoostClassifier{Forest{Size: n, Estimators: trees}, nil}
 }
+
 // AdaBoost Classifier: Methods
 func (ad *AdaBoostClassifier) Fit(dpoints [][]float64, labels []float64) {
 	ad.Coeffs = make([]float64, ad.Size)
@@ -141,6 +142,7 @@ func NewGradBoostRegressor(n int, ming float64, lrate float64) *GradBoostRegress
 	}
 	return &GradBoostRegressor{Size: n, Estimators: trees, lRate: lrate}
 }
+
 // Gradient Boosting Regressor: Methods
 func (gb *GradBoostRegressor) Fit(dpoints [][]float64, labels []float64) {
 	clabels := make([]float64, len(labels))
@@ -158,7 +160,7 @@ func (gb *GradBoostRegressor) Predict(dpoints [][]float64) []float64 {
 	for _, tree := range gb.Estimators[1:] {
 		for i, pred := range tree.Predict(dpoints) {
 			preds[i] += gb.lRate * pred
-		} 
+		}
 	}
 	return preds
 }
@@ -178,4 +180,3 @@ func (gb *GradBoostRegressor) Load(filename string) {
 	var obj interface{} = gb
 	load(obj, filename)
 }
-

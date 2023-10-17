@@ -30,49 +30,50 @@ func load(obj interface{}, filename string) {
 	}
 }
 
-func Mean(vals []float64) float64 {
-	var mean float64
-	for _, val := range vals {
-		mean += val
-	}
-	mean /= float64(len(vals))
-	return mean
-}
-
+// Tree implements a binary tree structure.
 type Tree struct {
 	Root    *Node    `json:"root"`
 	Imp     Impurity `json:"-"`
 	MinGain float64
 }
 
+// TreeClassifier implements a decision tree for classification.
 type TreeClassifier struct {
 	Tree
 	Report pl.Report `json:"-"`
 }
 
+// TreeRegressor implements a regression tree.
 type TreeRegressor struct {
 	Tree
 }
 
+// NewTreeClassifier is a factory function for TreeClassifier.
 func NewTreeClassifier(imp Impurity, ming float64) TreeClassifier {
 	return TreeClassifier{Tree{Imp: imp, MinGain: ming}, pl.Report{}}
 }
 
+// NewTreeRegressor is a factory function for TreeRegressor.
 func NewTreeRegressor(ming float64) TreeRegressor {
 	return TreeRegressor{Tree{Imp: MSE, MinGain: ming}}
 }
 
+// String makes a Tree a Stringer (for debugging purposes).
 func (dt Tree) String() string {
 	s := fmt.Sprintf("Tree {\n  root: %v\n}\n", dt.Root)
 	return s
 }
 
+// Fit performs the training of a tree. This method is called
+// on the embedded Tree struct inside a classification tree or
+// regression tree.
 func (dt *Tree) Fit(dpoints [][]float64, labels []float64) {
 	examples := MakeExamples(dpoints, labels)
 	dt.Root = NewNode(0, dt.MinGain)
 	dt.Root.Fit(examples, dt.Imp)
 }
 
+// Predict implements the inference of the labels for the given data points.
 func (dt Tree) Predict(dpoints [][]float64) []float64 {
 	labels := make([]float64, len(dpoints))
 	for i, dpoint := range dpoints {
@@ -90,28 +91,32 @@ func (dt Tree) Predict(dpoints [][]float64) []float64 {
 	return labels
 }
 
-func (dt Tree) Save(jsonfile string) {
-	var obj interface{} = dt
-	save(obj, jsonfile)
+// Marshal and Unmarshal implement the JSONable interface of the persist pkg.
+func (dt Tree) Marshal() ([]byte, error) {
+	return json.MarshalIndent(dt, "", "    ")
 }
 
-func (dt *Tree) Load(jsonfile string) {
-	var obj interface{} = dt
-	load(obj, jsonfile)
+func (dt *Tree) Unmarshal(bs []byte) error {
+	return json.Unmarshal(bs, dt)
 }
 
+// Score computes the quantities necessary to populate a Report struct and
+// returns the accuracy.
 func (dt *TreeClassifier) Score(dpoints [][]float64, labels []float64) float64 {
 	predictions := dt.Predict(dpoints)
 	dt.Report = getReport(predictions, labels)
 	return dt.Report.Accuracy
 }
 
-// coefficient of determination
+// Score computes the coefficient of determination as a measure of performance
+// for a regression tree.
 func (dt TreeRegressor) Score(dpoints [][]float64, labels []float64) float64 {
 	predictions := dt.Predict(dpoints)
 	return getCoD(predictions, labels)
 }
 
+// getReport is a helper function to compute the Report struct quantities
+// precision, recall, specificity and accuracy.
 func getReport(predictions []float64, labels []float64) pl.Report {
 	var tp, tn, fp, fn float64
 	for i, p := range predictions {
@@ -146,7 +151,9 @@ func getReport(predictions []float64, labels []float64) pl.Report {
 	}
 }
 
-// Coefficient of Determination
+// getCoD is a helper function to compute the coefficient of determination.
+// As a measure of performance for regression trees, it compares the mean-squared
+// error with that of a regressor which predicts the label mean for every data point.
 func getCoD(predictions []float64, labels []float64) float64 {
 	mean := Mean(labels)
 	var rss float64 // residual square sum

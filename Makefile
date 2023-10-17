@@ -7,6 +7,7 @@ fmt:
 	go fmt pkg/ch03-linreg/*
 	go fmt pkg/ch06-logreg/*
 	go fmt pkg/ch08-nbayes/*
+	go fmt pkg/ch09-tree/*
 
 	go fmt cmd/ch03-linreg/*
 	go fmt cmd/ch05-percept/*

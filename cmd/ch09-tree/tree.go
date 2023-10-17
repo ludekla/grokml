@@ -6,6 +6,7 @@ import (
 
 	"grokml/pkg/ch09-tree"
 	ds "grokml/pkg/dataset"
+	"grokml/pkg/persist"
 )
 
 var train = flag.Bool("t", false, "train model before prediction")
@@ -15,8 +16,9 @@ func main() {
 	flag.Parse()
 
 	csv := ds.NewCSVReader(
-		"data/Admission_Predict.csv", "Chance of Admit",
-		"GRE Score", "TOEFL Score", "University Rating",
+		"data/Admission_Predict.csv",   // filename
+		"Chance of Admit", "GRE Score", // columns to pick
+		"TOEFL Score", "University Rating",
 		"SOP", "LOR", "CGPA", "Research",
 	)
 	dset := ds.NewDataSet(csv, ds.AtoF)
@@ -30,18 +32,18 @@ func main() {
 		// Entropy
 		dt1 = ch09.NewTreeClassifier(ch09.Entropy, 0.1)
 		dt1.Fit(trainSet.DPoints(), trainSet.Labels())
-		dt1.Save("models/ch09-tree/tree_entropy.json")
+		persist.Dump(&dt1, "models/ch09-tree/tree_entropy.json")
 		// Gini
 		dt2 = ch09.NewTreeClassifier(ch09.Gini, 0.1)
 		dt2.Fit(trainSet.DPoints(), trainSet.Labels())
-		dt2.Save("models/ch09-tree/tree_gini.json")
+		persist.Dump(&dt2, "models/ch09-tree/tree_gini.json")
 	} else {
 		// Entropy
 		dt1 = ch09.TreeClassifier{}
-		dt1.Load("models/ch09-tree/tree_entropy.json")
+		persist.Load(&dt1, "models/ch09-tree/tree_entropy.json")
 		// Gini
 		dt2 = ch09.TreeClassifier{}
-		dt2.Load("models/ch09-tree/tree_gini.json")
+		persist.Load(&dt2, "models/ch09-tree/tree_gini.json")
 	}
 	// Scoring tests
 	dt1.Score(testSet.DPoints(), testSet.Labels())
