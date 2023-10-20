@@ -9,6 +9,7 @@ import (
 
 	"grokml/pkg/ch08-nbayes"
 	ds "grokml/pkg/dataset"
+	"grokml/pkg/persist"
 	pl "grokml/pkg/pipeline"
 	tk "grokml/pkg/tokens"
 )
@@ -68,10 +69,10 @@ func main() {
 		fmt.Printf("test set: %d emails\n", testSet.Size())
 		fmt.Printf("%+v\nF-Score: %.3f\n", rep, rep.FScore(1.0))
 
-		pline.Save(modelfile)
+		persist.Dump(pline, modelfile)
 	} else {
 		fmt.Println("Using trained model.")
-		pline.Load(modelfile)
+		persist.Load(pline, modelfile)
 	}
 
 	var nb *ch08.NaiveBayes = pline.Estimator.(*ch08.NaiveBayes)

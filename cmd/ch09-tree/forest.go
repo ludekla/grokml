@@ -6,6 +6,7 @@ import (
 
 	"grokml/pkg/ch09-tree"
 	ds "grokml/pkg/dataset"
+	"grokml/pkg/persist"
 )
 
 var train = flag.Bool("t", false, "train model before prediction")
@@ -15,7 +16,8 @@ func main() {
 	flag.Parse()
 
 	csv := ds.NewCSVReader(
-		"data/Admission_Predict.csv", "Chance of Admit",
+		"data/Admission_Predict.csv", // data
+		"Chance of Admit",            // columns to pick
 		"GRE Score", "TOEFL Score", "University Rating",
 		"SOP", "LOR", "CGPA", "Research",
 	)
@@ -30,18 +32,18 @@ func main() {
 		// Entropy
 		fc1 = ch09.NewForestClassifier(3, ch09.Entropy, 0.1)
 		fc1.Fit(trainSet.DPoints(), trainSet.Labels())
-		fc1.Save("models/ch09-tree/forest_entropy.json")
+		persist.Dump(fc1, "models/ch09-tree/forest_entropy.json")
 		// Gini
 		fc2 = ch09.NewForestClassifier(3, ch09.Gini, 0.1)
 		fc2.Fit(trainSet.DPoints(), trainSet.Labels())
-		fc2.Save("models/ch09-tree/forest_gini.json")
+		persist.Dump(fc2, "models/ch09-tree/forest_gini.json")
 	} else {
 		// Entropy
 		fc1 = &ch09.ForestClassifier{}
-		fc1.Load("models/ch09-tree/forest_entropy.json")
+		persist.Load(fc1, "models/ch09-tree/forest_entropy.json")
 		// Gini
 		fc2 = &ch09.ForestClassifier{}
-		fc2.Load("models/ch09-tree/forest_gini.json")
+		persist.Load(fc2, "models/ch09-tree/forest_gini.json")
 	}
 	// Scoring tests
 	fc1.Score(testSet.DPoints(), testSet.Labels())

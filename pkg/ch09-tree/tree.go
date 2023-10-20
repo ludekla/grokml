@@ -3,32 +3,9 @@ package ch09
 import (
 	"encoding/json"
 	"fmt"
-	"log"
-	"os"
 
 	pl "grokml/pkg/pipeline"
 )
-
-// Helper functions
-func save(obj interface{}, filename string) {
-	bs, err := json.MarshalIndent(obj, "", "  ")
-	if err != nil {
-		log.Fatal(err)
-	}
-	if err := os.WriteFile(filename, bs, 0666); err != nil {
-		log.Fatal(err)
-	}
-}
-
-func load(obj interface{}, filename string) {
-	bs, err := os.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	if err != json.Unmarshal(bs, obj) {
-		log.Fatal(err)
-	}
-}
 
 // Tree implements a binary tree structure.
 type Tree struct {

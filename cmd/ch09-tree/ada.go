@@ -6,6 +6,7 @@ import (
 
 	"grokml/pkg/ch09-tree"
 	ds "grokml/pkg/dataset"
+	"grokml/pkg/persist"
 )
 
 var train = flag.Bool("t", false, "train model before prediction")
@@ -15,7 +16,8 @@ func main() {
 	flag.Parse()
 
 	csv := ds.NewCSVReader(
-		"data/Admission_Predict.csv", "Chance of Admit",
+		"data/Admission_Predict.csv", // data
+		"Chance of Admit",            // columns
 		"GRE Score", "TOEFL Score", "University Rating",
 		"SOP", "LOR", "CGPA", "Research",
 	)
@@ -30,18 +32,18 @@ func main() {
 		// Entropy
 		ac1 = ch09.NewAdaBoostClassifier(3, ch09.Entropy, 0.1)
 		ac1.Fit(trainSet.DPoints(), trainSet.Labels())
-		ac1.Save("models/ch09-tree/adaBoost_entropy.json")
+		persist.Dump(ac1, "models/ch09-tree/adaBoost_entropy.json")
 		// Gini
 		ac2 = ch09.NewAdaBoostClassifier(3, ch09.Gini, 0.1)
 		ac2.Fit(trainSet.DPoints(), trainSet.Labels())
-		ac2.Save("models/ch09-tree/adaBoost_gini.json")
+		persist.Dump(ac2, "models/ch09-tree/adaBoost_gini.json")
 	} else {
 		// Entropy
 		ac1 = &ch09.AdaBoostClassifier{}
-		ac1.Load("models/ch09-tree/adaBoost_entropy.json")
+		persist.Load(ac1, "models/ch09-tree/adaBoost_entropy.json")
 		// Gini
 		ac2 = &ch09.AdaBoostClassifier{}
-		ac2.Load("models/ch09-tree/adaBoost_gini.json")
+		persist.Load(ac2, "models/ch09-tree/adaBoost_gini.json")
 	}
 	// Scoring tests
 	ac1.Score(testSet.DPoints(), testSet.Labels())

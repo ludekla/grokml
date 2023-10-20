@@ -6,6 +6,7 @@ import (
 
 	"grokml/pkg/ch03-linreg"
 	ds "grokml/pkg/dataset"
+	"grokml/pkg/persist"
 	"grokml/pkg/pipeline"
 	vc "grokml/pkg/vector"
 )
@@ -35,10 +36,10 @@ func main() {
 		pl.Fit(trainSet.DPoints(), trainSet.Labels())
 		fmt.Printf("score on training set: %.3f\n", pl.Score(trainSet.DPoints(), trainSet.Labels()))
 		fmt.Printf("score on test set: %.3f\n", pl.Score(testSet.DPoints(), testSet.Labels()))
-		pl.Save(modelfile)
+		persist.Dump(pl, modelfile)
 	} else {
 		fmt.Println("Use already trained model")
-		pl.Load(modelfile)
+		persist.Load(pl, modelfile)
 	}
 
 	dpoints := [][]float64{{600, 1}, {1000, 2}, {1500, 3}, {2000, 4}}

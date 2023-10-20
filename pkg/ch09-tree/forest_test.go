@@ -4,6 +4,8 @@ import (
 	"math"
 	"math/rand"
 	"testing"
+
+	"grokml/pkg/persist"
 )
 
 func init() {
@@ -25,10 +27,10 @@ func TestForestClassifier(t *testing.T) {
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
 	}
-	fc.Save("../../models/ch09-tree/forest.json")
+	persist.Dump(fc, "../../models/ch09-tree/forest.json")
 
 	fc2 := &ForestClassifier{}
-	fc2.Load("../../models/ch09-tree/forest.json")
+	persist.Load(fc2, "../../models/ch09-tree/forest.json")
 	fc2.Score(dpoints, labels)
 	rep = fc2.Report
 	exp = 1.0
@@ -53,10 +55,10 @@ func TestAdaBoostClassifier(t *testing.T) {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
 		t.Errorf("Report %v", rep)
 	}
-	ac.Save("../../models/ch09-tree/adaBoost.json")
+	persist.Dump(ac, "../../models/ch09-tree/adaBoost.json")
 
 	ac2 := &AdaBoostClassifier{}
-	ac2.Load("../../models/ch09-tree/adaBoost.json")
+	persist.Load(ac2, "../../models/ch09-tree/adaBoost.json")
 	ac2.Score(dpoints, labels)
 	rep = ac2.Report
 	exp = 0.9230769
@@ -76,10 +78,10 @@ func TestGradBoostRegressor(t *testing.T) {
 	if math.Abs(got-exp) > 1e-5 {
 		t.Errorf("expected R2 score %.7f, got %.7f", exp, got)
 	}
-	gb.Save("../../models/ch09-tree/gradboost.json")
+	persist.Dump(gb, "../../models/ch09-tree/gradboost.json")
 
-	gb2 := GradBoostRegressor{}
-	gb2.Load("../../models/ch09-tree/gradboost.json")
+	gb2 := &GradBoostRegressor{}
+	persist.Load(gb2, "../../models/ch09-tree/gradboost.json")
 	got = gb2.Score(dpoints, labels)
 	if math.Abs(got-exp) > 1e-5 {
 		t.Errorf("expected R2 score %.7f, got %.7f", exp, got)

@@ -51,5 +51,4 @@ func TestTransformerII(t *testing.T) {
 	} else if sum(dpoints[0]) == 0.0 {
 		t.Errorf("Expected sum to be %f, got %f", exp, sum(dpoints[0]))
 	}
-
 }

@@ -6,6 +6,7 @@ import (
 
 	"grokml/pkg/ch05-percept"
 	ds "grokml/pkg/dataset"
+	"grokml/pkg/persist"
 	pl "grokml/pkg/pipeline"
 	tk "grokml/pkg/tokens"
 )
@@ -36,11 +37,11 @@ func main() {
 
 		fmt.Printf("score on training set: %.3f\n", pline.Score(trainSet.DPoints(), trainSet.Labels()))
 		fmt.Printf("score on testset: %.3f\n", pline.Score(testSet.DPoints(), testSet.Labels()))
-		pline.Save(modelfile)
+		persist.Dump(pline, modelfile)
 	} else {
 		// Load trained model.
 		fmt.Println("Using already trained model.")
-		pline.Load(modelfile)
+		persist.Load(pline, modelfile)
 	}
 
 	fmt.Printf("score on dataset: %.3f\n", pline.Score(dset.DPoints(), dset.Labels()))

@@ -3,6 +3,8 @@ package ch09
 import (
 	"math"
 	"testing"
+
+	"grokml/pkg/persist"
 )
 
 func TestTreeEntropy(t *testing.T) {
@@ -20,10 +22,10 @@ func TestTreeEntropy(t *testing.T) {
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
 	}
-	dt.Save("../../models/ch09-tree/entree.json")
+	persist.Dump(&dt, "../../models/ch09-tree/entree.json")
 
-	dt2 := TreeClassifier{}
-	dt2.Load("../../models/ch09-tree/entree.json")
+	dt2 := &TreeClassifier{}
+	persist.Load(dt2, "../../models/ch09-tree/entree.json")
 	dt2.Score(dpoints, labels)
 	rep = dt2.Report
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
@@ -46,10 +48,10 @@ func TestTreeGini(t *testing.T) {
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
 		t.Errorf("expected F-score %.7f, got %.7f", exp, rep.FScore(1.0))
 	}
-	dt.Save("../../models/ch09-tree/ginitree.json")
+	persist.Dump(&dt, "../../models/ch09-tree/ginitree.json")
 
 	dt2 := TreeClassifier{}
-	dt2.Load("../../models/ch09-tree/ginitree.json")
+	persist.Load(&dt2, "../../models/ch09-tree/ginitree.json")
 	dt2.Score(dpoints, labels)
 	rep = dt2.Report
 	if math.Abs(rep.FScore(1.0)-exp) > 1e-5 {
@@ -68,10 +70,10 @@ func TestTreeMSE(t *testing.T) {
 	if math.Abs(got-exp) > 1e-5 {
 		t.Errorf("expected R2 score %.7f, got %.7f", exp, got)
 	}
-	dt.Save("../../models/ch09-tree/msetree.json")
+	persist.Dump(&dt, "../../models/ch09-tree/msetree.json")
 
 	dt2 := TreeRegressor{}
-	dt2.Load("../../models/ch09-tree/msetree.json")
+	persist.Load(&dt2, "../../models/ch09-tree/msetree.json")
 	got = dt2.Score(dpoints, labels)
 	if math.Abs(got-exp) > 1e-5 {
 		t.Errorf("expected R2 score %.7f, got %.7f", exp, got)
