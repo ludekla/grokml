@@ -81,7 +81,7 @@ func (dt *Tree) Unmarshal(bs []byte) error {
 // returns the accuracy.
 func (dt *TreeClassifier) Score(dpoints [][]float64, labels []float64) float64 {
 	predictions := dt.Predict(dpoints)
-	dt.Report = getReport(predictions, labels)
+	dt.Report = pl.GetReport(predictions, labels)
 	return dt.Report.Accuracy
 }
 
@@ -89,55 +89,5 @@ func (dt *TreeClassifier) Score(dpoints [][]float64, labels []float64) float64 {
 // for a regression tree.
 func (dt TreeRegressor) Score(dpoints [][]float64, labels []float64) float64 {
 	predictions := dt.Predict(dpoints)
-	return getCoD(predictions, labels)
-}
-
-// getReport is a helper function to compute the Report struct quantities
-// precision, recall, specificity and accuracy.
-func getReport(predictions []float64, labels []float64) pl.Report {
-	var tp, tn, fp, fn float64
-	for i, p := range predictions {
-		if p > threshold && labels[i] > threshold {
-			tp++
-		} else if p > threshold && labels[i] <= threshold {
-			fp++
-		} else if p <= threshold && labels[i] > threshold {
-			fn++
-		} else {
-			tn++
-		}
-	}
-	var precision, recall, specificity float64
-	if tp == 0.0 {
-		precision = 0.0
-		recall = 0.0
-	} else {
-		precision = tp / (tp + fp)
-		recall = tp / (tp + fn)
-	}
-	if tn == 0.0 {
-		specificity = 0.0
-	} else {
-		specificity = tn / (tn + fp)
-	}
-	return pl.Report{
-		Accuracy:    (tp + tn) / (tp + tn + fp + fn),
-		Precision:   precision,
-		Recall:      recall,
-		Specificity: specificity,
-	}
-}
-
-// getCoD is a helper function to compute the coefficient of determination.
-// As a measure of performance for regression trees, it compares the mean-squared
-// error with that of a regressor which predicts the label mean for every data point.
-func getCoD(predictions []float64, labels []float64) float64 {
-	mean := Mean(labels)
-	var rss float64 // residual square sum
-	var tss float64 // total square sum
-	for i, pred := range predictions {
-		rss += (pred - labels[i]) * (pred - labels[i])
-		tss += (mean - labels[i]) * (mean - labels[i])
-	}
-	return 1.0 - rss/tss
+	return pl.GetCoD(predictions, labels)
 }

@@ -39,29 +39,6 @@ type Pipeline[I InType, O OutType] struct {
 	Estimator   Estimator[O]      `json:"estimator"`
 }
 
-// Report serves as a container for 4 standard ML performance measures.
-// While accuracy is both for regressors and classifiers, precision
-// recall and specificity are only used for the latter.
-type Report struct {
-	Accuracy    float64
-	Precision   float64
-	Recall      float64
-	Specificity float64
-}
-
-// FScore computes the standard performance measure called F-score
-// aka F1-score. Its extremes beta = 0 and beta = infinity are recall and
-// precision respectively. For all in-between values, it is a
-// mixture. In the case beta = 1 this mixture is a quotient of the geometric
-// and the arithmetic average.
-func (rp Report) FScore(beta float64) float64 {
-	denominator := beta*beta*rp.Recall + rp.Precision
-	if denominator == 0.0 {
-		return 0.0
-	}
-	return (1 + beta*beta) * rp.Recall * rp.Precision / denominator
-}
-
 // NewPipeline is the factory function for Pipeline.
 func NewPipeline[I InType, O OutType](trf Transformer[I, O], est Estimator[O]) *Pipeline[I, O] {
 	return &Pipeline[I, O]{Transformer: trf, Estimator: est}

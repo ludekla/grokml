@@ -18,16 +18,6 @@ func prob(examples []Example) float64 {
 	return sum / float64(len(examples))
 }
 
-// Mean is a helper function to compute the average value of a slice.
-func Mean(vals []float64) float64 {
-	var mean float64
-	for _, val := range vals {
-		mean += val
-	}
-	mean /= float64(len(vals))
-	return mean
-}
-
 // Impurity is a function type that computes the impurity
 // of the given set of examples.
 type Impurity func(examples []Example) float64

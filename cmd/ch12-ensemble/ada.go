@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"grokml/pkg/ch09-tree"
+	"grokml/pkg/ch12-ensemble"
 	ds "grokml/pkg/dataset"
 	"grokml/pkg/persist"
 )
@@ -24,25 +25,25 @@ func main() {
 	dset := ds.NewDataSet(csv, ds.AtoF)
 	trainSet, testSet := dset.Split(0.1)
 
-	var ac1, ac2 *ch09.AdaBoostClassifier
+	var ac1, ac2 *ch12.AdaBoostClassifier
 	// var dt3 TreeRegressor
 
 	if *train {
 		fmt.Printf("Training on Dataset\nheader: %v size: %d\n", dset.Header(), dset.Size())
 		// Entropy
-		ac1 = ch09.NewAdaBoostClassifier(3, ch09.Entropy, 0.1)
+		ac1 = ch12.NewAdaBoostClassifier(3, ch09.Entropy, 0.1)
 		ac1.Fit(trainSet.DPoints(), trainSet.Labels())
 		persist.Dump(ac1, "models/ch09-tree/adaBoost_entropy.json")
 		// Gini
-		ac2 = ch09.NewAdaBoostClassifier(3, ch09.Gini, 0.1)
+		ac2 = ch12.NewAdaBoostClassifier(3, ch09.Gini, 0.1)
 		ac2.Fit(trainSet.DPoints(), trainSet.Labels())
 		persist.Dump(ac2, "models/ch09-tree/adaBoost_gini.json")
 	} else {
 		// Entropy
-		ac1 = &ch09.AdaBoostClassifier{}
+		ac1 = &ch12.AdaBoostClassifier{}
 		persist.Load(ac1, "models/ch09-tree/adaBoost_entropy.json")
 		// Gini
-		ac2 = &ch09.AdaBoostClassifier{}
+		ac2 = &ch12.AdaBoostClassifier{}
 		persist.Load(ac2, "models/ch09-tree/adaBoost_gini.json")
 	}
 	// Scoring tests
@@ -55,4 +56,9 @@ func main() {
 	rep = ac2.Report
 	fmt.Println("Impurity: Gini")
 	fmt.Printf("report: %+v F-Score: %.4f\n", rep, rep.FScore(1.0))
+
+	dpoints := testSet.DPoints()
+	labels := ac1.Predict(dpoints)
+	fmt.Println(labels[20:25])
+
 }

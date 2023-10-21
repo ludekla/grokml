@@ -26,6 +26,7 @@ vet:
 	go vet pkg/ch06-logreg/*
 	go vet pkg/ch08-nbayes/*
 	go vet pkg/ch09-tree/*
+	go vet pkg/ch12-ensemble/*
 	
 	go vet cmd/ch03-linreg/linreg.go
 	go vet cmd/ch03-linreg/linregpl.go
@@ -37,8 +38,8 @@ vet:
 	go vet cmd/ch08-nbayes/nbayes.go
 	go vet cmd/ch08-nbayes/nbayespl.go
 	go vet cmd/ch09-tree/tree.go
-	go vet cmd/ch09-tree/ada.go
 	go vet cmd/ch09-tree/forest.go
+	go vet cmd/ch12-ensemble/ada.go
 
 test:
 	go test pkg/vector/*
@@ -49,6 +50,7 @@ test:
 	go test pkg/ch06-logreg/*
 	go test pkg/ch08-nbayes/*
 	go test pkg/ch09-tree/*
+	go test pkg/ch12-ensemble/*
 
 run:
 	go run cmd/ch03-linreg/linreg.go -t
@@ -61,11 +63,8 @@ run:
 	go run cmd/ch09-tree/forest.go
 	go run cmd/ch09-tree/tree.go -t
 	go run cmd/ch09-tree/tree.go
-
-build:
-	go build -o bin/linreg cmd/ch03-linreg/linreg.go
-	go build -o bin/reglin cmd/ch03-linreg/reglin.go
-	go build -o bin/sentan cmd/ch06-logreg/sentan.go
+	go run cmd/ch12-ensemble/ada.go -t
+	go run cmd/ch12-ensemble/ada.go
 
 clean:
 	rm bin/* 
