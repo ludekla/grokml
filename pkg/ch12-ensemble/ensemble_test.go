@@ -4,8 +4,8 @@ import (
 	"math"
 	"testing"
 
-	"grokml/pkg/persist"
 	"grokml/pkg/ch09-tree"
+	"grokml/pkg/persist"
 )
 
 func TestAdaBoostClassifier(t *testing.T) {

@@ -9,9 +9,9 @@ import (
 
 // GradBoostClassifier implements a forest classifier with Gradient Boost.
 type GradBoostRegressor struct {
-	Size       int              `json:"size"`
+	Size       int                   `json:"size"`
 	Regressors []*ch09.TreeRegressor `json:"trees"`
-	lRate      float64          `json:"-"`
+	lRate      float64               `json:"-"`
 }
 
 // NewGradBoostClassifier is the constructor function for GradBoostClassifier.

@@ -6,7 +6,7 @@ import (
 
 // TokenMap implements a mapping from tokens to floats. It acts as a vector with
 // a float parameter for every word, ie token, as obtained from text data, and all
-// the required canonical vector operations. 
+// the required canonical vector operations.
 type TokenMap map[string]float64
 
 // New is a factory function for TokenMap objects.
@@ -49,9 +49,9 @@ func NewTokeniser(toLower bool) *Tokeniser {
 	return &Tokeniser{toLower}
 }
 
-// Transform is the defining method for Transformers: it takes a slice of 
+// Transform is the defining method for Transformers: it takes a slice of
 // string slices - construed as documents - and returns a token map for every
-// document. 
+// document.
 func (t Tokeniser) Transform(docs [][]string) []TokenMap {
 	tmaps := make([]TokenMap, len(docs))
 	for i, doc := range docs {
