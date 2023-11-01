@@ -2,6 +2,7 @@ package ch05
 
 import (
 	"math"
+	"math/rand"
 	"testing"
 
 	ds "grokml/pkg/dataset"
@@ -9,6 +10,7 @@ import (
 )
 
 func TestPerceptron(t *testing.T) {
+	rand.Seed(0)
 	pc := NewTextPerceptron(20, 0.7)
 	csv := ds.NewCSVReader("../../data/reviews.csv", "sentiment", "review")
 	dset := ds.NewDataSet[string](csv, ds.AtoA)

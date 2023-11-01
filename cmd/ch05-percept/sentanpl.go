@@ -26,6 +26,7 @@ func main() {
 
 	pline := pl.NewPipeline[string, tk.TokenMap](
 		tk.NewTokeniser(true),
+		tk.NewNonScaler(),
 		ch05.NewTextPerceptron(10, 0.7),
 	)
 

@@ -21,7 +21,8 @@ func main() {
 
 	// Linear Regression: Learning rate, number of epochs
 	pl := pipeline.NewPipeline[float64, vc.Vector](
-		vc.NewVectoriser(true),     // transformer
+		vc.NewVectoriser(true), // transformer
+		vc.NewScaler(),
 		ch03.NewLinReg(1e-2, 1000), // vectoriser
 	)
 

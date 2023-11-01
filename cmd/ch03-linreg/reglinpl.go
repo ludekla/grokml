@@ -21,6 +21,7 @@ func main() {
 
 	pline := pl.NewPipeline[float64, vc.Vector](
 		vc.NewVectoriser(true),
+		vc.NewScaler(),
 		ch03.NewRegLin(1e-2, 100, 0.001, 0.0),
 	)
 

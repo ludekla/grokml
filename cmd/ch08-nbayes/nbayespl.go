@@ -46,6 +46,7 @@ func main() {
 
 	pline := pl.NewPipeline[string, tk.TokenMap](
 		tk.NewTokeniser(true),
+		tk.NewNonScaler(),
 		ch08.NewNaiveBayes(0.5),
 	)
 

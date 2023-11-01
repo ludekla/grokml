@@ -23,9 +23,7 @@ func NewLinReg(lrate float64, epochs int) *LinReg {
 
 // Fit performs the training.
 func (lr *LinReg) Fit(dpoints []vc.Vector, labels []float64) []float64 {
-	stats := vc.GetDataStats(dpoints, labels)
-	dpoints, labels = stats.Normalise(dpoints, labels)
-	weights := vc.RandVector(len(stats.XMean))
+	weights := vc.RandVector(len(dpoints[0]))
 	bias := rand.Float64()
 	errs := make([]float64, 0, lr.NEpochs)
 	size := float64(len(dpoints))
@@ -39,9 +37,7 @@ func (lr *LinReg) Fit(dpoints []vc.Vector, labels []float64) []float64 {
 		}
 		errs = append(errs, math.Sqrt(err/size))
 	}
-	weights.IDiv(stats.XStd)
-	weights.IScaMul(stats.YStd)
-	lr.Bias = stats.YMean + stats.YStd*bias - weights.Dot(stats.XMean)
+	lr.Bias = bias
 	lr.Weights = weights
 	return errs
 }

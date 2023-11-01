@@ -27,9 +27,7 @@ func NewRegLin(lrate float64, nEpochs int, lpen, rpen float64) *RegLin {
 
 // Fit performs the training.
 func (rl *RegLin) Fit(dpoints []vc.Vector, labels []float64) []float64 {
-	stats := vc.GetDataStats(dpoints, labels)
-	dpoints, labels = stats.Normalise(dpoints, labels)
-	weights := vc.RandVector(len(stats.XMean))
+	weights := vc.RandVector(len(dpoints[0]))
 	bias := rand.Float64()
 	errs := make([]float64, 0, rl.NEpochs)
 	size := float64(len(dpoints))
@@ -46,9 +44,7 @@ func (rl *RegLin) Fit(dpoints []vc.Vector, labels []float64) []float64 {
 		}
 		errs = append(errs, math.Sqrt(err/float64(size)))
 	}
-	weights.IDiv(stats.XStd)
-	weights.IScaMul(stats.YStd)
-	rl.Bias = stats.YMean + stats.YStd*bias - weights.Dot(stats.XMean)
+	rl.Bias = bias
 	rl.Weights = weights
 	return errs
 }
