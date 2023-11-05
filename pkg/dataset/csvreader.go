@@ -44,6 +44,17 @@ func NewCSVReader(path string, header ...string) *CSVReader {
 		log.Fatal(err)
 	}
 	cols := findCols(rec, header)
+	// Check whether all columns must be included.
+	if len(cols) == 1 {
+		c := cols[0]
+		for i, colname := range rec {
+			if i == c {
+				continue
+			}
+			cols = append(cols, i)
+			header = append(header, colname)
+		}
+	}
 	return &CSVReader{file, reader, header, cols}
 }
 

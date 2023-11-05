@@ -56,6 +56,7 @@ type DataSet[T dtype] struct {
 // this package to extract the very columns that the converter function conv
 // is applied to.
 func NewDataSet[T dtype](rd *CSVReader, conv converter[T]) DataSet[T] {
+	defer rd.Close()
 	ds := DataSet[T]{header: rd.header}
 	for {
 		row, ok := rd.Read()

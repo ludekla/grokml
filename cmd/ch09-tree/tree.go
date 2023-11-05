@@ -15,12 +15,13 @@ func main() {
 
 	flag.Parse()
 
-	csv := ds.NewCSVReader(
-		"data/Admission_Predict.csv",   // filename
-		"Chance of Admit", "GRE Score", // columns to pick
-		"TOEFL Score", "University Rating",
-		"SOP", "LOR", "CGPA", "Research",
-	)
+	// csv := ds.NewCSVReader(
+	// 	"data/Admission_Predict.csv",   // filename
+	// 	"Chance of Admit", "GRE Score", // columns to pick
+	// 	"TOEFL Score", "University Rating",
+	// 	"SOP", "LOR", "CGPA", "Research",
+	// )
+	csv := ds.NewCSVReader("data/titanic.csv", "Survived")
 	dset := ds.NewDataSet(csv, ds.AtoF)
 	trainSet, testSet := dset.Split(0.1)
 
