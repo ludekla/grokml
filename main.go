@@ -50,20 +50,20 @@ func main() {
 		sc.Fit(dps)
 		dps = sc.Transform(dps)
 		lc.Fit(dps, trainLbs)
-		// persist.Dump(lc, logreg)
-		// persist.Dump(sc, scaler)
+		persist.Dump(lc, logreg)
+		persist.Dump(sc, scaler)
 		// decision tree
 		dt = ch09.NewTreeClassifier(ch09.Entropy, 0.1)
 		dt.Fit(trainPts, trainLbs)
-		// persist.Dump(&dt, tree)
+		persist.Dump(&dt, tree)
 		// forest classifier
 		fc = ch09.NewForestClassifier(3, ch09.Entropy, 0.1)
 		fc.Fit(trainPts, trainLbs)
-		// persist.Dump(fc, forest)
+		persist.Dump(fc, forest)
 		// AdaBoost classifier
 		ac = ch12.NewAdaBoostClassifier(3, ch09.Entropy, 0.1)
 		ac.Fit(trainPts, trainLbs)
-		// persist.Dump(ac, booster)
+		persist.Dump(ac, booster)
 	} else {
 		// Logistic Regression
 		lc = ch06.NewNumLogReg(0.0, 0.0)
