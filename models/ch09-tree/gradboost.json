@@ -1,0 +1,133 @@
+{
+    "size": 2,
+    "trees": [
+        {
+            "root": {
+                "label": 0,
+                "split_info": {
+                    "dimension": 0,
+                    "threshold": 35
+                },
+                "depth": 0,
+                "min_gain": 0.1,
+                "left": {
+                    "label": 0,
+                    "split_info": {
+                        "dimension": 0,
+                        "threshold": 15
+                    },
+                    "depth": 1,
+                    "min_gain": 0.1,
+                    "left": {
+                        "label": 7,
+                        "split_info": {
+                            "dimension": 0,
+                            "threshold": 0
+                        },
+                        "depth": 2,
+                        "min_gain": 0.1,
+                        "left": null,
+                        "right": null
+                    },
+                    "right": {
+                        "label": 0,
+                        "split_info": {
+                            "dimension": 0,
+                            "threshold": 25
+                        },
+                        "depth": 2,
+                        "min_gain": 0.1,
+                        "left": {
+                            "label": 5,
+                            "split_info": {
+                                "dimension": 0,
+                                "threshold": 0
+                            },
+                            "depth": 3,
+                            "min_gain": 0.1,
+                            "left": null,
+                            "right": null
+                        },
+                        "right": {
+                            "label": 7,
+                            "split_info": {
+                                "dimension": 0,
+                                "threshold": 0
+                            },
+                            "depth": 3,
+                            "min_gain": 0.1,
+                            "left": null,
+                            "right": null
+                        }
+                    }
+                },
+                "right": {
+                    "label": 0,
+                    "split_info": {
+                        "dimension": 0,
+                        "threshold": 65
+                    },
+                    "depth": 1,
+                    "min_gain": 0.1,
+                    "left": {
+                        "label": 1.3333333333333333,
+                        "split_info": {
+                            "dimension": 0,
+                            "threshold": 0
+                        },
+                        "depth": 2,
+                        "min_gain": 0.1,
+                        "left": null,
+                        "right": null
+                    },
+                    "right": {
+                        "label": 0,
+                        "split_info": {
+                            "dimension": 0,
+                            "threshold": 75
+                        },
+                        "depth": 2,
+                        "min_gain": 0.1,
+                        "left": {
+                            "label": 5,
+                            "split_info": {
+                                "dimension": 0,
+                                "threshold": 0
+                            },
+                            "depth": 3,
+                            "min_gain": 0.1,
+                            "left": null,
+                            "right": null
+                        },
+                        "right": {
+                            "label": 3.8,
+                            "split_info": {
+                                "dimension": 0,
+                                "threshold": 0
+                            },
+                            "depth": 3,
+                            "min_gain": 0.1,
+                            "left": null,
+                            "right": null
+                        }
+                    }
+                }
+            },
+            "MinGain": 0.1
+        },
+        {
+            "root": {
+                "label": 7.401486830834377e-17,
+                "split_info": {
+                    "dimension": 0,
+                    "threshold": 0
+                },
+                "depth": 0,
+                "min_gain": 0.1,
+                "left": null,
+                "right": null
+            },
+            "MinGain": 0.1
+        }
+    ]
+}

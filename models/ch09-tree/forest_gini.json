@@ -1,0 +1,47 @@
+{
+    "size": 3,
+    "trees": [
+        {
+            "root": {
+                "label": 0.7219753086419752,
+                "split_info": {
+                    "dimension": 0,
+                    "threshold": 0
+                },
+                "depth": 0,
+                "min_gain": 0.1,
+                "left": null,
+                "right": null
+            },
+            "MinGain": 0.1
+        },
+        {
+            "root": {
+                "label": 0.725216049382716,
+                "split_info": {
+                    "dimension": 0,
+                    "threshold": 0
+                },
+                "depth": 0,
+                "min_gain": 0.1,
+                "left": null,
+                "right": null
+            },
+            "MinGain": 0.1
+        },
+        {
+            "root": {
+                "label": 0.720030864197531,
+                "split_info": {
+                    "dimension": 0,
+                    "threshold": 0
+                },
+                "depth": 0,
+                "min_gain": 0.1,
+                "left": null,
+                "right": null
+            },
+            "MinGain": 0.1
+        }
+    ]
+}
