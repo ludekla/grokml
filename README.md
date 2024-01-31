@@ -16,12 +16,12 @@ except for the part on neural networks. We exclude neural networks here. They
 are quite complex and require extra care. When it comes to recurrent neural networks,
 especially LSTMs, they tend - at least in my experience - to overwhelm the garbage collector.
 I will have to do further research to figure out why that happened and whether I could have
-done better. 
+done better. However, the code in this repo is free of such ailments.
 
 # Usage
 
-Users may just clone the repo and play with the code. People who are trying to *grok* ML 
-algorithms or are even working through the book will find it useful to look through the 
+Users may just clone the repo and play with the code. People who are currently trying to 
+*grok* ML algorithms or are even working through the book will find it useful to look through the 
 code, it should be structured reasonably well. 
 
 Always using Python will not have the same learning effect as coding ML algos in a compiled
